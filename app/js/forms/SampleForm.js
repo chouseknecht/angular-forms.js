@@ -24,7 +24,7 @@ angular.module('SampleFormDefinition', [])
                 placeholder: 'First name',
                 required: true,
                 autocomplete: false,
-                helpText: 'Provide your first name'
+                helpText: 'Provide your first name.'
                 },
             last_name: {
                 label: 'Last Name',
@@ -33,7 +33,16 @@ angular.module('SampleFormDefinition', [])
                 placeholder: 'Last name',
                 required: true, 
                 autocomplete: false,
-                helpText: 'Provide your last name'
+                helpText: 'Provide your last name.'
+                },
+            email_address: {
+                label: 'Email',
+                type: 'email',
+                srOnly: true,
+                placeholder: 'Email address',
+                required: true,
+                autocomplete: false,
+                helpText: 'Your primary email address.'
                 },
             username: {
                 label: 'Username',

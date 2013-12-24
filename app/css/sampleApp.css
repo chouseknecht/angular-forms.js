@@ -17,6 +17,7 @@ input:required:focus {
   display: inline-block;
   color: red;
   font-size: 12px;
+  margin-right: 5px;
 }
 
 .help-text {

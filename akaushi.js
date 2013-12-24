@@ -51,6 +51,7 @@ angular.module('AkaushiModule', [])
                 switch (fld.type) {
                     case 'text':
                     case 'password':
+                    case 'email':
                         fld_html += this.inputField(f, fld);
                         break;
                 }
@@ -108,10 +109,12 @@ angular.module('AkaushiModule', [])
         this.addValidations = function(f, fld) {
             var html = '';
             if (fld.required) {
-                html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "." + f + ".$error.required\">A value is required</div>\n"  
+                html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "." + f + ".$error.required\">" +
+                    "A value is required.</div>\n"  
             }
             if (fld.type == 'email') {
-                html += "<div class=\"error\" ng-show\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "." + f + ".$error.email\">Please provide a valid email address</div>\n" 
+                html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "." + f + ".$error.email\">" +
+                    "Please provide a valid email address.</div>\n" 
             }
             return html;
             }
