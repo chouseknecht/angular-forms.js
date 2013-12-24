@@ -27,9 +27,17 @@
 
 'use strict';
 
-angular.module('sampleApp', ['AkaushiModule', 'SampleFormDefinition'])
-    .controller('sampleController', ['$scope', 'Akaushi', 'SampleForm', 
-    function($scope, Akaushi, SampleForm) {
-        var form = Akaushi({ scope: $scope, targetId: 'htmlTemplate', form: SampleForm });       
+angular.module('sampleApp', ['AkaushiModule', 'SampleFormDefinition', 'HorizontalFormDefinition'])
+    .controller('sampleController', ['$scope', 'Akaushi', 'SampleForm', 'HorizontalForm', 
+    function($scope, Akaushi, SampleForm, HorizontalForm) {
+        var form = Akaushi({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
         form.inject();
+
+        var horizontalForm = Akaushi({ scope: $scope, targetId: 'horizontalForm', form: HorizontalForm });       
+        horizontalForm.inject();
+
+        if (!$scope.$$phase) {
+            $scope.$digest();
+        }
+        
         }]);

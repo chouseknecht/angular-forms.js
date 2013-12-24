@@ -3,15 +3,23 @@
 <head>
     <meta charset="utf-8">
     <title>Akaushi | Sample application</title>
-    <link rel="stylesheet" href="/app/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/app/css/sampleApp.css"/>
+    <link rel="stylesheet" href="/app/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/app/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/app/css/sampleApp.css" />
 </head>
 <body>
     
     <div class="container">
         <div class="row">
             <div class="col-lg-12" ng-controller="sampleController">
-                <div id="htmlTemplate"></div>
+                <h4>Basic Form</h4>
+                <div class="well">
+                    <div id="basicForm"></div>
+                </div>
+                <h4>Horizontal Form</h4>
+                <div class="well">
+                    <div id="horizontalForm"></div>
+                </div>
             </div><!-- col-lg-12 -->
         </div><!-- row -->
     </div>   
@@ -23,6 +31,7 @@
   <script src="/app/js/sampleApp.js"></script>
   <script src="/akaushi.js"></script>
   <script src="/app/js/forms/SampleForm.js"></script>
+  <script src="/app/js/forms/HorizontalForm.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,28 @@
+/*********************************************
+ *  Copyright (c) 2013-2014 Chris Houseknecht
+ *
+ *  SampleForm.js
+ *
+ *  Demonstrate some of the things you can do with akaushi to 
+ *  generate clean, consistent forms in your app.
+ *  
+ */
+
+input:required:focus {
+  border: 1px solid red;
+  outline: none;
+}
+
+.error {
+  display: inline-block;
+  color: red;
+  font-size: 12px;
+}
+
+.help-text {
+    display: inline-block;
+    padding-left: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+

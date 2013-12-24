@@ -1,59 +1,47 @@
 /*********************************************
  *  Copyright (c) 2013-2014 Chris Houseknecht
  *
- *  SampleForm.js
+ *  HorizontalForm.js
  *
- *  Demonstrate some of the things you can do with akaushi to 
- *  generate clean, consistent forms in your app.
+ *  Demonstrate generating a horizontal form with akaushi.
  *  
  */
 
 'use strict';
 
-angular.module('SampleFormDefinition', [])
+angular.module('HorizontalFormDefinition', [])
     .value(
-    'SampleForm', {
-        name: 'SampleForm',                    // Required. Used to set <form> id attribute
-        horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
+    'HorizontalForm', {
+        name: 'HorizontalForm',                // Required. Used to set <form> id attribute
+        horizontal: true,                      // Set to true for Bootstrap horizontal form layout 
         
         fields: {
             first_name: {
                 label: 'First Name',
-                srOnly: true,
                 type: 'text',
-                placeholder: 'First name',
+                placeholder: 'Provide your first name',
                 required: true,
-                autocomplete: false,
-                helpText: 'Provide your first name'
-                },
+                autocomplete: false},
             last_name: {
                 label: 'Last Name',
                 type: 'text',
-                srOnly: true,
-                placeholder: 'Last name',
+                placeholder: 'Provide your last name',
                 required: true, 
-                autocomplete: false,
-                helpText: 'Provide your last name'
-                },
+                autocomplete: false},
             username: {
                 label: 'Username',
-                srOnly: true,
-                placeholder: 'Username',
+                placeholder: 'Choose the name you will be known as',
                 type: 'text', 
                 length: 30,
                 required: true,
-                autocomplete: false,
-                helpText: 'Choose the name you will be known as.'
+                autocomplete: false
                 },
             password: {
                 label: 'Password',
-                srOnly: true,
-                placeholder: 'Password',
-                helpText: 'Create a password. Make it strong!',
+                placeholder: 'Create a password. Make it strong!',
                 type: 'password', 
                 length: 16, 
                 autocomplete: false,
-                required: true,
                 confirm: true      //generate a confirmation password field. associate the two and add validation directive 
                 }
             },
@@ -62,13 +50,13 @@ angular.module('SampleFormDefinition', [])
             save: {
                 label: "Save",
                 icon: "fa-check",
-                ngClick: "save()",
+                ngClick: "horizontalSave()",
                 'class': 'btn-primary btn-sm'
                 },
             reset: {
                 label: "Reset",
                 icon: "fa-minus-circle",
-                ngClick: "reset()",
+                ngClick: "horizontalReset()",
                 'class': 'btn-default btn-sm'
                 }
             }
