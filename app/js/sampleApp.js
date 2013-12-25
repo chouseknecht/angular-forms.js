@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2014 Chris Houseknecht
  *
- * The MIT License (MIT)
+ * Distributed as part of angular-forms.js under The MIT License (MIT)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

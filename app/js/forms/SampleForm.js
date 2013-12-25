@@ -3,7 +3,7 @@
  *
  *  SampleForm.js
  *
- *  Demonstrate some of the things you can do with akaushi to 
+ *  Demonstrate some of the things you can do with angular-forms to 
  *  generate clean, consistent forms in your app.
  *  
  */
