@@ -27,13 +27,23 @@
 
 'use strict';
 
-angular.module('sampleApp', ['AkaushiModule', 'SampleFormDefinition', 'HorizontalFormDefinition'])
-    .controller('sampleController', ['$scope', 'Akaushi', 'SampleForm', 'HorizontalForm', 
-    function($scope, Akaushi, SampleForm, HorizontalForm) {
+angular.module('sampleApp', ['AkaushiModule', 'SampleFormDefinition'])
+    .controller('sampleController', ['$scope', 'Akaushi', 'SampleForm', 
+    function($scope, Akaushi, SampleForm) {
         var form = Akaushi({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
         form.inject();
-
-        var horizontalForm = Akaushi({ scope: $scope, targetId: 'horizontalForm', form: HorizontalForm });       
+        
+        //Copy of our sample form, make a couple quick changes and render as a horizontal form.
+        var horizontal = angular.copy(SampleForm); 
+        horizontal['horizontal'] = true;
+        for (var fld in horizontal.fields) {
+             horizontal.fields[fld].srOnly = false;
+             if (horizontal.fields[fld].helpText) {
+                 horizontal.fields[fld].placeholder = horizontal.fields[fld].helpText;
+                 delete horizontal.fields[fld].helpText;
+             }
+        }
+        var horizontalForm = Akaushi({ scope: $scope, targetId: 'horizontalForm', form: horizontal });       
         horizontalForm.inject();
 
         $scope.sources = [
