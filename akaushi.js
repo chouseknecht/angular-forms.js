@@ -54,6 +54,9 @@ angular.module('AkaushiModule', [])
                     case 'email':
                         fld_html += this.inputField(f, fld);
                         break;
+                    case 'select':
+                        fld_html += this.select(f, fld);
+                        break;
                 }
                 
                 if (fld.helpText) {
@@ -66,7 +69,10 @@ angular.module('AkaushiModule', [])
                     label_html = this.fieldLabel(f, fld);
                 }
                 
-                html += "<div class=\"form-group\">\n";
+                html += "<div class=\"form-group\""; 
+                html += (fld['ngHide']) ? this.attribute(fld, 'ngHide') : ""; 
+                html += (fld['ngShow']) ? this.attribute(fld, 'ngShow') : ""; 
+                html += ">\n";
                 html += label_html; 
                 html += (this.form.horizontal) ? "<div class=\"" + col_size + "\">\n" : "";
                 html += fld_html;
@@ -94,11 +100,10 @@ angular.module('AkaushiModule', [])
             var html = '';
             html += "<input type=\"" + fld.type + "\" ng-model=\"";
             html += (fld.ngModel) ? fld.ngModel : f;
-            html += "\" name=\"" + f + "\" id=\"fld_" + f +
-                "\" ";
+            html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
             html += this.addInputClass(fld);
             for (var attr in fld) {
-                if (attr != 'label' && attr != 'type' && attr != 'srOnly'  && attr != 'class') {
+                if (attr != 'label' && attr != 'type' && attr != 'srOnly'  && attr != 'class' && attr != 'ngHide' && attr != 'ngShow') {
                     html += this.attribute(fld, attr); 
                 }
             }
@@ -106,9 +111,29 @@ angular.module('AkaushiModule', [])
             return html;
             }
 
+        this.select = function(f, fld) {
+           var html = '';
+           html += "<select ng-model=\"";
+           html += (fld.ngModel) ? fld.ngModel : f;
+           html += "\"";
+           html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
+           html += this.addInputClass(fld);
+           html += "ng-options=\"itm.id as itm.label for itm in " + fld.optionArray + "\" ";
+           for (var attr in fld) {
+                if (attr != 'label' && attr != 'type' && attr != 'srOnly'  && attr != 'class' && attr != 'optionArray' && attr != 'placeholder'
+                    && attr != 'ngHide' && attr != 'ngShow') {
+                    html += this.attribute(fld, attr); 
+                }
+            }
+            html += ">";
+            html += (fld.placeholder) ? "\n<option value=\"\">" + fld.placeholder + "</option>\n" : "";
+            html += "</select>\n";
+            return html;
+           }
+
         this.addValidations = function(f, fld) {
             var html = '';
-            if (fld.required) {
+            if (fld.required || fld.ngRequired) {
                 html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "." + f + ".$error.required\">" +
                     "A value is required.</div>\n"  
             }
@@ -161,18 +186,24 @@ angular.module('AkaushiModule', [])
 
         this.attribute = function(obj, itm) {
             var html = '';
-            if (itm !== 'helpText') {
-                switch (itm) {
-                    case 'required': 
-                        html += " required";
-                        break;
-                    case 'autocomplete':
-                        html += " autocomplete=\"";
-                        html += (obj.autocomplete == true || obj.autocomplete == 'on') ? "on\"" : "off\"";
-                        break;
-                    default: 
-                        html += " " + itm + "=\"" + obj[itm] + "\" ";
-                    }
+            if (itm.match(/^ng/)) {
+                var d = itm.replace(/^ng/,'').toLowerCase();
+                html += ' ng-' + d + '="' + obj[itm] + '"';
+            }
+            else {
+                if (itm !== 'helpText') {
+                    switch (itm) {
+                        case 'required': 
+                            html += " required";
+                            break;
+                        case 'autocomplete':
+                            html += " autocomplete=\"";
+                            html += (obj.autocomplete == true || obj.autocomplete == 'on') ? "on\"" : "off\"";
+                            break;
+                        default: 
+                            html += " " + itm + "=\"" + obj[itm] + "\" ";
+                        }
+                }
             }
             return html;
             }

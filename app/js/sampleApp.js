@@ -36,8 +36,22 @@ angular.module('sampleApp', ['AkaushiModule', 'SampleFormDefinition', 'Horizonta
         var horizontalForm = Akaushi({ scope: $scope, targetId: 'horizontalForm', form: HorizontalForm });       
         horizontalForm.inject();
 
-        if (!$scope.$$phase) {
-            $scope.$digest();
-        }
+        $scope.sources = [
+            { id: 'google', label: 'Google' },
+            { id: 'yahoo', label: 'Yahoo!' },
+            { id: 'bing', label: 'Bing' },
+            { id: 'facebook', label: 'Facebook' },
+            { id: 'word', label: 'A friend told me' },
+            { id: 'other', label: 'Other' }
+            ];
+
+        $scope.sourceSelected = function() {
+            console.log("You selected: ");
+            console.log($scope.referal_source);
+            }
+
+        //if (!$scope.$$phase) {
+        //    $scope.$digest();
+        //}
         
         }]);

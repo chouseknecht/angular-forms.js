@@ -64,6 +64,25 @@ angular.module('SampleFormDefinition', [])
                 autocomplete: false,
                 required: true,
                 confirm: true      //generate a confirmation password field. associate the two and add validation directive 
+                },
+            referal_source: {
+                label: 'Referal source', 
+                srOnly: true,
+                placeholder: 'Select a referal source',
+                type: 'select',
+                required: true,
+                helpText: 'How did you hear about us?',
+                optionArray: 'sources',
+                ngChange: "sourceSelected()"
+                },
+            other_source: {
+                label: 'Other',
+                srOnly: true,
+                placeholder: 'Other source',
+                type: 'text',
+                ngShow: "referal_source == 'other'",
+                ngRequired: "referal_source == 'other'",
+                helpText: 'What is the Other source?'
                 }
             },
 
