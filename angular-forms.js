@@ -27,9 +27,9 @@
 
 'use strict';
 
-angular.module('AkaushiModule', [])
+angular.module('AngularFormsModule', [])
 
-.factory('Akaushi', [ '$compile', function($compile) {
+.factory('AngularForms', [ '$compile', function($compile) {
     return function(params) { return new( function() {
             
         this.init = function() {
