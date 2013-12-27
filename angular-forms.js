@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2013-2014 Chris Houseknecht
  *
- * Distributed under The MIT License (MIT)
+ * The MIT License (MIT)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of angular-forms.js and associated documentation files (the "Software"), to deal
@@ -36,13 +36,14 @@ angular.module('AngularFormsModule', [])
             this.form = params.form;
             this.targetId = params.targetId; 
             this.scope = params.scope;
+            this.col_size = "col-sm-10";
             }
         
         this.build = function() {
             var html = this.startForm();
             var fld, fld_html, label_html;
-            if (this.form.horizontal) {
-                var col_size = (this.inputColSize) ? this.inputColSize : "col-sm-10";
+            if (this.form.horizontal && this.inputColSize) {
+                this.col_size = this.form.inputColSize;
             }
             for (var f in this.form.fields) {
                 fld = this.form.fields[f];
@@ -57,6 +58,15 @@ angular.module('AngularFormsModule', [])
                     case 'select':
                         fld_html += this.select(f, fld);
                         break;
+                    case 'checkbox':
+                    case 'radio':
+                        fld_html += this.indicator(f, fld);
+                        break;
+                    case 'checkbox_group':
+                        fld_html += this.checkboxGroup(f, fld);
+                        break;
+                     case 'radio_group':
+                        fld_html += this.radioGroup(f, fld);
                 }
                 
                 if (fld.helpText) {
@@ -64,27 +74,66 @@ angular.module('AngularFormsModule', [])
                 }
                 
                 fld_html += this.addValidations(f, fld);
-
-                if (fld.label) {
+                
+                if (fld.type != 'checkbox' && fld.type != 'radio' && fld.label) {
                     label_html = this.fieldLabel(f, fld);
                 }
-                
-                html += "<div class=\"form-group\""; 
-                html += (fld['ngHide']) ? this.attribute(fld, 'ngHide') : ""; 
-                html += (fld['ngShow']) ? this.attribute(fld, 'ngShow') : ""; 
-                html += ">\n";
-                html += label_html; 
-                html += (this.form.horizontal) ? "<div class=\"" + col_size + "\">\n" : "";
-                html += fld_html;
-                html += (this.form.horizontal) ? "</div>\n" : "";
-                html += "</div><!-- form-group -->\n";
+
+                if (!this.form.horizontal) {
+                    html += "<div class=\"";
+                    switch (fld.type) {
+                        case 'checkbox':
+                            html += 'checkbox';
+                            break;
+                        case 'radio':
+                            html += 'radio';
+                            break;
+                        default:
+                            html += "form-group";
+                    }
+                    html += (fld['groupClass']) ? " " + fld['groupClass'] : "";
+                    html += "\"";
+                    html += (fld['ngHide']) ? this.attribute(fld, 'ngHide') : ""; 
+                    html += (fld['ngShow']) ? this.attribute(fld, 'ngShow') : "";
+                    html += ">\n";
+                    html += label_html;
+                    html += fld_html;
+                    html += (this.form.horizontal) ? "</div>\n" : "";
+                    html += "</div><!-- form-group -->\n";
+                }
+                else {
+                    html += "<div class=\"form-group";
+                    html += (fld['groupClass']) ? " " + fld['groupClass'] : "";
+                    html += "\"";
+                    html += (fld['ngHide']) ? this.attribute(fld, 'ngHide') : ""; 
+                    html += (fld['ngShow']) ? this.attribute(fld, 'ngShow') : "";
+                    html += ">\n";
+                    html += label_html;
+                    if (fld.type == 'checkbox') {
+                        var offset = "col-sm-offset-" + (12 - parseInt(this.col_size.replace(/[a-z,A-Z,-]/g,'')));
+                        html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
+                        html += "<div class=\"checkbox\">\n";
+                    }
+                    else if (fld.type == 'radio') {
+                        var offset = "col-sm-offset-" + (12 - parseInt(this.col_size.replace(/[a-z,A-Z,-]/g,'')));
+                        html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
+                        html += "<div class=\"radio\">\n";
+                    }
+                    else { 
+                        html += "<div class=\"" + this.col_size + "\">\n";
+                    }
+                    html += fld_html;
+                    html += (fld.type == 'checkbox' || fld.type == 'radio') ? "</div><!-- checkbox/radio -->\n" : "";
+                    html += "</div>\n";
+                    html += "</div><!-- form-group -->\n";
+                }
             }
             //Add buttons
             if (this.form.buttons) {
                 html += "<div class=\"form-group buttons\">\n";
                 if (this.form.horizontal) {
-                    var offset = "col-sm-offset-" + (12 - parseInt(col_size.replace(/[a-z,A-Z,-]/g,'')));
-                    html += "<div class=\"" + offset + " " + col_size + "\">\n";
+                    var offset = "col-sm-offset-" + (12 - parseInt(this.col_size.replace(/[a-z,A-Z,-]/g,'')));
+                    html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
                 }
                 for (var btn in this.form.buttons) {
                     html += this.button(btn, this.form.buttons[btn]);
@@ -129,7 +178,63 @@ angular.module('AngularFormsModule', [])
             html += (fld.placeholder) ? "\n<option value=\"\">" + fld.placeholder + "</option>\n" : "";
             html += "</select>\n";
             return html;
-           }
+            }
+
+        this.indicator = function(f, fld) {
+            //checkboxes and radio buttons
+            var html = '';
+            html += "<input type=\"" + fld.type + "\" ng-model=\"";
+            html += (fld.ngModel) ? fld.ngModel : f;
+            html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
+            html += (fld['class']) ? "class=\"" + fld['class'] + "\" " : "";
+            for (var attr in fld) {
+                if (attr != 'label' && attr != 'type' && attr != 'srOnly'  && attr != 'class' && attr != 'ngHide' && attr != 'ngShow') {
+                    html += this.attribute(fld, attr); 
+                }
+            }
+            html += ">";
+            if (fld.type == 'checkbox' || fld.type == 'radio') {
+                html = this.labelWrap(f, fld, html);
+            }
+            return html;
+            }
+
+        this.checkboxGroup = function(f, fld) {
+            var html = '';
+            html += "<div class=\"checkbox-group\">\n";
+            for (var i=0; i < fld.checkboxes.length; i++) {
+                fld.checkboxes[i].type = 'checkbox';
+                fld.checkboxes[i].labelClass = 'checkbox-inline';
+                html += this.indicator(fld.checkboxes[i].model, fld.checkboxes[i]);
+            }
+            html += "</div><!-- checkbox-group -->\n";
+            return html;    
+            }
+
+        this.radioGroup = function(f, fld) {
+            var html = '';
+            html += "<div class=\"radio-group\">\n";
+            for (var i=0; i < fld.options.length; i++) {
+                fld.options[i].type = 'radio';
+                fld.options[i].labelClass = 'radio-inline';
+                fld.options[i].ngModel = (fld.ngModel) ? fld.ngModel : f;
+                html += this.indicator(f, fld.options[i]);
+            }
+            html += "</div><!-- radio-group -->\n";
+            return html;    
+            }
+
+        this.labelWrap = function(f, fld, html) {
+            // For checkboxes and readio buttons, wrap the input element with a label element
+            var h = '';
+            if (this.form)
+            h += "<label";
+            h += (fld.labelClass) ? " class=\"" + fld.labelClass + "\"" : "";
+            h += (fld.ngShow) ? this.attribute(fld, 'ngShow') : "";
+            h += (fld.ngHide) ? this.attribute(fld, 'ngHide') : "";
+            h+= ">" + html + " " + fld.label + "</label>\n";
+            return h; 
+            }
 
         this.addValidations = function(f, fld) {
             var html = '';
@@ -191,7 +296,7 @@ angular.module('AngularFormsModule', [])
                 html += ' ng-' + d + '="' + obj[itm] + '"';
             }
             else {
-                if (itm !== 'helpText') {
+                if (itm != 'helpText' && itm != 'labelClass') {
                     switch (itm) {
                         case 'required': 
                             html += " required";

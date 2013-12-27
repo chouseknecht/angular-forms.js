@@ -9,20 +9,36 @@
  */
 
 input:required:focus {
-  border: 1px solid red;
-  outline: none;
+    border: 1px solid red;
+    outline: none;
 }
 
 .error {
-  display: inline-block;
-  color: red;
-  font-size: 12px;
-  padding-left: 3px;
+    display: inline-block;
+    color: red;
+    font-size: 12px;
+    padding-left: 3px;
 }
 
 .help-text {
     display: inline-block;
-    padding-left: 3px;
     font-size: 12px;
 }
 
+.options-group {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.radio-options-group {
+    margin-top: 20px;
+}
+
+.radio-options-group .radio-inline {
+    margin-left: 20px;
+}
+
+.radio-options-group .radio-inline:first-child {
+    margin-left: 0;
+}

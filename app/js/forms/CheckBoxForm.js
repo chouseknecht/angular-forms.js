@@ -15,31 +15,23 @@ angular.module('CheckBoxFormDefinition', [])
         name: 'checkbox_form',           // Required. Used to set <form> id attribute
         
         fields: {
-            sound_on: {
-                label: 'Inline checkbox',
-                helpText: 'Example of an inline checkbox', 
-                type: 'checkbox',
-                inline: true
+            standard_checkbox: {
+                label: 'Checkbox',
+                helpText: 'This is a standard checkbox',
+                type: 'checkbox'
                 },
-            not_inline: {
-                label: 'Regular checkbox',
-                helpText: 'Example of a regular checkbox',
-                type: 'checkbox',
+            checkbox_group: {
+                label: 'Options',
+                groupClass: 'options-group',
+                helpText: "Put related checkboxes inline together using the \'checkbox_group\' type. Click Option 1 to see additional options.",
+                type: 'checkbox_group',
+                checkboxes: [
+                    { model: "option1", label: "Option 1" },
+                    { model: "option2", label: "Option 2" }, 
+                    { model: "option3", label: "Option 3", ngShow: "option1" },
+                    { model: "option4", label: "Option 4", ngShow: "option1" }
+                    ]
                 }
-            },
+            }
 
-        buttons: {
-            save: {
-                label: "Save",
-                icon: "fa-check",
-                ngClick: "save()",
-                'class': 'btn-primary btn-sm'
-                },
-            reset: {
-                label: "Reset",
-                icon: "fa-minus-circle",
-                ngClick: "reset()",
-                'class': 'btn-default btn-sm'
-                }
-            },
     });

@@ -27,21 +27,27 @@
 
 'use strict';
 
-angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition'])
-    .controller('sampleController', ['$scope', 'AngularForms', 'SampleForm', 
-    function($scope, AngularForms, SampleForm) {
+angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition', 'CheckBoxFormDefinition', 'RadioFormDefinition'])
+    .controller('sampleController', ['$scope', 'AngularForms', 'SampleForm', 'CheckBoxForm', 'RadioForm',
+    function($scope, AngularForms, SampleForm, CheckBoxForm, RadioForm) {
         var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
         form.inject();
         
         //Copy of our sample form, make a couple quick changes and render as a horizontal form.
         var horizontal = angular.copy(SampleForm); 
         horizontal['horizontal'] = true;
+        horizontal['name'] = 'SampleFormHorizontal';
         for (var fld in horizontal.fields) {
-             horizontal.fields[fld].srOnly = false;
-             if (horizontal.fields[fld].helpText) {
-                 horizontal.fields[fld].placeholder = horizontal.fields[fld].helpText;
-                 delete horizontal.fields[fld].helpText;
-             }
+            horizontal.fields[fld].srOnly = false;
+            horizontal.fields[fld].ngModel = fld + '_horizontal';
+            if (horizontal.fields[fld].helpText) {
+                horizontal.fields[fld].placeholder = horizontal.fields[fld].helpText;
+                delete horizontal.fields[fld].helpText;
+            }
+            if (fld == 'other_source') {
+                horizontal.fields[fld].ngShow = "referral_source_horizontal == 'other'";
+                horizontal.fields[fld].ngRequired = "referral_source_horizontal == 'other'";
+            }
         }
         var horizontalForm = AngularForms({ scope: $scope, targetId: 'horizontalForm', form: horizontal });       
         horizontalForm.inject();
@@ -60,8 +66,41 @@ angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition'])
             console.log($scope.referal_source);
             }
 
-        //if (!$scope.$$phase) {
-        //    $scope.$digest();
-        //}
+        var cCheckboxForm = AngularForms({ scope: $scope, targetId: 'checkboxForm', form: CheckBoxForm });       
+        cCheckboxForm.inject();
+
+        //Copy the sample checkbox form, make a few changes, and render it as a horizontal form.
+        var cHorizontal = angular.copy(CheckBoxForm); 
+        cHorizontal['horizontal'] = true;
+        cHorizontal['fields']['standard_checkbox'].ngModel = 'standard_checkbox_horizontal';
+        delete cHorizontal['fields']['checkbox_group'].groupClass;
+        for (var i=0; i < cHorizontal['fields']['checkbox_group']['checkboxes'].length; i++) {
+            var c = cHorizontal['fields']['checkbox_group']['checkboxes'][i];
+            c.model = c.model + '_horizontal';
+            if (c.ngShow) {
+                c.ngShow = c.ngShow + '_horizontal';
+            }
+        }
+        var hCheckboxForm = AngularForms({ scope: $scope, targetId: 'checkboxHorizontalForm', form: cHorizontal });       
+        hCheckboxForm.inject();
+
+        var radio = AngularForms({ scope: $scope, targetId: 'radioForm', form: RadioForm });       
+        radio.inject();
+
+        //Copy the sample radio form, make a few changes, and render it as a horizontal form.
+        var hRadio = angular.copy(RadioForm); 
+        hRadio['horizontal'] = true;
+        for (var fld in hRadio['fields']) {
+            if (hRadio['fields'][fld].ngModel) {
+                hRadio['fields'][fld].ngModel = hRadio['fields'][fld].ngModel + '_horizontal';
+            }
+            else {
+                console.log('setting ngModel for ' + fld);
+                hRadio['fields'][fld].ngModel = fld + '_horizontal';
+            }  
+        }
+        delete hRadio['fields']['radio_group'].groupClass;
+        var hRadioForm = AngularForms({ scope: $scope, targetId: 'radioHorizontalForm', form: hRadio });       
+        hRadioForm.inject();
         
         }]);
