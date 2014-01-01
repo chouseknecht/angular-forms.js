@@ -1,0 +1,11 @@
+{
+  "name": "angular-forms",
+  "devDependencies": {
+    "angular": "1.2.6", 
+    "jquery": "2.0.3",
+    "components-font-awesome": "4.0.3",
+    "bootstrap": "3.0.3",
+    "angular-bootstrap": "0.9.0",
+    "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip"
+  }
+}
