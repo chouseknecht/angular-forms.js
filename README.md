@@ -1,7 +1,7 @@
 angular-forms
 =============
 
-Turn forms into reusable JSON objects. With angular-forms.js concentrate on building your app and not all the details of creating aand validating forms. Let angular-forms.js generate the HTML, CSS and validation for you. 
+Turn forms into reusable JSON objects. With angular-forms.js concentrate on building your app and not all the details of creating and validating forms. Let angular-forms.js generate the HTML, CSS and validation for you. 
 
 Generated forms are built with Twitter Bootstrap elements baked in, so you don't even have to think about styling. Indicate the desired form style, basic or horizontal, in the JSON from definition, and the form is generated accordingly.
 
