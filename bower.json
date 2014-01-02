@@ -1,6 +1,6 @@
 {
   "name": "angular-forms.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "devDependencies": {
     "angular": "1.2.6", 
     "jquery": "2.0.3",
