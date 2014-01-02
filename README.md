@@ -10,7 +10,7 @@ Requirements
 
 * [AngularJS 1.2.6+](http://www.angularjs.org)
 * [Twitter Bootstrap 3.0.3+](http://www.getbootstrap.com)
-* [FontAwesome 
+* [FontAwesome 4.0.3+](http://www.fontawesome.io) 
 
 Note that Angular-forms.js is being developed with the latest stable versions of any required packages. It is quite possible that earlier version will work just fine.
 
