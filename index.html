@@ -16,9 +16,9 @@
                     <h1><span class="red">A</span>ngularForms</h1>
                     <div class="download">
                         <a class="btn btn-default btn-lg" role="button" 
-                            href="https://github.com/chouseknecht/angular-forms.js/archive/master.zip">Download</a>
+                            ng-href="{{ download_url }}">Download</a>
                     </div>
-                    <div class="github-info">Current: {{ version }} 
+                    <div class="github-info ng-cloak">Current: {{ version }} {{ version_name }}
                         <a class="btn btn-default btn-xs" role="button"
                             href="https://github.com/chouseknecht/angular-forms.js"><i class="fa fa-github"></i> Repo</a>
                         <a class="btn btn-default btn-xs" role="button"
@@ -50,7 +50,7 @@
     ...
     &lt;script src="/angular-forms.min.js"&gt;&lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt; </pre>
+&lt;/html&gt;</pre>
                         <p>AngularForms can also be installed into a project using bower:</p>
                         <pre>bower install angular-forms.js</pre>
                         <p>By default AngularForms will be installed in the bower_components directory.</p>
