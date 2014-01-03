@@ -2,7 +2,7 @@
 <html lang="en" ng-app="docApp">
     <head>
         <meta charset="utf-8">
-        <title>angular-forms.js</title>
+        <title>AngularForms | angular-forms.js. Web forms made simple.</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="/bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -10,10 +10,13 @@
         <link rel="stylesheet/less" type="text/css" href="/docsite/less/styles.less" />
     </head>
     <body>
+
         <div ng-controller="docController">
+         
             <div class="jumbotron">
                 <div class="container">
                     <h1><span class="red">A</span>ngularForms</h1>
+                    <p>Create web forms as reusable JSON objects that can be injected anywhere into your app, complete with Twitter Bootstrap styling and AngularJS data bindings and validation.</p>
                     <div class="download">
                         <a class="btn btn-default btn-lg" role="button" 
                             ng-href="{{ download_url }}">Download</a>
@@ -25,51 +28,293 @@
                             href="https://github.com/chouseknecht/angular-forms.js/fork"><i class="fa fa-github"></i> Fork Me!</a>
                     </div>
                 </div>
-            </div>
+            </div><!-- jumbotron -->
+
             <div class="container">
-                <div class="row"
+                <div class="row">
                     <div class="col-lg-12">
-                        <p>With AngularForms your forms become reusable JSON objects that can be injected anywhere into your app, complete with Twitter Bootstrap styling, AngularJS bindings and validation. Let AngularForms handle the forms while you focus on building your app.
-                        </p>
-                        <h3>Adding AngularForms to your app</h3>
-                        <p>AngularForms requires JQuery, AngularJS, FontAwesome, and the Twitter Bootstrap style sheet. Once you have the requirements installed, download the project and add a script tag to your project for angular-forms.min.js.</p>
-                        <p>An index.html would look like the following:
+                        <h3>Requirements</h3>
+                        <p>Before using AngularForms, add the following to your project:</p>
+                        <ul>
+                        <li><a href="http://jquery.com">JQuery 1.10.2+</a></li>
+                        <li><a href="http://angularjs.org">AngularJS 1.2.6+</a></li>
+                        <li><a href="http://fontawesome.io">FontAwesome 4.0.3+</a></li>
+                        <li><a href="http://getbootstrap.com">Twitter Bootstrap style sheet 3.0.3+</a></li>
+                        </ul>
+                        <p>The above can be installed using <a href="http://bower.io">Bower</a>:</p>
+<pre>
+bower install angular
+bower install bootstrap
+bower install jquery
+bower install components-font-awesome
+</pre>
+                        <h3 class="section-start">Download AngularForms</h3>
+                        <p>There's more than one way to acquire AngularForms and incorporate it into your project. Choose the method that works best for you:</p>
+                        <h4>Just the javascript, please</h4>
+                        <p>The quickest way to get started is to download the compiled javascript.</p>
+                        <a class="btn btn-primary btn-sm" role="button" ng-href="{{ download_url }}">Download</a>
+                        
+                        <h4>Additional methods</h4>
+                        <h5><a href="https://github.com/chouseknecht/angular-forms.js">Clone or fork via Github</a></h5>
+                        <p>Cloning or forking the github repo gives you access to a full sample application. Plus, you can contribute!</p>
+
+                        <h5>Install via <a href="http://bower.io">Bower</a></h5>
+                        <p>Add AngularForms to your project with bower:</p>
+<pre>
+bower install angular-forms.js
+</pre>
+                        
+                        <h3 class="section-start">Sample Template</h3>
+                        <p>Below is a very simple html page showing how to incorporate AngularForms. It assumes bower was used to install the required components. Use it as an example and customize it to fit your environment.</p> 
 <pre>
 &lt;!doctype html&gt;
-&lt;html lang="en" ng-app="sampleApp"&gt;
+&lt;html lang="en" ng-app="myApp"&gt;
 &lt;head&gt;
     &lt;meta charset="utf-8"&gt;
-&lt;head&gt;
-    &lt;link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css" /&gt;
-    &lt;link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css" /&gt;
-    ...
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;AngularForms | angular-forms.js. Web forms made simple.&lt;/title&gt;
+    &lt;link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" /&gt;
+    &lt;link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.min.css" /&gt;
+    &lt;link rel="stylesheet" href="/css/myStyles.css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;script src="/jquery/jquery.min.js"&gt;&lt;/script&gt;
-    &lt;script src="/angular/angular.min.js"&gt;&lt;/script&gt;
-    ...
-    &lt;script src="/angular-forms.min.js"&gt;&lt;/script&gt;
+    &lt;div ng-controller="yourController"&gt;
+        &lt;p>Site content appears here.&lt;/p&gt;
+
+        &lt;div id="insert-form-here">&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;script src="/bower_components/jquery/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script src="/bower_components/angular/angular.min.js"&gt;&lt;/script&gt;
+    &lt;script src="/js/myApp.js"&gt;&lt;/script&gt;
+    &lt;script src="/bower_components/angular-forms.js/angular-forms.min.js"&gt;&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-                        <p>AngularForms can also be installed into a project using bower:</p>
-                        <pre>bower install angular-forms.js</pre>
-                        <p>By default AngularForms will be installed in the bower_components directory.</p>
+                    
+                        <h3 class="section-start">Getting Started</h3>
+                        
+                        <p>In the following example sampleForm.js contains a JSON object representing a form. In myApp.js the Angular application is defined along with the controller. In the controller a call to AngularForms() turns the JSON into HTML, adding in CSS classes and Angular directives.</p>
+                        <p>The form is generated based on the properties and attributes found in the JSON object. The result is compiled and injected into the '#exampleFrom' DOM element. Click the button to see it in action.</p>
+                        <p><strong>Note</strong> the CSS we add to style a few items that come standard with a generated form. This style sheet is not currently included in the build, so you might want to copy it into your app and adjust as needed.</p>
+                        <tabset class="example">
+                            <tab>
+                            <tab-heading>HTML</tab-heading>
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en" ng-app="myApp"&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;title&gt;My Sample App&lt;/title&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+        &lt;link href="/bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet"&gt;
+        &lt;link href="/css/styles.css" rel="stylesheet"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        
+        &lt;div class="container"&gt;
+            &lt;div class="row"&gt;
+                &lt;div class="col-lg-12" ng-controller="myController"&gt;
+                    &lt;h4&gt;Example Form&lt;/h4&gt;
+                    &lt;div class="well"&gt;
+                        &lt;div id="exampleForm"&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;script src="/bower_components/jquery/jquery.min.js"&gt;&lt;/script&gt;
+        &lt;script src="/bower_components/angular/angular.min.js"&gt;&lt;/script&gt;
+            
+        &lt;!-- angular app files --&gt;
+        &lt;script src="/js/myApp.js"&gt;&lt;/script&gt;
+        &lt;script src="/js/sampleForm.js"&gt;&lt;/script&gt;
+        &lt;script src="/bower_components/angular-forms.js/angular-forms.min.js"&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+                            </tab>
+                            
+                            <tab> 
+                            <tab-heading>CSS</tab-heading>
+<pre>
+input:required:focus {
+    border: 1px solid red;
+    outline: none;
+}
+
+.error {
+    display: inline-block;
+    color: red;
+    font-size: 12px;
+    padding-left: 3px;
+}
+
+.help-text {
+    display: inline-block;
+    font-size: 12px;
+}
+</pre>
+                            </tab>
+
+                            <tab>
+                            <tab-heading>myApp.js</tab-heading>
+<pre>
+'use strict';
+
+var myApp = angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition']);
+
+myApp.controller('myController', ['$scope', 'AngularForms', 'SampleForm', 
+    function($scope, AngularForms, SampleForm) {
+    
+    var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
+    form.inject();
+    
+    }]);
+</pre>
+                            </tab>
+
+                            <tab>
+                            <tab-heading>sampleForm.js</tab-heading>
+<pre>
+'use strict';
+
+angular.module('SampleFormDefinition', [])
+    .value(
+    'SampleForm', {
+        name: 'SampleForm',                    // Required. Used to set <form> id attribute
+        horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
+        
+        fields: {
+            first_name: {
+                label: 'First Name',
+                srOnly: true,
+                type: 'text',
+                placeholder: 'First name',
+                required: true,
+                autocomplete: false,
+                helpText: 'Provide your first name.'
+                },
+            last_name: {
+                label: 'Last Name',
+                type: 'text',
+                srOnly: true,
+                placeholder: 'Last name',
+                required: true, 
+                autocomplete: false,
+                helpText: 'Provide your last name.'
+                },
+            email_address: {
+                label: 'Email',
+                type: 'email',
+                srOnly: true,
+                placeholder: 'Email address',
+                required: true,
+                autocomplete: false,
+                helpText: 'Your primary email address.'
+                },
+            username: {
+                label: 'Username',
+                srOnly: true,
+                placeholder: 'Username',
+                type: 'text', 
+                length: 30,
+                required: true,
+                autocomplete: false,
+                helpText: 'Choose the name you will be known as.'
+                },
+            password: {
+                label: 'Password',
+                srOnly: true,
+                placeholder: 'Password',
+                helpText: 'Create a password. Make it strong!',
+                type: 'password', 
+                length: 16, 
+                autocomplete: false,
+                required: true,
+                confirm: true      //generate a confirmation password field. associate the two and add validation directive 
+                },
+            referral_source: {
+                label: 'Referral source', 
+                srOnly: true,
+                placeholder: 'Select a referral source',
+                type: 'select',
+                required: true,
+                helpText: 'How did you hear about us?',
+                optionArray: 'sources',
+                ngChange: "sourceSelected()"
+                },
+            other_source: {
+                label: 'Other',
+                srOnly: true,
+                placeholder: 'Other source',
+                type: 'text',
+                ngShow: "referral_source == 'other'",
+                ngRequired: "referral_source == 'other'",
+                helpText: 'What is the Other source?'
+                }
+            },
+
+        buttons: {
+            save: {
+                label: "Save",
+                icon: "fa-check",
+                ngClick: "save()",
+                'class': 'btn-primary btn-sm'
+                },
+            reset: {
+                label: "Reset",
+                icon: "fa-minus-circle",
+                ngClick: "reset()",
+                'class': 'btn-default btn-sm'
+                }
+            }
+        });
+</pre>
+                            </tab>
+                        </tabset>
+                        
+                        <div class="example">
+                            <p>Click the <em>Show Form</em> button to see the sample form generated and inserted into the DOM below.</p>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showForm()">Show Form</button>
+                            <div class="example" ng-show="exampleFormReady">
+                                <h4>Example Form</h4>
+                                <div class="well">
+                                    <div id="exampleForm"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="section-start">Reference</h3>
+                        <p>Create</p>
+
+                    </div><!-- col-lg-12 -->
+                </div><!-- row -->
+            </div><!-- container -->
+            
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Designed and built by <a href="http://twitter.com/chouseknecht">@chouseknecht</a><br \>
+                            Code and documentation licensed under <a href="http://opensource.org/licenses/MIT">The MIT License</a>
+                        </div>      
                     </div>
                 </div>
-            </div>
-        </div><!-- docController -->
+            </div><!-- footer -->
 
+        </div><!-- docController -->
 
         <script src="/bower_components/jquery/jquery.min.js"></script>
         <script src="/bower_components/less.js/dist/less-1.6.0.min.js" type="text/javascript"></script>
         <script src="/bower_components/angular/angular.min.js"></script>
-        <script src="/bower_components/angular-route/angular-route.min.js"></script>
         <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
         <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
         <!-- angular app files -->
         <script src="/docsite/js/docApp.js"></script>
+        <script src="/angular-forms.min.js"></script>
         <script src="/docsite/js/RestService.js"></script>
+        <script src="/app/js/forms/SampleForm.js"></script>
         <script src="/docsite/js/Utilities.js"></script>
         
         <script type="text/ng-template" id="errorModal.html">

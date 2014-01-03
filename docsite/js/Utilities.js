@@ -20,8 +20,6 @@ angular.module('Utilities', ['ui.bootstrap'])
         
         scope.error_message = params.msg; 
         
-        console.log('here');
-        
         var errorModalController = function($scope, $modalInstance) {
             $scope.ok = function() { $modalInstance.dismiss() }; 
             }

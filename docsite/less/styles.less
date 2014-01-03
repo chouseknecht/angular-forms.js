@@ -8,13 +8,17 @@
  */
 
 @red: #dd1b16;
-
+@grey: #eeeeee;
 
 .red { 
     color: @red;
 }
 
 .jumbotron {
+    p {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
     .download {
         margin-top: 30px;
     }
@@ -26,6 +30,45 @@
         }
     }
 }
+
+.section-start {
+    margin-top: 45px;
+}
+
+.example .tab-pane {
+    height: 500px;
+    overflow: auto;
+}
+
+.footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: @grey;
+}
+
+/* Example form styles */
+.example {
+    margin-top: 30px;
+}
+
+input:required:focus {
+    border: 1px solid red;
+    outline: none;
+}
+
+.error {
+    display: inline-block;
+    color: red;
+    font-size: 12px;
+    padding-left: 3px;
+}
+
+.help-text {
+    display: inline-block;
+    font-size: 12px;
+}
+
 
 /* Angular ng-cloak directive */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

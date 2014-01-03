@@ -10,11 +10,22 @@
 
 'use strict';
 
-var app = angular.module('docApp', ['RestService', 'Utilities']);
+var app = angular.module('docApp', ['RestService', 'Utilities', 'AngularFormsModule', 'SampleFormDefinition']);
 
-app.controller('docController', ['$scope', 'Rest', 'Error',
-    function($scope, Rest, Error) {
+app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'SampleForm',
+    function($scope, Rest, Error, AngularForms, SampleForm) {
         
+        $scope.exampleFormReady =  false;
+
+        $scope.sources = [
+            { id: 'google', label: 'Google' },
+            { id: 'yahoo', label: 'Yahoo!' },
+            { id: 'bing', label: 'Bing' },
+            { id: 'facebook', label: 'Facebook' },
+            { id: 'word', label: 'A friend told me' },
+            { id: 'other', label: 'Other' }
+            ];
+
         // Get version info and download URL
         if ($scope.removeRepoLoad) {
             $scope.removeRepoLoad();
@@ -42,5 +53,11 @@ app.controller('docController', ['$scope', 'Rest', 'Error',
             .error( function(data, status, headers, config) {
                 Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
                 });
+        
+        $scope.showForm = function() {
+            var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm });       
+            form.inject();
+            $scope.exampleFormReady =  true;
+            }
 
         }]);
