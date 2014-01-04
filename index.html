@@ -26,7 +26,11 @@
                             href="https://github.com/chouseknecht/angular-forms.js"><i class="fa fa-github"></i> Repo</a>
                         <a class="btn btn-default btn-xs" role="button"
                             href="https://github.com/chouseknecht/angular-forms.js/fork"><i class="fa fa-github"></i> Fork Me!</a>
-                    </div>
+                        <a class="btn btn-default btn-xs" role="button"
+                            href="https://github.com/chouseknecht/angular-forms.js/star"><i class="fa fa-github"></i> Star</a>
+                    </div>     
+                    <a href="https://twitter.com/CHouseknecht" class="twitter-follow-button" data-show-count="false">Follow @chouseknecht</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                 </div>
             </div><!-- jumbotron -->
 
@@ -92,9 +96,9 @@ bower install angular-forms.js
                     
                         <h3 class="section-start">Getting Started</h3>
                         
-                        <p>In the following example sampleForm.js contains a JSON object representing a form. In myApp.js the Angular application is defined along with the controller. In the controller a call to AngularForms() turns the JSON into HTML, adding in CSS classes and Angular directives.</p>
+                        <p>In the following example sampleForm.js contains a JSON object representing a form. In myApp.js the Angular application is defined along with the controller. Within the controller the JSON from sampleFrom.js is passed to AngularForms(), which turns it into HTML. It also adds CSS classes and Angular directives, providing the form with styling and validtion.</p>
                         <p>The form is generated based on the properties and attributes found in the JSON object. The result is compiled and injected into the '#exampleFrom' DOM element. Click the button to see it in action.</p>
-                        <p><strong>Note</strong> the CSS we add to style a few items that come standard with a generated form. This style sheet is not currently included in the build, so you might want to copy it into your app and adjust as needed.</p>
+                        <p><strong>Note</strong> the included CSS to style some of the items that come standard with a generated form. This style sheet is not currently included in the build, so you might want to copy it into your app and adjust as needed.</p>
                         <tabset class="example">
                             <tab>
                             <tab-heading>HTML</tab-heading>
@@ -285,7 +289,96 @@ angular.module('SampleFormDefinition', [])
                         </div>
 
                         <h3 class="section-start">Reference</h3>
-                        <p>Create</p>
+                        <p>The following provides a list of the properties and attributes used to define JSON form objects.</p>
+                        
+                        <h4>Form properties</h4>
+                        Set the following top-level form attributes:
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Attribute</th>
+                                <th>Required?</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td class="text-center"><i class="fa fa-check"></i></td>
+                                    <td>String value providing the name attribute for the &lt;form&gth; element. This value can be used in Angular directives access the $pristine and $error field attributes. For example, if the form name property is set to 'registration', then $scope.registration.username.$pristine.</td>
+                                </tr>
+                                <tr>
+                                    <td>horizontal</td>
+                                    <td></td>
+                                    <td>Boolean value. When set to <em>true</em> the .form-horizontal class will be added to the &lt;form&gt; element, and the form will be constructed using the Twitter Bootsrap horizontal form layout.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Fields</h4>
+                        <p>Define a fields object and add an object for each field.</p>
+                        <p>Typically the name of the field object will match the $scope variable it represents. However, the ngModel attribute can be used to override this behavior.</p>
+<pre>
+'SampleForm', {
+        name: 'SampleForm',
+        horizontal: false, 
+        
+        fields: {
+            first_name: {
+                label: 'First Name',
+                srOnly: true,
+                type: 'text',
+                placeholder: 'First name',
+                required: true,
+                autocomplete: false,
+                helpText: 'Provide your first name.'
+                },
+            last_name: {
+                label: 'Last Name',
+                type: 'text',
+                srOnly: true,
+                placeholder: 'Last name',
+                required: true, 
+                autocomplete: false,
+                helpText: 'Provide your last name.'
+                },
+            ...
+</pre>
+                        <p>The following table lists each attribute used to define a field:</p>
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Attribute</th>
+                                <th>Required?</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>type</td>
+                                <td class="text-center"><i class="fa fa-check"></i></td>
+                                <td>One of the following string values:<br />
+                                    <ul>
+                                        <li>text</li>
+                                        <li>password</li>
+                                        <li>email</li>
+                                        <li>select</li>
+                                        <li>checkbox</li>
+                                        <li>radio</li>
+                                        <li>checkbox_group</li>
+                                        <li>radio_group</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>label</td>
+                                <td></td>
+                                <td>String value for the &ltlabel&gt; element.
+                                <p><strong>Note</strong> that labels are not required. However, horizontal forms obviously look better when labels are provided. The same is true with radio and checkbox fields, which are wrapped with a &lth;label&gt; element with label text appearing on the right.</p></td>
+                            </tr>
+                            </tbody>
+                        </table>
 
                     </div><!-- col-lg-12 -->
                 </div><!-- row -->

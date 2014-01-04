@@ -10,6 +10,10 @@
 @red: #dd1b16;
 @grey: #eeeeee;
 
+h4 {
+    margin-top: 25px;
+}
+
 .red { 
     color: @red;
 }
@@ -21,10 +25,10 @@
     }
     .download {
         margin-top: 30px;
+        margin-bottom: 50px;
     }
     .github-info {
-        font-size: 14px; 
-        margin-top: 50px;
+        font-size: 14px;
         .btn {
             margin-left: 15px
         }
@@ -45,6 +49,13 @@
     padding-top: 20px;
     padding-bottom: 20px;
     background-color: @grey;
+}
+
+.github-info {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 15px;
+    padding-top: 4px;
 }
 
 /* Example form styles */
@@ -68,7 +79,6 @@ input:required:focus {
     display: inline-block;
     font-size: 12px;
 }
-
 
 /* Angular ng-cloak directive */
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
