@@ -312,18 +312,21 @@ angular.module('SampleFormDefinition', [])
                                     <td></td>
                                     <td>Boolean value. When set to <em>true</em> the .form-horizontal class will be added to the &lt;form&gt; element, and the form will be constructed using the Twitter Bootsrap horizontal form layout.</td>
                                 </tr>
+                                <tr>
+                                    <td>inputColSize</td>
+                                    <td></td>
+                                    <td>String containing a valid Twitter Bootstrap col-sm-* value. Use to provide an override value for the right side or input side of a horizontal form. By default the left side or label side will be set to 'col-sm-2' and the right side or input side to 'col-sm-10'. If inputColSize is set, the width for the left side will be calculate as the difference between 12 and the provided column width.</td>
                             </tbody>
                         </table>
 
                         <h4>Fields</h4>
-                        <p>Define a fields object and add an object for each field.</p>
-                        <p>Typically the name of the field object will match the $scope variable it represents. However, the ngModel attribute can be used to override this behavior.</p>
+                        <p>Define a <em>fields</em> object and add an object for each field.</p>
 <pre>
 'SampleForm', {
         name: 'SampleForm',
         horizontal: false, 
         
-        fields: {
+        <span class="highlight">fields:</span> {
             first_name: {
                 label: 'First Name',
                 srOnly: true,
@@ -344,7 +347,20 @@ angular.module('SampleFormDefinition', [])
                 },
             ...
 </pre>
-                        <p>The following table lists each attribute used to define a field:</p>
+                        <p>By default the name of the field object will be used as the data model for the associated input element. However, this can be overriden by providing an ngModel attribute. In the example below the ngModel value of 'user.username will be used as the data model, overriding the default of 'username'.</p>
+<pre>
+username: {
+    label: 'Username',
+    type: 'text',
+    <span class="highlight">ngModel: 'user.username'</span>,
+    srOnly: true,
+    placeholder: 'Username',
+    required: true, 
+    autocomplete: false,
+    helpText: 'Provide your username.'
+    },
+</pre>                        
+                        <p>The following table lists each attribute that can be used to define a field:</p>
 
                         <table class="table table-hover">
                             <thead>
@@ -375,7 +391,39 @@ angular.module('SampleFormDefinition', [])
                                 <td>label</td>
                                 <td></td>
                                 <td>String value for the &ltlabel&gt; element.
-                                <p><strong>Note</strong> that labels are not required. However, horizontal forms obviously look better when labels are provided. The same is true with radio and checkbox fields, which are wrapped with a &lth;label&gt; element with label text appearing on the right.</p></td>
+                                <p><strong>Note</strong> that labels are not required. However, horizontal forms obviously look better when labels are provided. The same is true with radio and checkbox fields, which are wrapped with a &lt;label&gt; element with label text appearing on the right.</p></td>
+                            </tr>
+                            <tr>
+                                <td>srOnly</td>
+                                <td></td>
+                                <td>Boolean value. When set to true the <em>sr-only</em> class will be added to the &lt;label&gt; element causing the label to be hidden for all but screen readers.</td>
+                            </tr>
+                            <tr>
+                                <td>class</td>
+                                <td></td>
+                                <td>String containing one or more class values to be added to the input element.</td>
+                            </tr>
+                            <tr>
+                                <td>required</td>
+                                <td></td>
+                                <td>Boolean value. When set to true the <em>required</em> attribute will be added to the input element.</td>
+                            </tr>
+                            <tr>
+                                <td>autocomplete</td>
+                                <td></td>
+                                <td>String containing <em>on</em> or <em>off</em>. Applies to user information fields such as username, password, first name, last name, etc. When set to <em>on</em> the browser will attempt to populate the field. For increased security it is recommended that autocomplete be set to <em>off</em> for username and password fields.</td>
+                            </tr>
+                            <tr>
+                                <td>helpText</td>
+                                <td></td>
+                                <td><p>String value providing a description for the input field. Value will be placed in a &lt;div&gt; element below the input field and given a class of <em>help-text</em>.</p>
+<pre>
+&lt;label class="sr-only" for="first_name"&gt;First Name&lt;/label&gt;
+&lt;input type="text" class="form-control" name="first_name" ng-model="first_name" required &gt;
+<span class="highlight">&lt;div class="help-text"&gt;Please provide your first name&lt;/div&gt;</span>
+&lt;div class="error ng-hide" ng-show="!SampleForm.first_name.$pristine &amp;&amp; SampleForm.first_name.$error.required"&gt;A value is required.&lt;/div&gt;
+</pre>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -391,7 +439,7 @@ angular.module('SampleFormDefinition', [])
                             <div class="copyright">
                                 Designed and built by <a href="http://twitter.com/chouseknecht">@chouseknecht</a><br \>
                                 Code and documentation licensed under <a href="http://opensource.org/licenses/MIT">The MIT License</a><br />
-                                Cow logo crafted by <a href="http://www.designatorium.com">Designatorium</a>
+                                Zany cow logo crafted by <a href="http://www.designatorium.com">Designatorium</a>
                             </div>
                         </div>
                         <div class="col-lg-3 col-lg-offset-3 logo"><span class="red">A</span>ngularF<img class="cow" src="/docsite/img/redcow.png" >rms</div>
