@@ -172,6 +172,15 @@ myApp.controller('myController', ['$scope', 'AngularForms', 'SampleForm',
     
     var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
     form.inject();
+
+    $scope.sources = [
+            { id: 'google', label: 'Google' },
+            { id: 'yahoo', label: 'Yahoo!' },
+            { id: 'bing', label: 'Bing' },
+            { id: 'facebook', label: 'Facebook' },
+            { id: 'word', label: 'A friend told me' },
+            { id: 'other', label: 'Other' }
+            ];
     
     }]);
 </pre>
@@ -347,6 +356,7 @@ angular.module('SampleFormDefinition', [])
                 },
             ...
 </pre>
+                        <h5>Data model</h5>
                         <p>By default the name of the field object will be used as the data model for the associated input element. However, this can be overriden by providing an ngModel attribute. In the example below the ngModel value of 'user.username will be used as the data model, overriding the default of 'username'.</p>
 <pre>
 username: {
@@ -359,8 +369,9 @@ username: {
     autocomplete: false,
     helpText: 'Provide your username.'
     },
-</pre>                        
-                        <p>The following table lists each attribute that can be used to define a field:</p>
+</pre>                  
+                        <h5>Input field attributes</h5>
+                        <p>The following lists the attributes used to define an input field:</p>
 
                         <table class="table table-hover">
                             <thead>
@@ -401,7 +412,12 @@ username: {
                             <tr>
                                 <td>class</td>
                                 <td></td>
-                                <td>String containing one or more class values to be added to the input element.</td>
+                                <td>String containing one or more class values to be added to the &lt;input&gt; or &lt;select&gt; element.</td>
+                            </tr>
+                            <tr>
+                                <td>labelClass</td>
+                                <td></td>
+                                <td>String containing one or more class values to be added to the &lt;label&gt; element.</td>
                             </tr>
                             <tr>
                                 <td>required</td>
@@ -425,10 +441,179 @@ username: {
 </pre>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>ng Directives</td>
+                                <td></td>
+                                <td>Any Angular directive in the field object will be included in the HTML. The key will be the directive name in camel case. For example, enter the directive 'ng-show' as 'ngShow'. The value is a string containing the exact text to be assigned to the ng attribute. <strong>Note</strong> that directives are not validated by AngularForms. They're included in the generated HTML exactly as they appear in the field object.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>groupClass</td>
+                                <td></td>
+                                <td>A string of one or more classes to be assigned to the field's parent &lt;div&gt; element. The parent is the <em>.form-group</em> wrapped around the label and input field.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ngShow<br />ngHide</td>
+                                <td></td>
+                                <td><p>The ngShow and ngHide are assumed to apply to both the label and field element. So if the field is to be hidden from view, the label will be hidden as well<p>
+                                <p>With the exception of checkboxes an radio buttons, the directives are placed on the field's parent &lt;div&gt; element and not on the field. This means they are added to the <em>.form-group</em> &lt;div&gt; and will affect the label and input field.</p>
+                                <p>For checkboxes and radio buttons the directives are added to the &lt;label&gt; element, which is wrapped around the &lt;input&gt; input element.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>placeholder</td>
+                                <td></td>
+                                <td>String containg helpful or descriptive text to direct the user. Will be used in the field's placeholder attribute.</td>
+                            </tr>
                             </tbody>
                         </table>
 
+                        <h5>Select fields</h5>    
+                        <p>In addtion to the those used to define an input field, &lt;select&gt; elements add the following attributes:</p>
+                    
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Attribute</th>
+                                <th>Required?</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>optionArray</td>
+                                <td class="text-center"><i class="fa fa-check"></i></td>
+                                <td><p>The scope variable containing an array of objects to be passed to ng-options. Each object in the array will have an <em>id</em> and a <em>label</em> key. In the example form above, we set optionArray to 'sources'. We then define $scope.source as:</p>
+<pre>
+$scope.sources = [
+    { id: 'google', label: 'Google' },
+    { id: 'yahoo', label: 'Yahoo!' },
+    { id: 'bing', label: 'Bing' },
+    { id: 'facebook', label: 'Facebook' },
+    { id: 'word', label: 'A friend told me' },
+    { id: 'other', label: 'Other' }
+    ];
+</pre>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>placeholder</td>
+                                <td></td>
+                                <td>String value containing a hint or text to direct the user. Used to construct an &lt;option&gt; element where the value is &quot;&quot; and the label is the string value. Will appear at the top of the options list, and will be automatically displayed as the selected option until the user makes a choice.<td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <h5>Checkbox groups</h5>    
+                        <p>Use a checkbox group to display a set of related inline checkboxes. Set the <em>checkbox</em> key to an array of objects representing the checkboxes. The following shows an example:</p>
+<pre>
+cb_group_example: {
+    label: 'Options',
+    groupClass: 'options-group',
+    helpText: "Put related checkboxes inline together using the \'checkbox_group\' type. Click Option 1 to see additional options.",
+    type: 'checkbox_group',
+    checkboxes: [
+        { model: "option1", label: "Option 1" },
+        { model: "option2", label: "Option 2" }, 
+        { model: "option3", label: "Option 3", ngShow: "option1" },
+        { model: "option4", label: "Option 4", ngShow: "option1" }
+        ]
+    }
+}
+</pre>
+                        <p><strong>Note</strong> the <em>model</em> and <em>label</em> keys are required in a checkbox array object. The model value is a string representing the field $scope variable, and the label contains a string that will be used in the <em>label</em> element.</p>
+
+                        <p>Any of the attributes described above in <em>Input fields</em> can be included in a checkbox array object. Of course certain options don't make sense and should not be used. All supplied ng direcives will be included in the generated HTML.</p>
+
+                        <h5>Radio button groups</h5>    
+                        <p>Use a radio button group to display a set of related inline radio buttons. Set the <em>options</em> key to an array of objects representing the radio buttons. The following shows an example:</p>
+
+<pre>
+rb_group_example: {
+    label: 'Radio Group',
+    groupClass: 'radio-options-group',
+    helpText: "Show radios in an inline group using the \'radio_group\' type.",
+    type: 'radio_group',
+    options: [
+        { label: 'Radio option 1', value: 'one' },
+        { label: 'Radio option 2', value: 'two' },
+        { label: 'Radio option 3', value: 'three' } 
+        ]
+    }
+}
+</pre>
+
+                    <p>Each radio button object in the options array requires a <em>label</em> and a <em>value</em> key. The label is the string value used in the &lt;label&gt; element. The value is the value to be assigned to the model when the radio is selected.<p>
+                    
+                    <p>Just as with a standard input field, the model is assumed to be the field key for the radio group. In the above example <em>rb_group_example</em> will be used as the model. Provide an <em>ngModel</em> key to override.</p>
+
+                    <p>Just as with checkboxes groups, add keys from the list of <em>Input fields</em> attributes above. All ng directives will be included in the generated HTML.</p>
+
+                    <h4>Buttons</h4>
+                    <p>Similar to defining fields, for form buttons create a <em>button</em> object and add to it an object for each button. Here's an example:</p>
+<pre>
+buttons: {
+    save: {
+        label: "Save",
+        icon: "fa-check",
+        ngClick: "save()",
+        'class': 'btn-primary btn-sm'
+        },
+    reset: {
+        label: "Reset",
+        icon: "fa-minus-circle",
+        ngClick: "reset()",
+        'class': 'btn-default btn-sm'
+        }
+    }
+</pre>
+                    <h5>Save and reset buttons</h5>
+                    
+                    <p>If the button key name is <em>save</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state or when the form contains an error. After a change is made to the form and there are no errors, the save button will be enabled.</p>
+                    
+                    <p>If the button key name is <em>reset</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state. Once a change is made to the form, the button will be enabled.</p>
+
+                    <h5>Button attributes</h5>
+                    <p>Use the following attributes to construct a button object:</p>
+                    
+                    <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="col-lg-2">Attribute</th>
+                        <th>Required?</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>icon</td>
+                        <td></td>
+                        <td>String containing <a href="http://fontawesome.io/icons/">FontAwesome</a> <em>fa-</em> class. The icon will appear inside the button to the left of any label text. FontAwesome size classes (i.e. fa-lg, fa-2x, etc.) can be included aa well.</td>
+                    </tr>
+                    <tr>
+                        <td>label</td>
+                        <td></td>
+                        <td>String value displayed inside the &lt;button&gt; element.</td>
+                    </tr>
+                    <tr>
+                        <td>class</td>
+                        <td></td>
+                        <td>String containing a class or a list of classes to be added to the &lt;button&gt; element.</td>
+                    </tr>
+                    <tr>
+                        <td>ng Directives</td>
+                        <td></td>
+                        <td>Any Angular directive in the field object will be included in the HTML. The key will be the directive name in camel case. For example, enter the directive 'ng-click' as 'ngClick'. The value is a string containing the exact text to be assigned to the ng attribute. <strong>Note</strong> that directives are not validated by AngularForms. They're included in the generated HTML exactly as they appear in the field object.</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    
+                    <h4>Error handling</h4>
+                    <p>To be documented...</p>
+
                     </div><!-- col-lg-12 -->
+                
                 </div><!-- row -->
             </div><!-- container -->
             
