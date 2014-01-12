@@ -27,11 +27,33 @@
 
 'use strict';
 
-angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition', 'CheckBoxFormDefinition', 'RadioFormDefinition'])
-    .controller('sampleController', ['$scope', 'AngularForms', 'SampleForm', 'CheckBoxForm', 'RadioForm',
-    function($scope, AngularForms, SampleForm, CheckBoxForm, RadioForm) {
+angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'SampleFormDefinition', 'CheckBoxFormDefinition', 'RadioFormDefinition',
+    'RobotFormDefinition'])
+    
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+        .when('/', { 
+            templateUrl: 'partials/main.html',
+            controller: 'sampleController'
+            })
+        .when('/robots', {
+            templateUrl: 'partials/robot.html',
+            controller: 'robotController'
+            })
+        .otherwise({
+            redirectTo: '/'
+            });
+        }])
+
+    .controller('sampleController', ['$scope', '$rootScope', '$location', 'AngularForms', 'SampleForm', 'CheckBoxForm', 'RadioForm',
+    function($scope, $rootScope, $location, AngularForms, SampleForm, CheckBoxForm, RadioForm) {
+        
+        $scope.location = $location.path();
+        
+        //Inject the sample form
         var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
         form.inject();
+        $scope.reset = function(){ console.log('here!'); form.resetForm(); }
         
         //Copy of our sample form, make a couple quick changes and render as a horizontal form.
         var horizontal = angular.copy(SampleForm); 
@@ -49,8 +71,10 @@ angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition', 'Chec
                 horizontal.fields[fld].ngRequired = "referral_source_horizontal == 'other'";
             }
         }
+        horizontal['buttons']['reset'].ngClick = 'horizontalReset()';
         var horizontalForm = AngularForms({ scope: $scope, targetId: 'horizontalForm', form: horizontal });       
         horizontalForm.inject();
+        $scope.horizontalReset = function() { horizontalForm.resetForm(); }
 
         $scope.sources = [
             { id: 'google', label: 'Google' },
@@ -60,11 +84,6 @@ angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition', 'Chec
             { id: 'word', label: 'A friend told me' },
             { id: 'other', label: 'Other' }
             ];
-
-        $scope.sourceSelected = function() {
-            console.log("You selected: ");
-            console.log($scope.referal_source);
-            }
 
         var cCheckboxForm = AngularForms({ scope: $scope, targetId: 'checkboxForm', form: CheckBoxForm });       
         cCheckboxForm.inject();
@@ -95,12 +114,54 @@ angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition', 'Chec
                 hRadio['fields'][fld].ngModel = hRadio['fields'][fld].ngModel + '_horizontal';
             }
             else {
-                console.log('setting ngModel for ' + fld);
                 hRadio['fields'][fld].ngModel = fld + '_horizontal';
             }  
         }
         delete hRadio['fields']['radio_group'].groupClass;
         var hRadioForm = AngularForms({ scope: $scope, targetId: 'radioHorizontalForm', form: hRadio });       
         hRadioForm.inject();
+
+        }])
+
+    .controller('robotController', ['$scope', '$rootScope', '$location', 'AngularForms', 'RobotForm',
+    function($scope, $rootScope, $location, AngularForms, RobotForm) {
         
+        $scope.location = $location.path();
+        $scope['order_complete'] = false;
+
+        //Inject the robot order form
+        var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });       
+        form.inject();
+        form.resetForm();
+
+        $scope.reset = function() { form.resetForm(); }
+        
+        $scope.save = function() {
+            var errors = 0;
+            form.clearErrors(); // clear custom error messages
+            if ($scope.arms > 2 && $scope.legs < 3) {
+                $scope[RobotForm.name + '_legs_error'] = 'More than 2 arms requires a minimum of 3 legs';
+                errors++;
+            }
+            if ($scope.legs < 3 && $scope.head == 'large') {
+                $scope[RobotForm.name + '_head_error'] = 'A large head requires a minimum of 3 legs';
+                errors++;
+            }
+            if ($scope.name.toLowerCase() == 'bob' || $scope.name.toLowerCase() == 'dave' || $scope.name.toLowerCase() == 'mike') {
+                $scope[RobotForm.name + '_name_error'] = 'That name is already taken';
+                errors++;
+            }
+            if (errors == 0) {
+                alert('Congratuations! We\'re building your robot.');
+            }
+            }
+
         }]);
+
+
+
+
+
+
+
+
