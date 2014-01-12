@@ -23,6 +23,7 @@
                 <div class="col-lg-12">
                 
                     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                      <div class="container">
                       <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse-me">
                           <span class="icon-bar"></span>
@@ -35,6 +36,7 @@
                           <li><a href="/index.html">Getting Started</a></li>
                           <li class="active"><a href="#">Reference</a></li>
                         </ul>
+                      </div>
                       </div>
                     </nav>
                     
@@ -139,11 +141,13 @@ username: {
                                     <li>text</li>
                                     <li>password</li>
                                     <li>email</li>
+                                    <li>number</li>
                                     <li>select</li>
                                     <li>checkbox</li>
                                     <li>radio</li>
                                     <li>checkbox_group</li>
                                     <li>radio_group</li>
+                                    <li>textarea</li>
                                 </ul>
                             </td>
                         </tr>
@@ -217,10 +221,13 @@ username: {
                         </tr>
                         </tbody>
                     </table>
+                    
+                    <h5>Number fields</h5>
+                    
 
                     <h5>Select fields</h5>    
                     <p>In addtion to the those used to define an input field, &lt;select&gt; elements add the following attributes:</p>
-                
+                        
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -233,7 +240,7 @@ username: {
                         <tr>
                             <td>optionArray</td>
                             <td class="text-center"><i class="fa fa-check"></i></td>
-                            <td><p>The scope variable containing an array of objects to be passed to ng-options. Each object in the array will have an <em>id</em> and a <em>label</em> key. In the example form above, we set optionArray to 'sources'. We then define $scope.source as:</p>
+                            <td><p>The scope variable containing an array of objects to be passed to ng-options. Each object in the array will have an <em>id</em> and a <em>label</em> key. In the Gettting Started example, we set optionArray to 'sources'. We then define $scope.sources as:</p>
 <pre>
 $scope.sources = [
     { id: 'google', label: 'Google' },
