@@ -152,6 +152,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'SampleFormDefiniti
         var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });       
         form.inject();
         form.resetForm();
+        console.log('head_size: ' + $scope.head_size);
 
         $scope.reset = function() { form.resetForm(); }
         
@@ -160,16 +161,23 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'SampleFormDefiniti
             form.clearErrors(); // clear custom error messages
             if ($scope.arms > 2 && $scope.legs < 3) {
                 $scope[RobotForm.name + '_legs_error'] = 'More than 2 arms requires a minimum of 3 legs';
+                $scope[RobotForm.name]['legs'].$pristine = false;
+                $scope[RobotForm.name]['legs'].$dirty = true;
                 errors++;
             }
-            if ($scope.legs < 3 && $scope.head == 'large') {
-                $scope[RobotForm.name + '_head_error'] = 'A large head requires a minimum of 3 legs';
+            if ($scope.legs < 3 && $scope.head_size == 'large') {
+                $scope[RobotForm.name + '_head_size_error'] = 'A large head requires a minimum of 3 legs';
+                $scope[RobotForm.name]['head_size'].$pristine = false;
+                $scope[RobotForm.name]['head_size'].$dirty = true;
                 errors++;
             }
             if ($scope.name.toLowerCase() == 'bob' || $scope.name.toLowerCase() == 'dave' || $scope.name.toLowerCase() == 'mike') {
                 $scope[RobotForm.name + '_name_error'] = 'That name is already taken';
                 errors++;
             }
+            //if (!$scope.$$phase) {
+            //    $scope.$digest();
+            //}
             if (errors == 0) {
                 alert('Congratuations! We\'re building your robot.');
             }

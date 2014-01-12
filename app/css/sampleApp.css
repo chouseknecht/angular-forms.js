@@ -21,12 +21,12 @@ select:required:focus, input:required:focus {
     display: inline-block;
     color: red;
     font-size: 12px;
-    padding-left: 3px;
 }
 
 .help-text {
     display: inline-block;
     font-size: 12px;
+    padding-right 3px;
 }
 
 .options-group {
