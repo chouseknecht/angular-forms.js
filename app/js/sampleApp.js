@@ -45,10 +45,30 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'SampleFormDefiniti
             });
         }])
 
+    .run(['$location', '$rootScope', function($location, $rootScope) {
+        
+        $rootScope.$on("$routeChangeSuccess", function(event, next, current) {
+            // When the path changes, update the navbar
+            var path = $location.path();
+            $('.navbar ul li a').each(function(idx) {
+                var href = $(this).attr('href').replace(/^#/,'');
+                if (href == path) {
+                    $(this).parent().addClass('active');
+                }
+                else {
+                    $(this).parent().removeClass('active');
+                }
+                });
+            });
+        
+        }])
+    
+    .controller('navbarController', ['$scope', '$location', function($scope, $location) {
+        $scope.location = $location.path();
+        }])
+
     .controller('sampleController', ['$scope', '$rootScope', '$location', 'AngularForms', 'SampleForm', 'CheckBoxForm', 'RadioForm',
     function($scope, $rootScope, $location, AngularForms, SampleForm, CheckBoxForm, RadioForm) {
-        
-        $scope.location = $location.path();
         
         //Inject the sample form
         var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
@@ -126,7 +146,6 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'SampleFormDefiniti
     .controller('robotController', ['$scope', '$rootScope', '$location', 'AngularForms', 'RobotForm',
     function($scope, $rootScope, $location, AngularForms, RobotForm) {
         
-        $scope.location = $location.path();
         $scope['order_complete'] = false;
 
         //Inject the robot order form
