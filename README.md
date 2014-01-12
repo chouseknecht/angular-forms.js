@@ -5,12 +5,17 @@ Turn forms into reusable JSON objects. With angular-forms.js concentrate on buil
 
 Generated forms are built with Twitter Bootstrap elements baked in, so you don't even have to think about styling. Indicate the desired form style, basic or horizontal, in the JSON from definition, and the form is generated accordingly.
 
+For full documentation and help getting started: [http://angularforms.org](http://www.angularforms.org)
+
+
 Requirements
 ============
 
 * [AngularJS 1.2.6+](http://www.angularjs.org)
 * [Twitter Bootstrap 3.0.3+](http://www.getbootstrap.com)
 * [FontAwesome 4.0.3+](http://www.fontawesome.io) 
+* [JQuery 2.0.3+](http://www.jqueryui.com)
+* [JQuery UI 1.10.3+](http://www.jqueryui.com)
 
 Note that Angular-forms.js is being developed with the latest stable versions of any required packages. It is quite possible that earlier version will work just fine.
 
@@ -25,11 +30,16 @@ Steps to install with bower:
     bower install bootstrap
     bower install angular-forms.js
     bower install components-font-awesome
+    bower install jquery
+    bower install jqueryui
 
 Add the follwing stylesheets and scripts to your app: 
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.min.css" /> 
+
+    <script src="/bower_components/jquery/jquery.min.js"></script>
+    <script src="/bower_components/jqueryui/ui/minified/jquery-ui.min.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script> 
     <script src="/bower_components/angular-forms.js/angular-forms.min.js"></script>
 
