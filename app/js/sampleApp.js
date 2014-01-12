@@ -175,11 +175,9 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'SampleFormDefiniti
                 $scope[RobotForm.name + '_name_error'] = 'That name is already taken';
                 errors++;
             }
-            //if (!$scope.$$phase) {
-            //    $scope.$digest();
-            //}
             if (errors == 0) {
-                alert('Congratuations! We\'re building your robot.');
+                // wait a half tick so screen can repaint (showing error messages cleared) before displaying alert dialog
+                setTimeout(function() { alert('Congratuations! We\'re building your robot.') }, 500);
             }
             }
 
