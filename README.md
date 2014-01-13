@@ -1,11 +1,12 @@
 angular-forms
 =============
 
-Turn forms into reusable JSON objects. With angular-forms.js concentrate on building your app and not all the details of creating and validating forms. Let angular-forms.js generate the HTML, CSS and validation for you. 
+AngularForms makes it easy to build forms for your AngularJS app. Create forms as JSON objects, and let AngularForms generate, compile and inject 
+the HTML into your app, complete with Angular directives, validation and Twitter Bootstrap styling.
 
-Generated forms are built with Twitter Bootstrap elements baked in, so you don't even have to think about styling. Indicate the desired form style, basic or horizontal, in the JSON from definition, and the form is generated accordingly.
+For full documentation and help getting started visit [http://angularforms.org](http://www.angularforms.org)
 
-For full documentation and help getting started: [http://angularforms.org](http://www.angularforms.org)
+v1.0.4 Beta release 
 
 
 Requirements
