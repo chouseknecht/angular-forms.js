@@ -55,10 +55,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        <h2>Getting Started</h2>
                         <h3>Requirements</h3>
                         <p>Before using AngularForms, add the following to your project:</p>
                         <ul>
                         <li><a href="http://jquery.com">JQuery 1.10.2+</a></li>
+                        <li><a href="http://jqueryui.com">JQueryUI 1.10.3+</a></li>
                         <li><a href="http://angularjs.org">AngularJS 1.2.6+</a></li>
                         <li><a href="http://fontawesome.io">FontAwesome 4.0.3+</a></li>
                         <li><a href="http://getbootstrap.com">Twitter Bootstrap style sheet 3.0.3+</a></li>
@@ -68,6 +70,7 @@
 bower install angular
 bower install bootstrap
 bower install jquery
+bower install jqueryui
 bower install components-font-awesome
 </pre>
                         <h3 class="section-start">Download AngularForms</h3>
@@ -97,6 +100,7 @@ bower install angular-forms.js
     &lt;title&gt;AngularForms | angular-forms.js. Web forms made simple.&lt;/title&gt;
     &lt;link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" /&gt;
     &lt;link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.min.css" /&gt;
+    &lt;link rel="stylesheet" href="/bower_components/jqueryui/themes/overcast/jquery-ui.min.css" /&gt;
     &lt;link rel="stylesheet" href="/css/myStyles.css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -106,6 +110,7 @@ bower install angular-forms.js
         &lt;div id="insert-form-here">&lt;/div&gt;
     &lt;/div&gt;
     &lt;script src="/bower_components/jquery/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script src="/bower_components/jqueryui/ui/minified/jquery-ui.min.js"&gt;&lt;/script&gt;
     &lt;script src="/bower_components/angular/angular.min.js"&gt;&lt;/script&gt;
     &lt;script src="/js/myApp.js"&gt;&lt;/script&gt;
     &lt;script src="/bower_components/angular-forms.js/angular-forms.min.js"&gt;&lt;/script&gt;
@@ -114,9 +119,28 @@ bower install angular-forms.js
                     
                         <h3 class="section-start">Example</h3>
                         
-                        <p>In the following example sampleForm.js contains a JSON object representing a form. In myApp.js the Angular application is defined along with the controller. Within the controller the JSON from sampleFrom.js is passed to AngularForms(), which turns it into HTML. It also adds CSS classes and Angular directives, providing the form with styling and validtion.</p>
-                        <p>The form is generated based on the properties and attributes found in the JSON object. The result is compiled and injected into the '#exampleFrom' DOM element. Click the button to see it in action.</p>
-                        <p><strong>Note</strong> the included CSS to style some of the items that come standard with a generated form. This style sheet is not currently included in the build, so you might want to copy it into your app and adjust as needed.</p>
+                        <p>In the following example sampleForm.js contains a JSON object called SampleForm that represents an HTML form. Click the <em>Show Form</em> button below, and the SampleForm object is turned into HTML, compled and injected into this page.</p>
+                        
+                        <div class="example">
+                            <p>Click the <em>Show Form</em> button to see the sample form generated and inserted into the DOM below.</p>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="showForm()">Show Form</button>
+                            <div class="example" ng-show="exampleFormReady">
+                                <h4>Example Form</h4>
+                                <div class="well">
+                                    <div id="exampleForm"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4>How does it work?</h4>
+                        <p>In sampleForm.js angular.module is called to return an object named SampleForm. SampleForm is the JSON representation of the HTML we want AngularForms to generate. SampleForm containes form properties (name and horizontal) an object called <em>fields</em> and an object called <em>buttons</em>.</p>
+
+                        <p>The <em>fields</em> object contains an object for each input field on the final form. For example, the <em>First name</em> input field is reprented in the JSON as fields.first_name. The fields.first_name object contains key:value pairs representing the attributes the input field will receive.</p>
+
+                        <p>In myApp.js the Angular application is defined along with a controller called <em>myController</em>. Within the controller the JSON object representing the form is passed to AngularForms(), which turns it into HTML. It also adds CSS classes and Angular directives, providing the form with styling and validtion. The form is generated according to the key:value properties in each field object. The result is compiled and injected into the '#exampleForm' DOM element.<p>
+
+                        <p><strong>Note</strong> the CSS stylesheet included in this example is not currently included in the build. If you're downlading the zip file to install AngularForms, you may want to copy it into your app and adjust as needed. If you're using the source from Github or via Bower, see the stylesheet in the sample app.</p>
+                        
                         <tabset class="example">
                             <tab>
                             <tab-heading>HTML</tab-heading>
@@ -212,7 +236,7 @@ myApp.controller('myController', ['$scope', 'AngularForms', 'SampleForm',
 angular.module('SampleFormDefinition', [])
     .value(
     'SampleForm', {
-        name: 'SampleForm',                    // Required. Used to set <form> id attribute
+        name: 'SampleForm',                    // Required. Used to set &lt;form&gt; id attribute
         horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
         
         fields: {
@@ -261,8 +285,7 @@ angular.module('SampleFormDefinition', [])
                 type: 'password', 
                 length: 16, 
                 autocomplete: false,
-                required: true,
-                confirm: true      //generate a confirmation password field. associate the two and add validation directive 
+                required: true
                 },
             referral_source: {
                 label: 'Referral source', 
@@ -288,7 +311,7 @@ angular.module('SampleFormDefinition', [])
         buttons: {
             save: {
                 label: "Save",
-                icon: "fa-check",
+                icon: "fa-refresh",
                 ngClick: "save()",
                 'class': 'btn-primary btn-sm'
                 },
@@ -303,18 +326,6 @@ angular.module('SampleFormDefinition', [])
 </pre>
                             </tab>
                         </tabset>
-                        
-                        <div class="example">
-                            <p>Click the <em>Show Form</em> button to see the sample form generated and inserted into the DOM below.</p>
-                            <button type="button" class="btn btn-primary btn-sm" ng-click="showForm()">Show Form</button>
-                            <div class="example" ng-show="exampleFormReady">
-                                <h4>Example Form</h4>
-                                <div class="well">
-                                    <div id="exampleForm"></div>
-                                </div>
-                            </div>
-                        </div>
-
                     
                     </div><!-- col-lg-12 -->
                 

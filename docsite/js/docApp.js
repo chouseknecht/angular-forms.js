@@ -15,6 +15,8 @@ var app = angular.module('docApp', ['RestService', 'Utilities', 'AngularFormsMod
 app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'SampleForm',
     function($scope, Rest, Error, AngularForms, SampleForm) {
         
+        var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm });
+        
         $scope.exampleFormReady =  false;
 
         $scope.sources = [
@@ -54,10 +56,12 @@ app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sam
                 Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
                 });
         
-        $scope.showForm = function() {
-            var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm });       
+        $scope.showForm = function() {  
             form.inject();
             $scope.exampleFormReady =  true;
             }
+
+        $scope.save = function() { alert('Your changes were saved!'); }
+        $scope.reset = function() { form.clearErrors(); form.resetForm(); }
 
         }]);
