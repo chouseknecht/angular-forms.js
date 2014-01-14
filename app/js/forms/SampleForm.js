@@ -65,6 +65,16 @@ angular.module('SampleFormDefinition', [])
                 required: true,
                 confirm: true      //generate a confirmation password field. associate the two and add validation directive 
                 },
+            employees: {
+                label: 'Employee count', 
+                srOnly: true, 
+                placeholder: 'Number of employees',
+                type: 'number',
+                helpText: 'How many employees do you have?',
+                required: true,
+                ngMinimum: 0,
+                ngMaximum: 200
+                },
             referral_source: {
                 label: 'Referral source', 
                 srOnly: true,
@@ -72,8 +82,7 @@ angular.module('SampleFormDefinition', [])
                 type: 'select',
                 required: true,
                 helpText: 'How did you hear about us?',
-                optionArray: 'sources',
-                ngChange: "sourceSelected()"
+                optionArray: 'sources'
                 },
             other_source: {
                 label: 'Other',
@@ -83,6 +92,13 @@ angular.module('SampleFormDefinition', [])
                 ngShow: "referral_source == 'other'",
                 ngRequired: "referral_source == 'other'",
                 helpText: 'What is the Other source?'
+                },
+            about_you: {
+                label: 'About you',
+                srOnly: true, 
+                placeholder:'About you', 
+                type: 'textarea',
+                helpText: 'Tell us a bit about yourself'
                 }
             },
 
@@ -95,7 +111,7 @@ angular.module('SampleFormDefinition', [])
                 },
             reset: {
                 label: "Reset",
-                icon: "fa-minus-circle",
+                icon: "fa-rotate-left",
                 ngClick: "reset()",
                 'class': 'btn-default btn-sm'
                 }
