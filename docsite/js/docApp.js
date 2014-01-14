@@ -61,7 +61,15 @@ app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sam
             $scope.exampleFormReady =  true;
             }
 
-        $scope.save = function() { alert('Your changes were saved!'); }
-        $scope.reset = function() { form.clearErrors(); form.resetForm(); }
+        $scope.save = function() {
+            alert('Your changes were saved!');
+            form.clearErrors();
+            form.resetForm;
+            }
+        
+        $scope.reset = function() {
+            form.clearErrors();
+            form.resetForm();
+            }
 
         }]);

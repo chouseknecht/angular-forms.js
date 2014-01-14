@@ -55,7 +55,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
+                        
                         <h2>Getting Started</h2>
+                        
                         <h3>Requirements</h3>
                         <p>Before using AngularForms, add the following to your project:</p>
                         <ul>
@@ -135,7 +137,7 @@ bower install angular-forms.js
                         <h4>How does it work?</h4>
                         <p>In sampleForm.js angular.module is called to return an object named SampleForm. SampleForm is the JSON representation of the HTML we want AngularForms to generate. SampleForm containes form properties (name and horizontal) an object called <em>fields</em> and an object called <em>buttons</em>.</p>
 
-                        <p>The <em>fields</em> object contains an object for each input field on the final form. For example, the <em>First name</em> input field is reprented in the JSON as fields.first_name. The fields.first_name object contains key:value pairs representing the attributes the input field will receive.</p>
+                        <p>The <em>fields</em> object contains an object for each input field on the final form. For example, the <em>First name</em> input field is reprented in the JSON as fields.first_name. The fields.first_name object contains key:value pairs representing the attributes the input field will receive. You'll see that buttons work exactly the same way.</p>
 
                         <p>In myApp.js the Angular application is defined along with a controller called <em>myController</em>. Within the controller the JSON object representing the form is passed to AngularForms(), which turns it into HTML. It also adds CSS classes and Angular directives, providing the form with styling and validtion. The form is generated according to the key:value properties in each field object. The result is compiled and injected into the '#exampleForm' DOM element.<p>
 
@@ -327,6 +329,18 @@ angular.module('SampleFormDefinition', [])
                             </tab>
                         </tabset>
                     
+                        <h3 class="section-start">How do I learn more?</h3>
+                        <p>The above example will get you started building a simple form. Visit the <a href="/reference.html">reference guide</a> to see all the available form controls and options.</p>
+
+                        <p>For more examples, <a href="https://github.com/chouseknecht/angular-forms.js">download the source code from Github</a> and take a look at the sample app. It can be run locally using the included node web server:</p>
+<pre>
+cd ~/angular-forms.js
+node ./scripts/web-server.js
+
+Http Server running at http://localhost:8000/
+</pre>
+
+
                     </div><!-- col-lg-12 -->
                 
                 </div><!-- row -->
