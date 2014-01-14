@@ -17,6 +17,7 @@ app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sam
         
         var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm });
         
+        $scope.destroyFormHide = true;
         $scope.exampleFormReady =  false;
 
         $scope.sources = [
@@ -56,7 +57,15 @@ app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sam
                 Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
                 });
         
-        $scope.showForm = function() {  
+        $scope.destroyForm = function() {
+            $scope.destroyFormHide = true;
+            $scope.exampleFormReady =  false;
+            $('#exampleForm').empty();
+            }
+
+        $scope.showForm = function() {
+            $scope.destroyFormHide = false;
+            $('#exampleForm').empty(); 
             form.inject();
             $scope.exampleFormReady =  true;
             }
@@ -64,7 +73,7 @@ app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sam
         $scope.save = function() {
             alert('Your changes were saved!');
             form.clearErrors();
-            form.resetForm;
+            form.resetForm();
             }
         
         $scope.reset = function() {

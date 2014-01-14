@@ -121,11 +121,16 @@ bower install angular-forms.js
                     
                         <h3 class="section-start">Example</h3>
                         
-                        <p>In the following example sampleForm.js contains a JSON object called SampleForm that represents an HTML form. Click the <em>Show Form</em> button below, and the SampleForm object is turned into HTML, compled and injected into this page.</p>
+                        <p>Our example contains a JSON object describing an HTML form we would like to have the user complete. Click the Show Form button below, and the JSON object will be turned into HTML, compiled and injected into the page where you can actually use it.
+                        
+                        <p>Type in the fields to see the validation work. Notice required fields are highlighted in red as you tab into them. The Reset button is enabled only after you enter a value in one of the fields. The save button will become enabled once all required fields have been entered and all validation requirements are satisified.</p>
+
+                        <p>All that without writing any HTML!</p>
                         
                         <div class="example">
                             <p>Click the <em>Show Form</em> button to see the sample form generated and inserted into the DOM below.</p>
                             <button type="button" class="btn btn-primary btn-sm" ng-click="showForm()">Show Form</button>
+                            <a class="remove-form" ng-click="destroyForm()" ng-hide="destroyFormHide">Remove the form</a>
                             <div class="example" ng-show="exampleFormReady">
                                 <h4>Example Form</h4>
                                 <div class="well">
@@ -135,7 +140,7 @@ bower install angular-forms.js
                         </div>
 
                         <h4>How does it work?</h4>
-                        <p>In sampleForm.js angular.module is called to return an object named SampleForm. SampleForm is the JSON representation of the HTML we want AngularForms to generate. SampleForm containes form properties (name and horizontal) an object called <em>fields</em> and an object called <em>buttons</em>.</p>
+                        <p>In sampleForm.js angular.module is used to created object named SampleForm. SampleForm is the JSON representation of the HTML we want AngularForms to generate. SampleForm containes form properties (name and horizontal) an object called <em>fields</em> and an object called <em>buttons</em>.</p>
 
                         <p>The <em>fields</em> object contains an object for each input field on the final form. For example, the <em>First name</em> input field is reprented in the JSON as fields.first_name. The fields.first_name object contains key:value pairs representing the attributes the input field will receive. You'll see that buttons work exactly the same way.</p>
 
