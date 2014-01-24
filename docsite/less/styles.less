@@ -7,10 +7,12 @@
  *
  */
 
-@red: #dd1b16;
-@grey: #eeeeee;
+@red:       #dd1b16;
+@grey:      #eee;
+@black:     #000;
+@dark-grey: #777;
 
-body { padding-top: 50px; }
+body { padding-top: 30px; }
 
 h4, h5 {
     margin-top: 25px;
@@ -52,12 +54,28 @@ h5 {
     }
 }
 
-.reference {
-    p { font-size: 32px; }
+.jumbotron.reference {
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    .cow { width: 18px; }
+}
+
+.navbar-brand {
+    padding-top: 0;
+    margin-top: 0;
+    a { 
+        font-size: 22px;
+    }
+    a:link, a:visited, a:hover, a:active {
+        text-decoration: none;
+        color: @dark-grey;
+    }
     .cow {
-        width: 24px;
+        width: 16px;
         margin-right: 1px;
     }
+    margin-bottom: 10px;
 }
 
 .section-start {

@@ -1,0 +1,461 @@
+
+<div class="jumbotron reference">
+    <div class="container">
+        <h2>Reference</h2>
+        <p>The nuts and bolts of using <span class="red">A</span>ngularF<img class="cow" src="/docsite/img/redcow.png">rms</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            
+            <h3>Form Object</h3>
+            <p>Use angular.module to create a JSON object representing the form. The object will consist of properties that apply to the form, a <em>fields</em> object describing each field, and a <em>buttons</em> object describing each button.
+            </p> 
+            <p>The following angular module creates a form object called SampleForm. It's taken from the sample app included in the source repo:</p>
+                    
+            <tabset class="example">
+                <tab>
+                <tab-heading>SampleForm.js</tab-heading>
+<pre>
+'use strict';
+
+angular.module('SampleFormDefinition', [])
+    .value(
+    'SampleForm', {
+        name: 'SampleForm',                    // Required. Used to set &lt;form&gt; id attribute
+        horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
+        
+        fields: {
+            first_name: {
+                label: 'First Name',
+                srOnly: true,
+                type: 'text',
+                placeholder: 'First name',
+                required: true,
+                autocomplete: false,
+                helpText: 'Provide your first name.'
+                },
+            last_name: {
+                label: 'Last Name',
+                type: 'text',
+                srOnly: true,
+                placeholder: 'Last name',
+                required: true, 
+                autocomplete: false,
+                helpText: 'Provide your last name.'
+                },
+            email_address: {
+                label: 'Email',
+                type: 'email',
+                srOnly: true,
+                placeholder: 'Email address',
+                required: true,
+                autocomplete: false,
+                helpText: 'Your primary email address.'
+                },
+            username: {
+                label: 'Username',
+                srOnly: true,
+                placeholder: 'Username',
+                type: 'text', 
+                length: 30,
+                required: true,
+                autocomplete: false,
+                helpText: 'Choose the name you will be known as.'
+                },
+            password: {
+                label: 'Password',
+                srOnly: true,
+                placeholder: 'Password',
+                helpText: 'Create a password. Make it strong!',
+                type: 'password', 
+                length: 16, 
+                autocomplete: false,
+                required: true,
+                confirm: true      //generate a confirmation password field. associate the two and add validation directive 
+                },
+            employees: {
+                label: 'Employee count', 
+                srOnly: true, 
+                placeholder: 'Number of employees',
+                type: 'number',
+                helpText: 'How many employees do you have?',
+                required: true,
+                ngMinimum: 0,
+                ngMaximum: 200
+                },
+            referral_source: {
+                label: 'Referral source', 
+                srOnly: true,
+                placeholder: 'Select a referral source',
+                type: 'select',
+                required: true,
+                helpText: 'How did you hear about us?',
+                optionArray: 'sources'
+                },
+            other_source: {
+                label: 'Other',
+                srOnly: true,
+                placeholder: 'Other source',
+                type: 'text',
+                ngShow: "referral_source == 'other'",
+                ngRequired: "referral_source == 'other'",
+                helpText: 'What is the Other source?'
+                },
+            about_you: {
+                label: 'About you',
+                srOnly: true, 
+                placeholder:'About you', 
+                type: 'textarea',
+                helpText: 'Tell us a bit about yourself'
+                }
+            },
+
+        buttons: {
+            save: {
+                label: "Save",
+                icon: "fa-check",
+                ngClick: "save()",
+                'class': 'btn-primary btn-sm'
+                },
+            reset: {
+                label: "Reset",
+                icon: "fa-rotate-left",
+                ngClick: "reset()",
+                'class': 'btn-default btn-sm'
+                }
+            }
+        });
+</pre>
+                </tab>
+            </tabset>
+
+            <h3 class="section-start">Form Attributes</h3>
+            <p>Set form attributes by adding the following key/value pairs to the root of the object:</p>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Required?</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>name</td>
+                        <td class="text-center"><i class="fa fa-check"></i></td>
+                        <td>String value providing the name attribute for the &lt;form&gth; element. This value can be used in Angular directives to access data model attributes such as $pristine and $error. For example, if the form name property is set to 'registration' and the form has a field named 'username', the ctrl object can be accessed with $scope.registration.username.$pristine.</td>
+                    </tr>
+                    <tr>
+                        <td>horizontal</td>
+                        <td></td>
+                        <td>Boolean value. When set to <em>true</em> the .form-horizontal class will be added to the &lt;form&gt; element, and the form will be constructed using the Twitter Bootsrap horizontal form layout.</td>
+                    </tr>
+                    <tr>
+                        <td>inputColSize</td>
+                        <td></td>
+                        <td>String containing a valid Twitter Bootstrap col-sm-* value. Use to provide an override value for the right side or input side of a horizontal form. By default the left side or label side will be set to 'col-sm-2' and the right side or input side to 'col-sm-10'. If inputColSize is set, the width for the left side will be calculate as the difference between 12 and the provided column width.</td>
+                    </tr>
+                    <tr>
+                        <td>class</td>
+                        <td></td>
+                        <td>String of classes to be added to the &lt;form&gth; element. Separate classes with a space.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-start">Fields</h3>
+            <p>Define a <em>fields</em> object and add an object for each field.</p>
+<pre>
+'SampleForm', {
+        name: 'SampleForm',
+        horizontal: false, 
+        
+        <span class="highlight">fields:</span> {
+            first_name: {
+                label: 'First Name',
+                srOnly: true,
+                type: 'text',
+                placeholder: 'First name',
+                required: true,
+                autocomplete: false,
+                helpText: 'Provide your first name.'
+                },
+            last_name: {
+                label: 'Last Name',
+                type: 'text',
+                srOnly: true,
+                placeholder: 'Last name',
+                required: true, 
+                autocomplete: false,
+                helpText: 'Provide your last name.'
+                },
+            ...
+</pre>
+                <h5>Data model</h5>
+                <p>By default the name of the field object will be used as the data model for the associated input element. However, this can be overriden by providing an ngModel attribute. In the example below the ngModel value of 'user.username will be used as the data model, overriding the default of 'username'.</p>
+<pre>
+username: {
+    label: 'Username',
+    type: 'text',
+    <span class="highlight">ngModel: 'user.username'</span>,
+    srOnly: true,
+    placeholder: 'Username',
+    required: true, 
+    autocomplete: false,
+    helpText: 'Provide your username.'
+    },
+</pre>                  
+            <h5>Input field attributes</h5>
+            <p>The following lists the attributes used to define an input field:</p>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Required?</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>type</td>
+                    <td class="text-center"><i class="fa fa-check"></i></td>
+                    <td>One of the following string values:<br />
+                        <ul>
+                            <li>text</li>
+                            <li>password</li>
+                            <li>email</li>
+                            <li>number</li>
+                            <li>select</li>
+                            <li>checkbox</li>
+                            <li>radio</li>
+                            <li>checkbox_group</li>
+                            <li>radio_group</li>
+                            <li>textarea</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>label</td>
+                    <td></td>
+                    <td>String value for the &ltlabel&gt; element.
+                    <p><strong>Note</strong> that labels are not required. However, horizontal forms obviously look better when labels are provided. The same is true with radio and checkbox fields, which are wrapped with a &lt;label&gt; element with label text appearing on the right.</p></td>
+                </tr>
+                <tr>
+                    <td>srOnly</td>
+                    <td></td>
+                    <td>Boolean value. When set to true the <em>sr-only</em> class will be added to the &lt;label&gt; element causing the label to be hidden for all but screen readers.</td>
+                </tr>
+                <tr>
+                    <td>class</td>
+                    <td></td>
+                    <td>String containing one or more class values to be added to the &lt;input&gt; or &lt;select&gt; element.</td>
+                </tr>
+                <tr>
+                    <td>labelClass</td>
+                    <td></td>
+                    <td>String containing one or more class values to be added to the &lt;label&gt; element.</td>
+                </tr>
+                <tr>
+                    <td>required</td>
+                    <td></td>
+                    <td>Boolean value. When set to true the <em>required</em> attribute will be added to the input element.</td>
+                </tr>
+                <tr>
+                    <td>autocomplete</td>
+                    <td></td>
+                    <td>String containing <em>on</em> or <em>off</em>. Applies to user information fields such as username, password, first name, last name, etc. When set to <em>on</em> the browser will attempt to populate the field. For increased security it is recommended that autocomplete be set to <em>off</em> for username and password fields.</td>
+                </tr>
+                <tr>
+                    <td>helpText</td>
+                    <td></td>
+                    <td><p>String value providing a description for the input field. Value will be placed in a &lt;div&gt; element below the input field and given a class of <em>help-text</em>.</p>
+<pre>
+&lt;label class="sr-only" for="first_name"&gt;First Name&lt;/label&gt;
+&lt;input type="text" class="form-control" name="first_name" ng-model="first_name" required &gt;
+<span class="highlight">&lt;div class="help-text"&gt;Please provide your first name&lt;/div&gt;</span>
+&lt;div class="error ng-hide" ng-show="!SampleForm.first_name.$pristine &amp;&amp; SampleForm.first_name.$error.required"&gt;A value is required.&lt;/div&gt;
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ng Directives</td>
+                    <td></td>
+                    <td>Any Angular directive in the field object will be included in the HTML. The key will be the directive name in camel case. For example, enter the directive 'ng-show' as 'ngShow'. The value is a string containing the exact text to be assigned to the ng attribute. <strong>Note</strong> that directives are not validated by AngularForms. They're included in the generated HTML exactly as they appear in the field object.
+                    </td>
+                </tr>
+                <tr>
+                    <td>groupClass</td>
+                    <td></td>
+                    <td>A string of one or more classes to be assigned to the field's parent &lt;div&gt; element. The parent is the <em>.form-group</em> wrapped around the label and input field.
+                    </td>
+                </tr>
+                <tr>
+                    <td>ngShow<br />ngHide</td>
+                    <td></td>
+                    <td><p>The ngShow and ngHide are assumed to apply to both the label and field element. So if the field is to be hidden from view, the label will be hidden as well<p>
+                    <p>With the exception of checkboxes an radio buttons, the directives are placed on the field's parent &lt;div&gt; element and not on the field. This means they are added to the <em>.form-group</em> &lt;div&gt; and will affect the label and input field.</p>
+                    <p>For checkboxes and radio buttons the directives are added to the &lt;label&gt; element, which is wrapped around the &lt;input&gt; input element.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td></td>
+                    <td>String containg helpful or descriptive text to direct the user. Will be used in the field's placeholder attribute.</td>
+                </tr>
+                </tbody>
+            </table>
+            
+            <h5>Number fields</h5>
+            
+
+            <h5>Select fields</h5>    
+            <p>In addtion to the those used to define an input field, &lt;select&gt; elements add the following attributes:</p>
+                
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Attribute</th>
+                    <th>Required?</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>optionArray</td>
+                    <td class="text-center"><i class="fa fa-check"></i></td>
+                    <td><p>The scope variable containing an array of objects to be passed to ng-options. Each object in the array will have an <em>id</em> and a <em>label</em> key. In the Gettting Started example, we set optionArray to 'sources'. We then define $scope.sources as:</p>
+<pre>
+$scope.sources = [
+    { id: 'google', label: 'Google' },
+    { id: 'yahoo', label: 'Yahoo!' },
+    { id: 'bing', label: 'Bing' },
+    { id: 'facebook', label: 'Facebook' },
+    { id: 'word', label: 'A friend told me' },
+    { id: 'other', label: 'Other' }
+    ];
+</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>placeholder</td>
+                    <td></td>
+                    <td>String value containing a hint or text to direct the user. Used to construct an &lt;option&gt; element where the value is &quot;&quot; and the label is the string value. Will appear at the top of the options list, and will be automatically displayed as the selected option until the user makes a choice.<td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h5>Checkbox groups</h5>    
+            <p>Use a checkbox group to display a set of related inline checkboxes. Set the <em>checkbox</em> key to an array of objects representing the checkboxes. The following shows an example:</p>
+<pre>
+cb_group_example: {
+    label: 'Options',
+    groupClass: 'options-group',
+    helpText: "Put related checkboxes inline together using the \'checkbox_group\' type. Click Option 1 to see additional options.",
+    type: 'checkbox_group',
+    checkboxes: [
+        { model: "option1", label: "Option 1" },
+        { model: "option2", label: "Option 2" }, 
+        { model: "option3", label: "Option 3", ngShow: "option1" },
+        { model: "option4", label: "Option 4", ngShow: "option1" }
+        ]
+    }
+}
+</pre>
+            <p><strong>Note</strong> the <em>model</em> and <em>label</em> keys are required in a checkbox array object. The model value is a string representing the field $scope variable, and the label contains a string that will be used in the <em>label</em> element.</p>
+
+            <p>Any of the attributes described above in <em>Input fields</em> can be included in a checkbox array object. Of course certain options don't make sense and should not be used. All supplied ng direcives will be included in the generated HTML.</p>
+
+            <h5>Radio button groups</h5>    
+            <p>Use a radio button group to display a set of related inline radio buttons. Set the <em>options</em> key to an array of objects representing the radio buttons. The following shows an example:</p>
+
+<pre>
+rb_group_example: {
+    label: 'Radio Group',
+    groupClass: 'radio-options-group',
+    helpText: "Show radios in an inline group using the \'radio_group\' type.",
+    type: 'radio_group',
+    options: [
+        { label: 'Radio option 1', value: 'one' },
+        { label: 'Radio option 2', value: 'two' },
+        { label: 'Radio option 3', value: 'three' } 
+        ]
+    }
+}
+</pre>
+
+            <p>Each radio button object in the options array requires a <em>label</em> and a <em>value</em> key. The label is the string value used in the &lt;label&gt; element. The value is the value to be assigned to the model when the radio is selected.<p>
+            
+            <p>Just as with a standard input field, the model is assumed to be the field key for the radio group. In the above example <em>rb_group_example</em> will be used as the model. Provide an <em>ngModel</em> key to override.</p>
+
+            <p>Just as with checkboxes groups, add keys from the list of <em>Input fields</em> attributes above. All ng directives will be included in the generated HTML.</p>
+
+            <h3 class="section-start">Buttons</h3>
+            <p>Similar to defining fields, for form buttons create a <em>button</em> object and add to it an object for each button. Here's an example:</p>
+<pre>
+buttons: {
+    save: {
+        label: "Save",
+        icon: "fa-check",
+        ngClick: "save()",
+        'class': 'btn-primary btn-sm'
+        },
+    reset: {
+        label: "Reset",
+        icon: "fa-minus-circle",
+        ngClick: "reset()",
+        'class': 'btn-default btn-sm'
+        }
+    }
+</pre>
+            <h5>Save and reset buttons</h5>
+            
+            <p>If the button key name is <em>save</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state or when the form contains an error. After a change is made to the form and there are no errors, the save button will be enabled.</p>
+            
+            <p>If the button key name is <em>reset</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state. Once a change is made to the form, the button will be enabled.</p>
+
+            <h5>Button attributes</h5>
+            <p>Use the following attributes to construct a button object:</p>
+            
+            <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="col-lg-2">Attribute</th>
+                <th>Required?</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>icon</td>
+                <td></td>
+                <td>String containing <a href="http://fontawesome.io/icons/">FontAwesome</a> <em>fa-</em> class. The icon will appear inside the button to the left of any label text. FontAwesome size classes (i.e. fa-lg, fa-2x, etc.) can be included aa well.</td>
+            </tr>
+            <tr>
+                <td>label</td>
+                <td></td>
+                <td>String value displayed inside the &lt;button&gt; element.</td>
+            </tr>
+            <tr>
+                <td>class</td>
+                <td></td>
+                <td>String containing a class or a list of classes to be added to the &lt;button&gt; element.</td>
+            </tr>
+            <tr>
+                <td>ng Directives</td>
+                <td></td>
+                <td>Any Angular directive in the field object will be included in the HTML. The key will be the directive name in camel case. For example, enter the directive 'ng-click' as 'ngClick'. The value is a string containing the exact text to be assigned to the ng attribute. <strong>Note</strong> that directives are not validated by AngularForms. They're included in the generated HTML exactly as they appear in the field object.</td>
+            </tr>
+            </tbody>
+            </table>
+            
+            <h3>Error handling</h3>
+            <p>To be documented...</p>
+
+        </div><!-- col-lg-12 -->
+    </div><!-- row -->
+</div><!-- container -->

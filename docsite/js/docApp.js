@@ -10,9 +10,41 @@
 
 'use strict';
 
-var app = angular.module('docApp', ['RestService', 'Utilities', 'AngularFormsModule', 'SampleFormDefinition']);
+var app = angular.module('docApp', ['ngRoute', 'RestService', 'Utilities', 'AngularFormsModule', 'SampleFormDefinition'])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+        .when('/', { 
+            templateUrl: '/docsite/partials/index_partial.html',
+            controller: 'mainController'
+            })
+        .when('/reference', {
+            templateUrl: '/docsite/partials/reference_partial.html',
+            controller: 'referenceController'
+            })
+        .otherwise({
+            redirectTo: '/'
+            });
+        }])
 
-app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'SampleForm',
+     .run(['$location', '$rootScope', function($location, $rootScope) {
+        
+        $rootScope.$on("$routeChangeSuccess", function(event, next, current) {
+            // When the path changes, update the navbar
+            var path = $location.path();
+            $('.navbar ul li a').each(function(idx) {
+                var href = $(this).attr('href').replace(/^#/,'');
+                if (href == path) {
+                    $(this).parent().addClass('active');
+                }
+                else {
+                    $(this).parent().removeClass('active');
+                }
+                });
+            });
+        
+        }]);
+
+app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'SampleForm',
     function($scope, Rest, Error, AngularForms, SampleForm) {
         
         var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm });
@@ -81,4 +113,7 @@ app.controller('docController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sam
             form.resetForm();
             }
 
+        }]);
+
+app.controller('referenceController', ['$scope', '$location', function($scope, $location) {
         }]);
