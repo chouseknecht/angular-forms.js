@@ -60,6 +60,8 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
             { id: 'word', label: 'A friend told me' },
             { id: 'other', label: 'Other' }
             ];
+       
+        $('.fade-in').show(500);
 
         // Get version info and download URL
         if ($scope.removeRepoLoad) {

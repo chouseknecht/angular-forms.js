@@ -6,12 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="/bower_components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-        <link rel="stylesheet/less" type="text/css" href="/docsite/less/styles.less" />
+        <link rel="stylesheet" type="text/css" href="/docsite/css/styles.min.css" />
     </head>
 <body>
     
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top fade-in" role="navigation">
         <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse-me">
@@ -29,9 +28,9 @@
         </div>
     </nav>
 
-    <div ng-cloak ng-view></div>
+    <div ng-view></div>
             
-    <div class="footer">
+    <div class="footer fade-in">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -47,7 +46,7 @@
     </div><!-- footer -->
 
     <script src="/bower_components/jquery/jquery.min.js"></script>
-    <script src="/bower_components/less.js/dist/less-1.6.0.min.js" type="text/javascript"></script>
+    <!-- <script src="/bower_components/less.js/dist/less-1.6.0.min.js" type="text/javascript"></script> -->
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-route/angular-route.min.js"></script>
     <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
