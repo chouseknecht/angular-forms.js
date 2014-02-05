@@ -35,15 +35,15 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
         .when('/', {
             templateUrl: 'partials/main.html',
             controller: 'sampleController'
-            })
+        })
         .when('/robots', {
             templateUrl: 'partials/robot.html',
             controller: 'robotController'
-            })
+        })
         .otherwise({
             redirectTo: '/'
-            });
-        }])
+        });
+    }])
 
     .run(['$location', '$rootScope', function($location, $rootScope) {
         
@@ -58,14 +58,13 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
                 else {
                     $(this).parent().removeClass('active');
                 }
-                });
             });
-        
-        }])
+        });
+    }])
     
     .controller('navbarController', ['$scope', '$location', function($scope, $location) {
         $scope.location = $location.path();
-        }])
+    }])
 
     .controller('sampleController', ['$scope', '$rootScope', '$location', '$sce', 'AngularForms', 'AngularModal', 'SampleForm',
     'CheckBoxForm', 'RadioForm', 'ExampleModal1',
@@ -79,7 +78,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
         form.inject();
         $scope.reset = function() {
             form.resetForm();
-            };
+        };
         
         //Copy of our sample form, make a couple quick changes and render as a horizontal form.
         horizontalForm = angular.copy(SampleForm);
@@ -102,7 +101,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
         horizontalAf.inject();
         $scope.horizontalReset = function() {
             horizontalAf.resetForm();
-            };
+        };
 
         $scope.sources = [
             { id: 'google', label: 'Google' },
@@ -111,7 +110,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             { id: 'facebook', label: 'Facebook' },
             { id: 'word', label: 'A friend told me' },
             { id: 'other', label: 'Other' }
-            ];
+        ];
 
         checkboxAf = new AngularForms({ scope: $scope, targetId: 'checkboxForm', form: CheckBoxForm });
         checkboxAf.inject();
@@ -156,7 +155,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             $scope.exampleModal1Header = 'Example Modal Dialog';
             $scope.sayHello(); //call to set default values
             $scope[ExampleModal1.name + '_show'] = true;
-            };
+        };
 
         $scope.sayHello = function() {
             if ($scope.sayHelloLabel === 'Say Hello!') {
@@ -172,9 +171,9 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
                 $scope.sayHelloIcon = 'fa-bullhorm';
                 $scope.sayHelloClass = 'btn btn-primary';
             }
-            };
+        };
 
-        }])
+    }])
 
     .controller('robotController', ['$scope', '$rootScope', '$location', 'AngularForms', 'RobotForm',
     function($scope, $rootScope, $location, AngularForms, RobotForm) {
@@ -188,7 +187,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
         
         $scope.reset = function() {
             form.resetForm();
-            };
+        };
         
         $scope.save = function() {
             var errors = 0;
@@ -213,9 +212,9 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
                 // wait a half tick so screen can repaint (showing error messages cleared) before displaying alert dialog
                 setTimeout(function() { alert('Congratuations! We\'re building your robot.'); }, 500);
             }
-            };
+        };
 
-        }]);
+    }]);
 
 
 
