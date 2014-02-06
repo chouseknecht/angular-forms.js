@@ -160,6 +160,17 @@ angular.module('AngularFormsModule', [])
                     return html;
                 };
 
+                this.placeholderStar = function(fld) {
+                    // Should the placeholder have a leading *
+                    if (this.form.starRequired && fld.required) {
+                        if (fld.label && !fld.srOnly) {
+                            return '';
+                        }
+                        return '* ';
+                    }
+                    return '';
+                };
+
                 this.inputField = function(f, fld) {
                     var attr, html = '';
                     html += (fld.type === 'spinner') ? "<div>\n" : "";
@@ -170,9 +181,14 @@ angular.module('AngularFormsModule', [])
                     html += (fld.ngModel) ? fld.ngModel : f;
                     html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
                     html += this.addInputClass(fld);
+                    if (fld.placeholder) {
+                        html += " placeholder=\"";
+                        html += this.placeholderStar(fld);
+                        html += fld.placeholder + "\"";
+                    }
                     for (attr in fld) {
                         if (attr !== 'label' && attr !== 'type' && attr !== 'srOnly'  && attr !== 'class' && attr !== 'ngHide' &&
-                            attr !== 'ngShow') {
+                            attr !== 'ngShow' && attr !== 'placeholder') {
                             html += this.attribute(fld, attr);
                         }
                     }
@@ -324,12 +340,16 @@ angular.module('AngularFormsModule', [])
                     html += "<label for=\"" + f + "\"";
                     if (fld.srOnly || fld.labelClass || this.form.horizontal) {
                         html += " class=\"";
-                        html += (this.form.horizontal) ? this.col_size + " control-label " : "";
+                        html += (this.form.horizontal) ? col_size + " control-label " : "";
                         html += (fld.srOnly) ? "sr-only " : "";
                         html += (fld.labelClass) ? fld.labelClass : "";
                         html += "\"";
                     }
-                    html += ">" + fld.label + "</label>\n";
+                    html += ">";
+                    if (this.form.starRequired && fld.required && !fld.srOnly) {
+                        html += "* ";
+                    }
+                    html += fld.label + "</label>\n";
                     return html;
                 };
 
@@ -415,9 +435,25 @@ angular.module('AngularFormsModule', [])
                     $compile(e)(this.scope);
                 };
 
+                this.setError = function(f, msg) {
+                    // Custom validation- set field to invalid state and show the error msg.
+                    // Note that following triggers field state changes without setting the form 
+                    // to an invalid state. If the form becomes invalid, the Save button becomes
+                    // disabled, and the user is forced to reset the form.
+                    this.scope[this.form.name + '_' + f + '_error'] = msg;
+                    this.scope[this.form.name][f].$pristine = false;
+                    this.scope[this.form.name][f].$dirty = true;
+                    $('#fld_' + f).removeClass('ng-pristine').removeClass('ng-valid').removeClass('ng-valid-custom-error')
+                        .addClass('ng-dirty').addClass('ng-invalid').addClass('ng-invalid-custom-error');
+                };
+
                 this.clearErrors = function() {
-                    for (var f in this.form.fields)
+                    // Call as first step in form save to clear custom error messages and classess
+                    for (var f in this.form.fields) {
                         this.scope[this.form.name + '_' + f + '_error'] = '';
+                        this.scope[this.form.name][f].$setValidity('custom-error', true);  //fixes classes for us
+                        this.scope[this.form.name][f].$setPristine();
+                    }
                 };
 
                 this.resetForm = function(master_obj) {
@@ -453,6 +489,7 @@ angular.module('AngularFormsModule', [])
                         }
                         // Clear validation errors
                         this.scope[this.form.name][f].$setPristine();
+                        this.scope[this.form.name][f].$setValidity('custom-error', true);
                         this.scope[this.form.name + '_' + f + '_error'] = '';
                     }
                 };
