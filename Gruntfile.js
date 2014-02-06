@@ -1,3 +1,6 @@
+
+/* global module:true */
+
 module.exports = function(grunt) {
 
     // Project configuration.

@@ -74,7 +74,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             radio, hRadio, hRadioForm;
 
         //Inject the sample form
-        form = new AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });
+        form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });
         form.inject();
         $scope.reset = function() {
             form.resetForm();
@@ -92,12 +92,12 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
                 delete horizontalForm.fields[fld].helpText;
             }
             if (fld === 'other_source') {
-                horizontalForm.fields[fld].ngShow = 'referral_source_horizontal == \"other\"';
-                horizontalForm.fields[fld].ngRequired = 'referral_source_horizontal == \"other\"';
+                horizontalForm.fields[fld].ngShow = "referral_source_horizontal == 'other'";
+                horizontalForm.fields[fld].ngRequired = "referral_source_horizontal == 'other'";
             }
         }
         horizontalForm.buttons.reset.ngClick = 'horizontalReset()';
-        horizontalAf = new AngularForms({ scope: $scope, targetId: 'horizontalForm', form: horizontalForm });
+        horizontalAf = AngularForms({ scope: $scope, targetId: 'horizontalForm', form: horizontalForm });
         horizontalAf.inject();
         $scope.horizontalReset = function() {
             horizontalAf.resetForm();
@@ -112,7 +112,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             { id: 'other', label: 'Other' }
         ];
 
-        checkboxAf = new AngularForms({ scope: $scope, targetId: 'checkboxForm', form: CheckBoxForm });
+        checkboxAf = AngularForms({ scope: $scope, targetId: 'checkboxForm', form: CheckBoxForm });
         checkboxAf.inject();
 
         //Copy the sample checkbox form, make a few changes, and render it as a horizontal form.
@@ -127,10 +127,10 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
                 c.ngShow = c.ngShow + '_horizontal';
             }
         }
-        cbHorizontalFormAf = new AngularForms({ scope: $scope, targetId: 'checkboxHorizontalForm', form: cbHorizontalForm });
+        cbHorizontalFormAf = AngularForms({ scope: $scope, targetId: 'checkboxHorizontalForm', form: cbHorizontalForm });
         cbHorizontalFormAf.inject();
 
-        radio = new AngularForms({ scope: $scope, targetId: 'radioForm', form: RadioForm });
+        radio = AngularForms({ scope: $scope, targetId: 'radioForm', form: RadioForm });
         radio.inject();
 
         //Copy the sample radio form, make a few changes, and render it as a horizontal form.
@@ -145,12 +145,12 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             }
         }
         delete hRadio.fields.radio_group.groupClass;
-        hRadioForm = new AngularForms({ scope: $scope, targetId: 'radioHorizontalForm', form: hRadio });
+        hRadioForm = AngularForms({ scope: $scope, targetId: 'radioHorizontalForm', form: hRadio });
         hRadioForm.inject();
 
         // Modal dialog testing
         $scope.testModal = function() {
-            var modal = new AngularModal({ scope: $scope, modal: ExampleModal1, targetId: 'modal-target' });
+            var modal = AngularModal({ scope: $scope, modal: ExampleModal1, targetId: 'modal-target' });
             modal.inject();
             $scope.exampleModal1Header = 'Example Modal Dialog';
             $scope.sayHello(); //call to set default values
@@ -181,7 +181,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
         $scope.order_complete = false;
 
         //Inject the robot order form
-        var form = new AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
+        var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
         form.inject();
         form.resetForm();
         
@@ -193,19 +193,21 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             var errors = 0;
             form.clearErrors(); // clear custom error messages
             if ($scope.arms > 2 && $scope.legs < 3) {
-                $scope[RobotForm.name + '_legs_error'] = 'More than 2 arms requires a minimum of 3 legs';
-                $scope[RobotForm.name].legs.$pristine = false;
-                $scope[RobotForm.name].legs.$dirty = true;
+                form.setError('legs', 'More than 2 arms requires a minimum of 3 legs');
+                //$scope[RobotForm.name + '_legs_error'] = 'More than 2 arms requires a minimum of 3 legs';
+                //$scope[RobotForm.name].legs.$setValidity('legs-error', false);
                 errors++;
             }
             if ($scope.legs < 3 && $scope.head_size === 'large') {
-                $scope[RobotForm.name + '_head_size_error'] = 'A large head requires a minimum of 3 legs';
-                $scope[RobotForm.name].head_size.$pristine = false;
-                $scope[RobotForm.name].head_size.$dirty = true;
+                form.setError('head_size', 'A large head requires a minimum of 3 legs');
+                //$scope[RobotForm.name + '_head_size_error'] = 'A large head requires a minimum of 3 legs';
+                //$scope[RobotForm.name].head_size.$setValidity('head-size-error', false);
                 errors++;
             }
             if ($scope.name.toLowerCase() === 'bob' || $scope.name.toLowerCase() === 'dave' || $scope.name.toLowerCase() === 'mike') {
-                $scope[RobotForm.name + '_name_error'] = 'That name is already taken';
+                form.setError('name', 'That name is already taken');
+                //$scope[RobotForm.name + '_name_error'] = 'That name is already taken';
+                //$scope[RobotForm.name].name.$setValidity('name-error', false);
                 errors++;
             }
             if (errors === 0) {

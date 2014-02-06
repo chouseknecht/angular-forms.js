@@ -12,10 +12,6 @@ body {
     padding-bottom: 80px;    
 }
 
-select:required:focus, input:required:focus {
-    border: 1px solid red;
-    outline: none;
-}
 
 .error {
     display: inline-block;
@@ -23,10 +19,16 @@ select:required:focus, input:required:focus {
     font-size: 12px;
 }
 
+input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+    border: 1px solid red;
+    outline: none;
+}
+
 .help-text {
     display: inline-block;
     font-size: 12px;
-    padding-right 3px;
+    margin-right: 5px;
+    padding-left: 2px;
 }
 
 .options-group {
