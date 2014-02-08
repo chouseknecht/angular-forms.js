@@ -10,44 +10,45 @@
 
 'use strict';
 
-var app = angular.module('docApp', ['ngRoute', 'RestService', 'Utilities', 'AngularFormsModule', 'SampleFormDefinition'])
+var app = angular.module('docApp', ['ngRoute', 'RestService', 'Utilities', 'AngularFormsModule', 'SampleFormDefinition',
+    'RobotFormDefinition'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
-        .when('/', { 
+        .when('/', {
             templateUrl: '/docsite/partials/index_partial.html',
             controller: 'mainController'
-            })
+        })
         .when('/reference', {
             templateUrl: '/docsite/partials/reference_partial.html',
             controller: 'referenceController'
-            })
+        })
         .otherwise({
             redirectTo: '/'
-            });
-        }])
+        });
+    }])
 
-     .run(['$location', '$rootScope', function($location, $rootScope) {
+    .run(['$location', '$rootScope', function($location, $rootScope) {
         
-        $rootScope.$on("$routeChangeSuccess", function(event, next, current) {
+        $rootScope.$on("$routeChangeSuccess", function() {
             // When the path changes, update the navbar
             var path = $location.path();
-            $('.navbar ul li a').each(function(idx) {
+            $('.navbar ul li a').each(function() {
                 var href = $(this).attr('href').replace(/^#/,'');
-                if (href == path) {
+                if (href === path) {
                     $(this).parent().addClass('active');
                 }
                 else {
                     $(this).parent().removeClass('active');
                 }
-                });
             });
-        
-        }]);
+        });
+    }]);
 
 app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'SampleForm',
     function($scope, Rest, Error, AngularForms, SampleForm) {
         
-        var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm });
+        var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm }),
+            url;
         
         $scope.destroyFormHide = true;
         $scope.exampleFormReady =  false;
@@ -59,7 +60,7 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
             { id: 'facebook', label: 'Facebook' },
             { id: 'word', label: 'A friend told me' },
             { id: 'other', label: 'Other' }
-            ];
+        ];
        
         $('.fade-in').show(500);
 
@@ -71,51 +72,90 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
             //Retrieve the current version
             var url = '/repos/:user/:repo/releases';
             Rest({ method: 'GET', url: url })
-                .success( function(data, status, headers, config) {
+                .success( function(data) {
                     $scope.version = data[0].tag_name;
-                    $scope.version_name = data[0].name; 
+                    $scope.version_name = data[0].name;
                     $scope.download_url = html_url + '/releases/download/' + data[0].tag_name + '/' + data[0].assets[0].name;
-                    })
-                .error( function(data, status, headers, config) {
+                })
+                .error( function(data, status) {
                     Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
-                    });
-            });
+                });
+        });
         
         // Get repo info
-        var url = '/repos/:user/:repo'; 
+        url = '/repos/:user/:repo';
         Rest({ method: 'GET', url: url })
-            .success( function(data, status, headers, config) {
+            .success( function(data) {
                 $scope.$emit('RepoLoaded', data.html_url);
-                })
-            .error( function(data, status, headers, config) {
+            })
+            .error( function(data, status) {
                 Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
-                });
+            });
         
         $scope.destroyForm = function() {
             $scope.destroyFormHide = true;
             $scope.exampleFormReady =  false;
             $('#exampleForm').empty();
-            }
+        };
 
         $scope.showForm = function() {
             $scope.destroyFormHide = false;
-            $('#exampleForm').empty(); 
+            $('#exampleForm').empty();
             form.inject();
             $scope.exampleFormReady =  true;
-            }
+        };
 
         $scope.save = function() {
             alert('Your changes were saved!');
             form.clearErrors();
             form.resetForm();
-            }
+        };
         
         $scope.reset = function() {
             form.clearErrors();
             form.resetForm();
+        };
+
+    }
+]);
+
+app.controller('referenceController', ['$scope', 'RobotForm', 'AngularForms',
+    function($scope, RobotForm, AngularForms) {
+
+        $('.fade-in').show(500);
+        
+        /* Setup the robot order form. This gets displayed under Error handling. */
+
+        $scope.order_complete = false;
+
+        //Inject the robot order form
+        var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
+        form.inject();
+        form.resetForm();
+        
+        $scope.reset = function() {
+            form.resetForm();
+        };
+        
+        $scope.save = function() {
+            var errors = 0;
+            form.clearErrors(); // clear custom error messages
+            if ($scope.arms > 2 && $scope.legs < 3) {
+                form.setError('legs', 'More than 2 arms requires a minimum of 3 legs');
+                errors++;
             }
-
-        }]);
-
-app.controller('referenceController', ['$scope', '$location', function($scope, $location) {
-        }]);
+            if ($scope.legs < 3 && $scope.head_size === 'large') {
+                form.setError('head_size', 'A large head requires a minimum of 3 legs');
+                errors++;
+            }
+            if ($scope.name.toLowerCase() === 'bob' || $scope.name.toLowerCase() === 'dave' || $scope.name.toLowerCase() === 'mike') {
+                form.setError('name', 'That name is already taken');
+                errors++;
+            }
+            if (errors === 0) {
+                // wait a half tick so screen can repaint (showing error messages cleared) before displaying alert dialog
+                setTimeout(function() { alert('Congratuations! We\'re building your robot.'); }, 500);
+            }
+        };
+    }
+]);

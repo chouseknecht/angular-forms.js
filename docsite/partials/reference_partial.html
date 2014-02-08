@@ -13,7 +13,7 @@
             <h3>Form Object</h3>
             <p>Use angular.module to create a JSON object representing the form. The object will consist of properties that apply to the form, a <em>fields</em> object describing each field, and a <em>buttons</em> object describing each button.
             </p> 
-            <p>The following example taken from the sample app (included in the source repo) creates a form object called <em>SampleForm</em>.
+            <p>The following example taken from the sample app (included in the source repo) creates a form object called <em>SampleForm</em>.</p>
 
             <tabset class="example">
                 <tab>
@@ -131,6 +131,7 @@ angular.module('SampleFormDefinition', [])
 </pre>
                 </tab>
             </tabset>
+            
 
             <h3 class="section-start">Form Attributes</h3>
             <p>Set form attributes by adding the following key/value pairs to the root of the object:</p>
@@ -166,7 +167,9 @@ angular.module('SampleFormDefinition', [])
                     </tr>
                     <tr>
                         <td>starRequired</td>
-                        <td>Add an * to the label of required fields. See <a href="#error-handling">Error Handling</a> for more details.</td>
+                        <td></td>
+                        <td>Boolean value. Setting to <em>true</em> adds an * to the label of required fields. See <a href="/index.html#/reference#error-handling">Error Handling</a> for more details.</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -456,8 +459,122 @@ buttons: {
             </tbody>
             </table>
             
-            <h3><a name="error-handling">Error handling</a></h3>
-            <p>To be documented...</p>
+            <h3><a id="error-handling">Error handling</a></h3>
+            <p>AngularForms will automatically handle errors for standard ng directives and input attributes. Standard errors are presented in real
+            time as the user enters values into a form. But what about errors detected after the user clicks Save? This section addresses how to handle and present errors detected post Save. These might be errors detected by the controller or by the server on a POST or PUT 
+            request.</p>
+            
+            <p>For post Save errors AngularForms provides a setError method. This is an alternative to creating a directive for each error your form validation might need to handle. Calling setSave adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setSave(&lth;field name&gt;, &lt;error message text&gt;</p>
+
+            <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input fields. You will typically call form.clearErrors() at the start of the logic to process form input or just prior to makig the POST or PUT request to the server.</p>
+
+            <p>The following provides a complete example of how to process post Save errors: </p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>Order Your Robot Today! Only $19.99</h4>
+                    <p>Here we show the use of the spinner input type and custom validation.</p>
+                    <ul>
+                        <li>Robots with more than 2 arms must have a minimum of 3 legs.</li>
+                        <li>And for a large head, the robot must also have a minimum of 3 legs.</li>
+                        <li>The robot's name must be unique. Bob, Dave and Mike are already taken.</li>
+                    </ul>
+                    <div class="well">
+                        <div id="orderForm"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <tabset class="example">
+                <tab>
+                <tab-heading>HTML</tab-heading>
+<pre>
+&lt;div class="row"&gt;
+    &lt;div class="col-lg-12">
+        &lt;h4>Order Your Robot Today! Only $19.99&lt;/h4>
+        &lt;p>Here we show the use of the spinner input type and custom validation.&lt;/p>
+        &lt;ul>
+            &lt;li>Robots with more than 2 arms must have a minimum of 3 legs.&lt;/li>
+            &lt;li>And for a large head, the robot must also have a minimum of 3 legs.&lt;/li>
+            &lt;li>The robot's name must be unique. Bob, Dave and Mike are already taken.&lt;/li>
+        &lt;/ul>
+        &lt;div class="well">
+            &lt;div id="orderForm">&lt;/div>
+        &lt;/div>
+    &lt;/div>
+    &lt;div class="navigation">
+        &lt;a href="#/" class="btn btn-default pull-right">&lt;i class="fa fa-arrow-left">&lt;/i> Cancel&lt;/a>
+    &lt;/div>
+&lt;/div>
+</pre>
+                </tab>
+
+                <tab>
+                <tab-heading>CSS</tab-heading>
+<pre>
+.error {
+    display: inline-block;
+    color: red;
+    font-size: 12px;
+}
+
+input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+    border: 1px solid red;
+    outline: none;
+}
+
+.help-text {
+    display: inline-block;
+    font-size: 12px;
+    margin-right: 5px;
+    padding-left: 2px;
+}
+</pre>
+                </tab>
+
+                <tab>
+                <tab-heading>Javascript</tab-heading>
+<pre>
+.controller('robotController', ['$scope', '$rootScope', '$location', 'AngularForms', 'RobotForm',
+    function($scope, $rootScope, $location, AngularForms, RobotForm) {
+        
+        $scope.order_complete = false;
+
+        //Inject the robot order form
+        var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
+        form.inject();
+        form.resetForm();
+        
+        $scope.reset = function() {
+            form.resetForm();
+        };
+        
+        $scope.save = function() {
+            var errors = 0;
+            form.clearErrors(); // clear custom error messages
+            if ($scope.arms > 2 && $scope.legs < 3) {
+                form.setError('legs', 'More than 2 arms requires a minimum of 3 legs');
+                errors++;
+            }
+            if ($scope.legs < 3 && $scope.head_size === 'large') {
+                form.setError('head_size', 'A large head requires a minimum of 3 legs');
+                errors++;
+            }
+            if ($scope.name.toLowerCase() === 'bob' || $scope.name.toLowerCase() === 'dave' || $scope.name.toLowerCase() === 'mike') {
+                form.setError('name', 'That name is already taken');
+                errors++;
+            }
+            if (errors === 0) {
+                // wait a half tick so screen can repaint (showing error messages cleared) before displaying alert dialog
+                setTimeout(function() { alert('Congratuations! We\'re building your robot.'); }, 500);
+            }
+        };
+
+    }]);
+</pre>
+                </tab>
+            </tabset>
+
 
         </div><!-- col-lg-12 -->
     </div><!-- row -->

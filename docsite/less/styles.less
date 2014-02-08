@@ -130,21 +130,27 @@ h5 {
     margin-top: 30px;
 }
 
-select:required:focus, input:required:focus {
-    border: 1px solid red;
-    outline: none;
+#error-handling, #error-handling:hover {
+    color: @black;
+    text-decoration: none;
 }
 
 .error {
     display: inline-block;
     color: red;
     font-size: 12px;
-    padding-left: 3px;
+}
+
+input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+    border: 1px solid red;
+    outline: none;
 }
 
 .help-text {
     display: inline-block;
     font-size: 12px;
+    margin-right: 5px;
+    padding-left: 2px;
 }
 
 /* Angular ng-cloak directive */
