@@ -13,8 +13,8 @@
             <h3>Form Object</h3>
             <p>Use angular.module to create a JSON object representing the form. The object will consist of properties that apply to the form, a <em>fields</em> object describing each field, and a <em>buttons</em> object describing each button.
             </p> 
-            <p>The following angular module creates a form object called SampleForm. It's taken from the sample app included in the source repo:</p>
-                    
+            <p>The following example taken from the sample app (included in the source repo) creates a form object called <em>SampleForm</em>.
+
             <tabset class="example">
                 <tab>
                 <tab-heading>SampleForm.js</tab-heading>
@@ -164,6 +164,9 @@ angular.module('SampleFormDefinition', [])
                         <td></td>
                         <td>String of classes to be added to the &lt;form&gth; element. Separate classes with a space.</td>
                     </tr>
+                    <tr>
+                        <td>starRequired</td>
+                        <td>Add an * to the label of required fields. See <a href="#error-handling">Error Handling</a> for more details.</td>
                 </tbody>
             </table>
 
@@ -453,7 +456,7 @@ buttons: {
             </tbody>
             </table>
             
-            <h3>Error handling</h3>
+            <h3><a name="error-handling">Error handling</a></h3>
             <p>To be documented...</p>
 
         </div><!-- col-lg-12 -->

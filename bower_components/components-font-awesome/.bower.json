@@ -15,6 +15,6 @@
     "commit": "1744fe47e16f15749b07d31d40c9ae66b57df307"
   },
   "_source": "git://github.com/components/font-awesome.git",
-  "_target": "4.0.3",
+  "_target": "*",
   "_originalSource": "components-font-awesome"
 }

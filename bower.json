@@ -5,11 +5,14 @@
     "angular-route": "latest"
   },
   "dependencies": {
-    "angular": "latest", 
+    "angular": "latest",
     "jquery": "latest",
     "jqueryui": "latest",
     "components-font-awesome": "latest",
     "bootstrap": "latest",
     "angular-bootstrap": "latest"
+  },
+  "resolutions": {
+    "angular": ">=1"
   }
 }
