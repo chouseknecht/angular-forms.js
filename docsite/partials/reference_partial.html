@@ -8,9 +8,42 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-2 col-md-3 hidden-sm hidden-xs">
+            <div class="sidebar-nav" af-affix data-top-offset="getHeaderHeight"> 
+                <h5>Index:</h5>
+                <ul class="nav">
+                    <li><a href="#reference#form-object">Form Object</a></li>
+                    <li><a href="#reference#form-attributes">Form Attributes</a></li>
+                    <li><a href="#reference#fields">Fields</a>
+                        <ul class="nav">
+                            <li><a href="#reference#data-model">Data model</a></li>
+                            <li><a href="#reference#input-field-attributes">Input field attributes</a></li>
+                            <li><a href="#reference#number-fields">Number fields</a></li>
+                            <li><a href="#reference#select-fields">Select fields</a></li>
+                            <li><a href="#reference#checkbox-groups">Checkbox groups</a></li>
+                            <li><a href="#reference#radio-button-groups">Radio button groups</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#reference#buttons">Buttons</a>
+                        <ul class="nav">
+                            <li><a href="#reference#save-and-reset-buttons">Save and reset buttons</a></li>
+                            <li><a href="#reference#button-attributes">Button attributes</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#reference#error-handling">Error Handling</a>
+                        <ul class="nav">
+                            <li><a href="#reference#setError">setError</a></li>
+                            <li><a href="#reference#clearErrors">clearErrors</a></li>
+                            <li><a href="#reference#example">Example</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12">
             
-            <h3>Form Object</h3>
+            <h3 id="form-object">Form Object</h3>
             <p>Use angular.module to create a JSON object representing the form. The object will consist of properties that apply to the form, a <em>fields</em> object describing each field, and a <em>buttons</em> object describing each button.
             </p> 
             <p>The following example taken from the sample app (included in the source repo) creates a form object called <em>SampleForm</em>.</p>
@@ -134,7 +167,7 @@ angular.module('SampleFormDefinition', [])
             </tabset>
             
 
-            <h3 class="section-start">Form Attributes</h3>
+            <h3 id="form-attributes" class="section-start">Form Attributes</h3>
             <p>Set form attributes by adding the following key/value pairs to the root of the object:</p>
 
             <table class="table table-hover">
@@ -174,7 +207,7 @@ angular.module('SampleFormDefinition', [])
                 </tbody>
             </table>
 
-            <h3 class="section-start">Fields</h3>
+            <h3 id="fields" class="section-start">Fields</h3>
             <p>Create a <em>fields</em> object and add a child object for each input field:</p>
 <pre>
 'SampleForm', {
@@ -202,7 +235,7 @@ angular.module('SampleFormDefinition', [])
                 },
             ...
 </pre>
-                <h5>Data model</h5>
+                <h5 id="data-model" >Data model</h5>
                 <p>By default the name of the field object will be used as the data model for the associated input element. However, this can be overriden by providing an ngModel attribute. In the example below the ngModel value of 'user.username will be used as the data model, overriding the default of 'username'.</p>
 <pre>
 username: {
@@ -216,7 +249,7 @@ username: {
     helpText: 'Provide your username.'
     },
 </pre>                  
-            <h5>Input field attributes</h5>
+            <h5 id="input-field-attributes" >Input field attributes</h5>
             <p>Use the following attributes to define input fields:</p>
 
             <table class="table table-hover">
@@ -280,14 +313,7 @@ username: {
                 <tr>
                     <td>helpText</td>
                     <td></td>
-                    <td><p>String value providing a description for the input field. When the form is generated, the helpText value will be placed in a &lt;div&gt; element below the input field and given a class of <em>help-text</em>. The following is an example of the generated HTML for a field with the helpText attribute:</p>
-<pre>
-&lt;label class="sr-only" for="first_name"&gt;First Name&lt;/label&gt;
-&lt;input type="text" class="form-control" name="first_name" ng-model="first_name" required &gt;
-<span class="highlight">&lt;div class="help-text"&gt;Please provide your first name&lt;/div&gt;</span>
-&lt;div class="error ng-hide" ng-show="!SampleForm.first_name.$pristine &amp;&amp; SampleForm.first_name.$error.required"&gt;
-A value is required.&lt;/div&gt;
-</pre>
+                    <td><p>String value providing a description for the input field. When the form is generated, the helpText value will be placed in a &lt;div&gt; element below the input field and given a class of <em>help-text</em>.
                     </td>
                 </tr>
                 <tr>
@@ -319,10 +345,10 @@ A value is required.&lt;/div&gt;
                 </tbody>
             </table>
             
-            <h5>Number fields</h5>
+            <h5 id="number-fields" >Number fields</h5>
             
 
-            <h5>Select fields</h5>    
+            <h5 id="select-fields" >Select fields</h5>    
             <p>In addtion to the those used to define an input field, &lt;select&gt; elements add the following attributes:</p>
                 
             <table class="table table-hover">
@@ -358,7 +384,7 @@ $scope.sources = [
                 </tbody>
             </table>
 
-            <h5>Checkbox groups</h5>    
+            <h5 id="checkbox-groups">Checkbox groups</h5>    
             <p>Use a checkbox group to display a set of related inline checkboxes. Set the <em>checkbox</em> key to an array of objects representing the checkboxes. The following shows an example:</p>
 <pre>
 cb_group_example: {
@@ -379,7 +405,7 @@ cb_group_example: {
 
             <p>Any of the attributes described above in <em>Input fields</em> can be included in a checkbox array object. Of course certain options don't make sense and should not be used. All supplied ng direcives will be included in the generated HTML.</p>
 
-            <h5>Radio button groups</h5>    
+            <h5 id="radio-button-groups">Radio button groups</h5>    
             <p>Use a radio button group to display a set of related inline radio buttons. Set the <em>options</em> key to an array of objects representing the radio buttons. The following shows an example:</p>
 
 <pre>
@@ -403,7 +429,7 @@ rb_group_example: {
 
             <p>Just as with checkboxes groups, add keys from the list of <em>Input fields</em> attributes above. All ng directives will be included in the generated HTML.</p>
 
-            <h3 class="section-start">Buttons</h3>
+            <h3 id="buttons" class="section-start">Buttons</h3>
             <p>Similar to defining fields, for form buttons create a <em>buttons</em> object and add to it an object for each button. Here's an example:</p>
 <pre>
 buttons: {
@@ -421,13 +447,13 @@ buttons: {
         }
     }
 </pre>
-            <h5>Save and reset buttons</h5>
+            <h5 id="save-and-reset-buttons">Save and reset buttons</h5>
             
             <p>If the button key name is <em>save</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state or when the form contains an error. After a change is made to the form and there are no errors, the save button will be enabled.</p>
             
             <p>If the button key name is <em>reset</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state. Once a change is made to the form, the button will be enabled.</p>
 
-            <h5>Button attributes</h5>
+            <h5 id="button-attributes">Button attributes</h5>
             <p>Use the following attributes to construct a button object:</p>
             
             <table class="table table-hover">
@@ -462,18 +488,18 @@ buttons: {
             </tbody>
             </table>
             
-            <h3><a id="error-handling">Error Handling</a></h3>
+            <h3 id="error-handling">Error Handling</h3>
             <p>AngularForms will automatically handle errors for standard ng directives and input attributes. Standard errors are presented in real
             time as the user enters values into a form. But what about errors detected after the user clicks Save? These might be errors detected by the controller or perhaps by the server. AngularForms provides two methods to help handle errors detected post Save.</p>
             
-            <h5>setError</h5>
+            <h5 id="setError">setError</h5>
             <p>setError provides an alternative to creating a directive for each custom error your form validation might need to handle. Calling setError adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setError(&lt;field name&gt;, &lt;error message text&gt;)</p>
 
-            <h5>clearErrors</h5>
+            <h5 id="clearErrors">clearErrors</h5>
             <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input 
             fields. You will typically call form.clearErrors() as the first step in processing form input or just prior to posting to the server.</p>
 
-            <h5>Example</h5>
+            <h5 id="example">Example</h5>
             <p>The following provides an example of how to process post Save errors: </p>
             
             <div class="row" id="robot-example">

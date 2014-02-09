@@ -157,5 +157,41 @@ app.controller('referenceController', ['$scope', 'RobotForm', 'AngularForms',
                 setTimeout(function() { alert('Congratuations! We\'re building your robot.'); }, 500);
             }
         };
+        
+        // Affix parameters
+        $scope.getHeaderHeight = function() { return $('.jumbotron').outerHeight(true); };
+        $scope.getFooterHeight = function() { return $('.footer').outerHeight(true) + 25; };
     }
 ]);
+
+// Make twitter bootstrap Affix work
+app.directive('afAffix', [ function() {
+    return {
+        link: function(scope, element, attr) {
+            // apply TB affix
+            var options = {};
+            if (attr.topOffset) {
+                if (/^\d+$/.test(attr.topOffset)) {
+                    options.top = parseInt(attr.topOffset,10);
+                }
+                else if (scope[attr.topOffset]) {
+                    // user passed a scope variable
+                    options.top = scope[attr.topOffset];
+                }
+            }
+            if (attr.bottomOffset) {
+                if (/^\d+$/.test(attr.bottomOffset)) {
+                    options.bottom = parseInt(attr.bottomOffset,10);
+                }
+                else if (scope[attr.bottomOffset]) {
+                    // user passed a scope variable
+                    options.bottom = scope[attr.bottomOffset];
+                }
+            }
+            console.log('affixed');
+            console.log(options);
+            $(element).affix({ offset: options });
+        }
+    };
+}]);
+
