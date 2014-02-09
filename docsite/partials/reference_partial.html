@@ -15,6 +15,7 @@
             </p> 
             <p>The following example taken from the sample app (included in the source repo) creates a form object called <em>SampleForm</em>.</p>
 
+
             <tabset class="example">
                 <tab>
                 <tab-heading>SampleForm.js</tab-heading>
@@ -174,7 +175,7 @@ angular.module('SampleFormDefinition', [])
             </table>
 
             <h3 class="section-start">Fields</h3>
-            <p>Define a <em>fields</em> object and add an object for each field.</p>
+            <p>Create a <em>fields</em> object and add a child object for each input field:</p>
 <pre>
 'SampleForm', {
         name: 'SampleForm',
@@ -216,7 +217,7 @@ username: {
     },
 </pre>                  
             <h5>Input field attributes</h5>
-            <p>The following lists the attributes used to define an input field:</p>
+            <p>Use the following attributes to define input fields:</p>
 
             <table class="table table-hover">
                 <thead>
@@ -279,12 +280,13 @@ username: {
                 <tr>
                     <td>helpText</td>
                     <td></td>
-                    <td><p>String value providing a description for the input field. Value will be placed in a &lt;div&gt; element below the input field and given a class of <em>help-text</em>.</p>
+                    <td><p>String value providing a description for the input field. When the form is generated, the helpText value will be placed in a &lt;div&gt; element below the input field and given a class of <em>help-text</em>. The following is an example of the generated HTML for a field with the helpText attribute:</p>
 <pre>
 &lt;label class="sr-only" for="first_name"&gt;First Name&lt;/label&gt;
 &lt;input type="text" class="form-control" name="first_name" ng-model="first_name" required &gt;
 <span class="highlight">&lt;div class="help-text"&gt;Please provide your first name&lt;/div&gt;</span>
-&lt;div class="error ng-hide" ng-show="!SampleForm.first_name.$pristine &amp;&amp; SampleForm.first_name.$error.required"&gt;A value is required.&lt;/div&gt;
+&lt;div class="error ng-hide" ng-show="!SampleForm.first_name.$pristine &amp;&amp; SampleForm.first_name.$error.required"&gt;
+A value is required.&lt;/div&gt;
 </pre>
                     </td>
                 </tr>
@@ -297,7 +299,8 @@ username: {
                 <tr>
                     <td>groupClass</td>
                     <td></td>
-                    <td>A string of one or more classes to be assigned to the field's parent &lt;div&gt; element. The parent is the <em>.form-group</em> wrapped around the label and input field.
+                    <td>A string of one or more classes to be assigned to the field's parent &lt;div&gt; element. The parent is the 
+                        <em>.form-group</em> wrapped around the label and input field.
                     </td>
                 </tr>
                 <tr>
@@ -401,7 +404,7 @@ rb_group_example: {
             <p>Just as with checkboxes groups, add keys from the list of <em>Input fields</em> attributes above. All ng directives will be included in the generated HTML.</p>
 
             <h3 class="section-start">Buttons</h3>
-            <p>Similar to defining fields, for form buttons create a <em>button</em> object and add to it an object for each button. Here's an example:</p>
+            <p>Similar to defining fields, for form buttons create a <em>buttons</em> object and add to it an object for each button. Here's an example:</p>
 <pre>
 buttons: {
     save: {
@@ -461,14 +464,17 @@ buttons: {
             
             <h3><a id="error-handling">Error Handling</a></h3>
             <p>AngularForms will automatically handle errors for standard ng directives and input attributes. Standard errors are presented in real
-            time as the user enters values into a form. But what about errors detected after the user clicks Save? This section addresses how to handle and present errors detected post Save. These might be errors detected by the controller or by the server on a POST or PUT 
-            request.</p>
+            time as the user enters values into a form. But what about errors detected after the user clicks Save? These might be errors detected by the controller or perhaps by the server. AngularForms provides two methods to help handle errors detected post Save.</p>
             
-            <p>For post Save errors AngularForms provides a setError method. This is an alternative to creating a directive for each error your form validation might need to handle. Calling setSave adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setSave(&lt;field name&gt;, &lt;error message text&gt;)</p>
+            <h5>setError</h5>
+            <p>For post Save errors AngularForms provides a setError method. This is an alternative to creating a directive for each error your form validation might need to handle. Calling setError adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setError(&lt;field name&gt;, &lt;error message text&gt;)</p>
 
-            <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input fields. You will typically call form.clearErrors() at the start of the logic to process form input or just prior to makig the POST or PUT request to the server.</p>
+            <h5>clearErrors</h5>
+            <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input 
+            fields. You will typically call form.clearErrors() as the first step in processing form input or just prior to posting to the server.</p>
 
-            <p>The following provides a complete example of how to process post Save errors: </p>
+            <p>The following provides an example of how to process post Save errors: </p>
+            
             <div class="row" id="robot-example">
                 <div class="col-lg-12">
                     <div class="well">
