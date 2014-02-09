@@ -82,5 +82,6 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-inva
 }
 
 .footer .navbar-brand { 
+    margin-bottom: 20px;
     padding-right: 0;
 }

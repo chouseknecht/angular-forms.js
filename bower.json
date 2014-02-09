@@ -2,14 +2,14 @@
   "name": "angular-forms.js",
   "version": "1.0.2",
   "devDependencies": {
-    "angular-route": "latest"
+    "angular-route": "latest",
+    "angular-bootstrap": "latest"
   },
   "dependencies": {
     "angular": "latest", 
     "jquery": "latest",
     "jqueryui": "latest",
     "components-font-awesome": "latest",
-    "bootstrap": "latest",
-    "angular-bootstrap": "latest"
+    "bootstrap": "latest"
   }
 }
