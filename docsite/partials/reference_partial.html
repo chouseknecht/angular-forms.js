@@ -202,7 +202,9 @@ angular.module('SampleFormDefinition', [])
                     <tr>
                         <td>starRequired</td>
                         <td></td>
-                        <td>Boolean value. Setting to <em>true</em> adds an * to the label of required fields. See <a href="/index.html#/reference#error-handling">Error Handling</a> for more details.</td>
+                        <td>Boolean value. Setting to <em>true</em> prepends an '*' to the label of all required fields. If no label exists 
+                        for a given field or the srOnly attribute is true, then it will attempt to prepend '*' to the placeholder value. This is
+                        a convenience option. An '*' can be included directly in a field's label text or placeholder text.</td>
                     </tr>
                 </tbody>
             </table>
