@@ -1,6 +1,11 @@
 {
   "name": "angular-forms.js",
-  "version": "1.0.2",
+  "version": "1.0.7",
+  "main": "dist/angular-forms.min.js",
+  "ignore": [
+     ".jshintrc",
+     "app/"
+  ],
   "devDependencies": {
     "angular-route": "latest",
     "angular-bootstrap": "latest"
