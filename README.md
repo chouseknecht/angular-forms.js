@@ -29,8 +29,8 @@ The recommended way to add the required items and angular-forms.js to your proje
     
 Add the follwing stylesheets and scripts to your app: 
 
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.min.css" /> 
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/components-font-awesome/css/font-awesome.min.css"> 
 
     <script src="/bower_components/jquery/jquery.min.js"></script>
     <script src="/bower_components/jqueryui/ui/minified/jquery-ui.min.js"></script>
