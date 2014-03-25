@@ -1,18 +1,20 @@
 {
   "name": "angular-forms.js",
-  "version": "1.0.2",
+  "version": "1.0.7",
+  "main": "dist/angular-forms.min.js",
+  "ignore": [
+     ".jshintrc",
+     "app/"
+  ],
   "devDependencies": {
-    "angular-route": "latest"
+    "angular-route": "latest",
+    "angular-bootstrap": "latest"
   },
   "dependencies": {
-    "angular": "latest",
+    "angular": "latest", 
     "jquery": "latest",
     "jqueryui": "latest",
     "components-font-awesome": "latest",
-    "bootstrap": "latest",
-    "angular-bootstrap": "latest"
-  },
-  "resolutions": {
-    "angular": ">=1"
+    "bootstrap": "latest"
   }
 }
