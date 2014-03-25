@@ -11,11 +11,7 @@ module.exports = function(grunt) {
             options: {
                 'jshintrc': ".jshintrc"
             },
-<<<<<<< HEAD
-            uses_defaults: ['app/js/sampleApp.js', 'angular-forms.js', 'angular-modal.js']
-=======
             uses_defaults: ['app/js/sampleApp.js', 'dist/angular-forms.js', 'dist/angular-modal.js']
->>>>>>> origin/master
         },
 
         uglify: {
@@ -25,13 +21,8 @@ module.exports = function(grunt) {
             },
             my_target: {
                 files: {
-<<<<<<< HEAD
-                    'angular-forms.min.js': ['angular-forms.js'],
-                    'angular-modal.min.js': ['angular-modal.js']
-=======
                     'dist/angular-forms.min.js': ['dist/angular-forms.js'],
                     'dist/angular-modal.min.js': ['dist/angular-modal.js']
->>>>>>> origin/master
                 }
             }
         }
