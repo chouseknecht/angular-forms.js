@@ -23,7 +23,8 @@ Note that Angular-forms.js is being developed with the latest stable versions of
 Installation
 ============
 
-The recommended way to add the required items and angular-forms.js to your project is to use [bower](http://www.bower.io). 
+The recommended way to add the required items and angular-forms.js to your project is to use [bower](http://www.bower.io).
+
     bower install angular-forms.js
     
 Add the follwing stylesheets and scripts to your app: 
@@ -58,5 +59,5 @@ Point your browser to: http://localhost:8000/app/index.html
 Contributing
 ============
 
-At the moment there are no tests. They will be added shortly. In the meantime, install the sample app, as detailed above, and add new features or changes to the sample app and demonstrate that things are working as expected. Lint and minify the javascript using (Grunt)[http://gruntjs.com]
+At the moment there are no tests. They will be added shortly. In the meantime, install the sample app, as detailed above, and add new features or changes to the sample app and demonstrate that things are working as expected. Lint and minify the javascript using [Grunt](http://gruntjs.com)
     
