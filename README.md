@@ -24,16 +24,8 @@ Installation
 ============
 
 The recommended way to add the required items and angular-forms.js to your project is to use [bower](http://www.bower.io). 
-
-Steps to install with bower:
-
-    bower install angular
-    bower install bootstrap
     bower install angular-forms.js
-    bower install components-font-awesome
-    bower install jquery
-    bower install jqueryui
-
+    
 Add the follwing stylesheets and scripts to your app: 
 
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
@@ -66,10 +58,5 @@ Point your browser to: http://localhost:8000/app/index.html
 Contributing
 ============
 
-At the moment there are no tests. They will be added shortly. In the meantime, install the sample app, as detailed above, and add new features or changes to the sample app and demonstrate that things are working as expected.    
-
-Use the compile.sh script to minify:
-
-    cd ~/projects/angular-forms.js
-    ./scripts/compile.sh
+At the moment there are no tests. They will be added shortly. In the meantime, install the sample app, as detailed above, and add new features or changes to the sample app and demonstrate that things are working as expected. Lint and minify the javascript using (Grunt)[http://gruntjs.com]
     
