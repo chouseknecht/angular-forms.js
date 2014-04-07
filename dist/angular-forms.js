@@ -37,34 +37,33 @@ angular.module('AngularFormsModule', [])
     }])
 
     .factory('AngularForms', [ '$compile', 'Empty', function($compile, Empty) {
-        var defaultCss = {
-            help: 'help-text',
-            error: 'error'
-        };
-
         return function(params) {
-            
+
             var fn = function() {
+
+                this.defaultCss = {
+                    help: 'help-text',
+                    error: 'error'
+                };
                         
                 this.init = function() {
+                    var key;
                     this.form = params.form;
                     this.targetId = params.targetId;
                     this.scope = params.scope;
 
-                    if (typeof params.formCss === 'undefined') {
-                        this.formCss = defaultCss;
+                    if (Empty(params.formCss)) {
+                        this.formCss = this.defaultCss;
                     } else {
                         this.formCss = params.formCss;
 
                         // copy defaults for undefined classes
-                        if (typeof this.formCss.help === 'undefined') {
-                            this.formCss.help = 'help-text';
-                        }
-                        if (typeof this.formCss.error === 'undefined') {
-                            this.formCss.error = 'error';
+                        for (key in this.defaultCss) {
+                            if (Empty(this.formCss[key])) {
+                                this.formCss[key] = this.defaultCss[key];
+                            }
                         }
                     }
-
                     this.col_size = "col-sm-10";
                 };
                     
@@ -320,7 +319,7 @@ angular.module('AngularFormsModule', [])
                 };
 
                 this.addValidations = function(f, fld) {
-                    var html = '';
+                    var msg, html = '';
                     if (fld.required || fld.ngRequired) {
                         html += "<div class=\"";
                         html += this.formCss.error;
@@ -555,6 +554,9 @@ angular.module('AngularFormsModule', [])
                             scope.$digest();
                         }
                     }
+                });
+                $(element).on('click', function() {
+                    $(this).select();
                 });
             }
         };
