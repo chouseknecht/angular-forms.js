@@ -38,13 +38,32 @@ angular.module('AngularFormsModule', [])
 
     .factory('AngularForms', [ '$compile', 'Empty', function($compile, Empty) {
         return function(params) {
-            
+
             var fn = function() {
+
+                this.defaultCss = {
+                    help: 'help-text',
+                    error: 'error'
+                };
                         
                 this.init = function() {
+                    var key;
                     this.form = params.form;
                     this.targetId = params.targetId;
                     this.scope = params.scope;
+
+                    if (Empty(params.formCss)) {
+                        this.formCss = this.defaultCss;
+                    } else {
+                        this.formCss = params.formCss;
+
+                        // copy defaults for undefined classes
+                        for (key in this.defaultCss) {
+                            if (Empty(this.formCss[key])) {
+                                this.formCss[key] = this.defaultCss[key];
+                            }
+                        }
+                    }
                     this.col_size = "col-sm-10";
                 };
                     
@@ -85,7 +104,9 @@ angular.module('AngularFormsModule', [])
                         }
                         
                         if (fld.helpText) {
-                            fld_html += "<div class=\"help-text\">" + fld.helpText + "</div>";
+                            fld_html += "<div class=\"";
+                            fld_html += this.formCss.help;
+                            fld_html += "\">" + fld.helpText + "</div>";
                         }
                         
                         fld_html += this.addValidations(f, fld);
@@ -170,7 +191,6 @@ angular.module('AngularFormsModule', [])
                     }
                     return '';
                 };
-
                 this.inputField = function(f, fld) {
                     var attr, html = '';
                     html += (fld.type === 'spinner') ? "<div>\n" : "";
@@ -301,33 +321,48 @@ angular.module('AngularFormsModule', [])
                 this.addValidations = function(f, fld) {
                     var msg, html = '';
                     if (fld.required || fld.ngRequired) {
-                        html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
+                        html += "<div class=\"";
+                        html += this.formCss.error;
+                        html += "\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
                             this.form.name + "." + f + ".$error.required\">" + "A value is required.</div>\n";
                     }
                     if (fld.type === 'email') {
-                        html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
+                        html += "<div class=\"";
+                        html += this.formCss.error;
+                        html += "\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
                             this.form.name + "." + f + ".$error.email\">" + "Please provide a valid email address.</div>\n";
                     }
                     if (fld.type === 'number') {
-                        html += "<div class=\"error\" ng-show=\"" + this.form.name + "." + f +
+                        html += "<div class=\"";
+                        html += this.formCss.error;
+                        html += "\" ng-show=\"" + this.form.name + "." + f +
                             ".$error.number\">" + "Please provide a numeric value.</div>\n";
                     }
                     if (fld.ngMinlength) {
-                        html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f +
+                        html += "<div class=\"";
+                        html += this.formCss.error;
+                        html += "\" ng-show=\"!" + this.form.name + "." + f +
                             ".$pristine && " + this.form.name + "." + f +
                             ".$error.minlength\">" + "Must contain a minimum of " + fld.ngMinlength + " characters.</div>\n";
                     }
                     if (fld.ngMaxlength) {
-                        html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
+                        html += "<div class=\"";
+                        html += this.formCss.error;
+                        html += "\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
                             this.form.name + "." + f + ".$error.maxlength\">" + "Length must be less than " +
                             fld.ngMaxlength + " characters.</div>\n";
                     }
                     if (fld.ngPattern) {
                         msg = (fld.patternErrorMsg) ? fld.patternErrorMsg : 'Please provide a valid value';
-                        html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
+
+                        html += "<div class=\"";
+                        html += this.formCss.error;
+                        html += "\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " +
                             this.form.name + "." + f + ".$error.pattern\">" + msg + "</div>\n";
                     }
-                    html += "<div class=\"error\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "_" + f +
+                    html += "<div class=\"";
+                    html += this.formCss.error;
+                    html += "\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "_" + f +
                         "_error\" ng-bind=\"" + this.form.name + "_" + f + "_error\"></div>\n";
                     return html;
                 };
@@ -519,6 +554,9 @@ angular.module('AngularFormsModule', [])
                             scope.$digest();
                         }
                     }
+                });
+                $(element).on('click', function() {
+                    $(this).select();
                 });
             }
         };
