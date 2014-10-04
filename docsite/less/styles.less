@@ -1,5 +1,5 @@
 /**********************************************
- * styles.less 
+ * styles.less
  *
  * Styles for documentation site
  *
@@ -24,8 +24,12 @@ h5 {
     font-weight: bold;
 }
 
-.red { 
+.red {
     color: @red;
+}
+
+.black-color {
+    color: @black;
 }
 
 .navbar-default {
@@ -34,25 +38,48 @@ h5 {
 }
 
 .jumbotron {
-    p {
-        margin-top: 15px;
-        margin-bottom: 15px;
+    .buttons {
+        margin-top: 60px;
+        margin-bottom: 40px;
     }
     .download {
-        margin-top: 30px;
-        margin-bottom: 50px;
+        display:inline-block;
+        padding: 10px 0 10px 0;
+        margin-right: 15px;
     }
     .github-info {
+        display: inline-block;
+        vertical-align: middle;
         font-size: 14px;
         .btn {
             margin-left: 15px
         }
     }
+    #my-tw-button {
+        display:inline-block;
+        vertical-align: middle;
+    }
     h1 {
         font-size: 80px;
+        margin-top: 10px;
     }
     .cow {
         width: 58px;
+    }
+}
+
+#twitter-widget-0 {
+    margin-top: 8px;
+}
+
+.why-list {
+    list-style-type: circle;
+    margin-top: 40px;
+    margin-left: 10px;
+    li {
+        color: @red;
+        font-size: 18px;
+        margin-top: 8px;
     }
 }
 
@@ -66,7 +93,7 @@ h5 {
 .navbar-brand {
     padding-top: 0;
     margin-top: 0;
-    a { 
+    a {
         font-size: 22px;
     }
     a:link, a:visited, a:hover, a:active {
@@ -110,9 +137,9 @@ h5 {
         padding-top: 5px;
         font-size: 36px;
         text-align: right;
-        img { 
+        img {
             margin-right: 2px;
-            width: 26px; 
+            width: 26px;
         }
     }
 }

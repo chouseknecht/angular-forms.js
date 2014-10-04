@@ -3,30 +3,42 @@
 <div class="jumbotron ng-cloak">
     <div class="container">
         <h1><span class="red">A</span>ngularF<img class="cow" src="/docsite/img/redcow.png" >rms</h1>
-        <p>Create web forms as reusable JSON objects that can be injected anywhere into your app, complete with Twitter Bootstrap styling and AngularJS data bindings and validation.</p>
-        <div class="download">
-            <a class="btn btn-default btn-lg" role="button" 
-                ng-href="{{ download_url }}">Download</a>
+        <h2>Forms as reusable objects in AngularJS</h2>
+        <ul class="why-list">
+            <li><span class="black-color">Stop waisting time with complicated HTML partials</span></li>
+            <li><span class="black-color">Get guaranteed styling and behavior</span></li>
+            <li><span class="black-color">Maximize code reusability</span></li>
+            <li><span class="black-color">Simplify validation and error handling</span></li>
+            <li><span class="black-color">Enjoy built-in Bootstrap styling</span></li>
+        </ul>
+
+        <div class="buttons">
+            <div class="download">
+                <a class="btn btn-default btn-lg" role="button"
+                    ng-href="{{ download_url }}">Download</a>
+            </div>
+            <div class="github-info ng-cloak">Current: {{ version }} {{ version_name }}
+                <a class="btn btn-default btn-xs" role="button"
+                    href="https://github.com/chouseknecht/angular-forms.js"><i class="fa fa-github"></i> Repo</a>
+                <a class="btn btn-default btn-xs" role="button"
+                    href="https://github.com/chouseknecht/angular-forms.js/fork"><i class="fa fa-github"></i> Fork Me!</a>
+                <a class="btn btn-default btn-xs" role="button"
+                    href="https://github.com/chouseknecht/angular-forms.js/star"><i class="fa fa-github"></i> Star</a>
+            </div>
+            <div id="my-tw-button">
+                <a href="https://twitter.com/CHouseknecht" class="twitter-follow-button" data-show-count="false">Follow @chouseknecht</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
         </div>
-        <div class="github-info ng-cloak">Current: {{ version }} {{ version_name }}
-            <a class="btn btn-default btn-xs" role="button"
-                href="https://github.com/chouseknecht/angular-forms.js"><i class="fa fa-github"></i> Repo</a>
-            <a class="btn btn-default btn-xs" role="button"
-                href="https://github.com/chouseknecht/angular-forms.js/fork"><i class="fa fa-github"></i> Fork Me!</a>
-            <a class="btn btn-default btn-xs" role="button"
-                href="https://github.com/chouseknecht/angular-forms.js/star"><i class="fa fa-github"></i> Star</a>
-        </div>     
-        <a href="https://twitter.com/CHouseknecht" class="twitter-follow-button" data-show-count="false">Follow @chouseknecht</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
     </div>
 </div><!-- jumbotron -->
 
 <div class="container ng-cloak">
 <div class="row">
     <div class="col-lg-12">
-        
         <h2>Getting Started</h2>
-        
+
         <h3>Requirements</h3>
         <p>Before using AngularForms, add the following to your project:</p>
         <ul>
@@ -49,7 +61,7 @@ bower install components-font-awesome
         <h4>Just the javascript, please</h4>
         <p>The quickest way to get started is to download the compiled javascript.</p>
         <a class="btn btn-primary btn-sm" role="button" ng-href="{{ download_url }}">Download</a>
-        
+
         <h4>Additional methods</h4>
         <h5><a href="https://github.com/chouseknecht/angular-forms.js">Clone or fork via Github</a></h5>
         <p>Cloning or forking the github repo gives you access to a full sample application. Plus, you can contribute!</p>
@@ -59,9 +71,9 @@ bower install components-font-awesome
 <pre>
 bower install angular-forms.js
 </pre>
-                        
+
         <h3 class="section-start">Sample Template</h3>
-        <p>Below is a very simple html page showing how to incorporate AngularForms. It assumes bower was used to install the required components. Use it as an example and customize it to fit your environment.</p> 
+        <p>Below is a very simple html page showing how to incorporate AngularForms. It assumes bower was used to install the required components. Use it as an example and customize it to fit your environment.</p>
 <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en" ng-app="myApp"&gt;
@@ -88,15 +100,15 @@ bower install angular-forms.js
     &lt;script src="/bower_components/angular-forms.js/angular-forms.min.js"&gt;&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-                    
-        <h3 class="section-start">Example</h3>
-        
+
+        <h2 class="section-start">Example</h2>
+
         <p>Our example contains a JSON object describing an HTML form we would like to have the user complete. Click the Show Form button below, and the JSON object will be turned into HTML, compiled and injected into the page where you can actually use it.
-        
+
         <p>Type in the fields to see the validation work. Notice required fields are highlighted in red as you tab into them. The Reset button is enabled only after you enter a value in one of the fields. The save button will become enabled once all required fields have been entered and all validation requirements are satisified.</p>
 
         <p>All that without writing any HTML!</p>
-        
+
         <div class="example">
             <p>Click the <em>Show Form</em> button to see the sample form generated and inserted into the DOM below.</p>
             <button type="button" class="btn btn-primary btn-sm" ng-click="showForm()">Show Form</button>
@@ -117,7 +129,7 @@ bower install angular-forms.js
         <p>In myApp.js the Angular application is defined along with a controller called <em>myController</em>. Within the controller the JSON object representing the form is passed to AngularForms(), which turns it into HTML. It also adds CSS classes and Angular directives, providing the form with styling and validtion. The form is generated according to the key:value properties in each field object. The result is compiled and injected into the '#exampleForm' DOM element.<p>
 
         <p><strong>Note</strong> the CSS stylesheet included in this example is not currently included in the build. If you're downlading the zip file to install AngularForms, you may want to copy it into your app and adjust as needed. If you're using the source from Github or via Bower, see the stylesheet in the sample app.</p>
-                        
+
         <tabset class="example">
             <tab>
             <tab-heading>HTML</tab-heading>
@@ -135,7 +147,7 @@ bower install angular-forms.js
         &lt;link href="/css/styles.css" rel="stylesheet"&gt;
     &lt;/head&gt;
     &lt;body&gt;
-        
+
         &lt;div class="container"&gt;
             &lt;div class="row"&gt;
                 &lt;div class="col-lg-12" ng-controller="myController"&gt;
@@ -149,7 +161,7 @@ bower install angular-forms.js
 
         &lt;script src="/bower_components/jquery/jquery.min.js"&gt;&lt;/script&gt;
         &lt;script src="/bower_components/angular/angular.min.js"&gt;&lt;/script&gt;
-            
+
         &lt;!-- angular app files --&gt;
         &lt;script src="/js/myApp.js"&gt;&lt;/script&gt;
         &lt;script src="/js/sampleForm.js"&gt;&lt;/script&gt;
@@ -158,8 +170,8 @@ bower install angular-forms.js
 &lt;/html&gt;
 </pre>
         </tab>
-        
-        <tab> 
+
+        <tab>
         <tab-heading>CSS</tab-heading>
 
 <pre>
@@ -212,10 +224,10 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-inva
 
 var myApp = angular.module('sampleApp', ['AngularFormsModule', 'SampleFormDefinition']);
 
-myApp.controller('myController', ['$scope', 'AngularForms', 'SampleForm', 
+myApp.controller('myController', ['$scope', 'AngularForms', 'SampleForm',
     function($scope, AngularForms, SampleForm) {
-    
-    var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });       
+
+    var form = AngularForms({ scope: $scope, targetId: 'basicForm', form: SampleForm });
     form.inject();
 
     $scope.sources = [
@@ -226,7 +238,7 @@ myApp.controller('myController', ['$scope', 'AngularForms', 'SampleForm',
             { id: 'word', label: 'A friend told me' },
             { id: 'other', label: 'Other' }
             ];
-    
+
     }]);
 </pre>
         </tab>
@@ -240,8 +252,8 @@ angular.module('SampleFormDefinition', [])
     .value(
     'SampleForm', {
         name: 'SampleForm',                    // Required. Used to set &lt;form&gt; id attribute
-        horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
-        
+        horizontal: false,                     // Set to true for Bootstrap horizontal form layout
+
         fields: {
             first_name: {
                 label: 'First Name',
@@ -257,7 +269,7 @@ angular.module('SampleFormDefinition', [])
                 type: 'text',
                 srOnly: true,
                 placeholder: 'Last name',
-                required: true, 
+                required: true,
                 autocomplete: false,
                 helpText: 'Provide your last name.'
                 },
@@ -274,7 +286,7 @@ angular.module('SampleFormDefinition', [])
                 label: 'Username',
                 srOnly: true,
                 placeholder: 'Username',
-                type: 'text', 
+                type: 'text',
                 length: 30,
                 required: true,
                 autocomplete: false,
@@ -285,13 +297,13 @@ angular.module('SampleFormDefinition', [])
                 srOnly: true,
                 placeholder: 'Password',
                 helpText: 'Create a password. Make it strong!',
-                type: 'password', 
-                length: 16, 
+                type: 'password',
+                length: 16,
                 autocomplete: false,
                 required: true
                 },
             referral_source: {
-                label: 'Referral source', 
+                label: 'Referral source',
                 srOnly: true,
                 placeholder: 'Select a referral source',
                 type: 'select',
@@ -330,7 +342,7 @@ angular.module('SampleFormDefinition', [])
         </tab>
     </tabset>
 
-    <h3 class="section-start">How do I learn more?</h3>
+    <h2 class="section-start">How do I learn more?</h2>
     <p>The above example will get you started building a simple form. Visit the <a href="/#/reference">reference guide</a> to see all the available form controls and options.</p>
 
     <p>For more examples, <a href="https://github.com/chouseknecht/angular-forms.js">download the source code from Github</a> and take a look at the sample app. It can be run locally using the included node web server. The following shows the steps to clone the repo into a local projects directory and start the server:</p>

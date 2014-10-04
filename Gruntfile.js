@@ -25,14 +25,26 @@ module.exports = function(grunt) {
                     'dist/angular-modal.min.js': ['dist/angular-modal.js']
                 }
             }
+        },
+        less: {
+            default: {
+                options: {
+                    compress: true,
+                    cleancss: true
+                },
+                files: {
+                    "docsite/css/styles.min.css": "docsite/less/styles.less"
+                }
+            }
         }
     });
 
     // Load plugins
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    //grunt.loadNpmTasks('grunt-contrib-jshint');
+    //grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'uglify']);
+    grunt.registerTask('default', ['less:default']);
 
 };
