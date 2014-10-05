@@ -15,6 +15,7 @@ Devel Branch WIP
 * Code cleanup: removed afEmpty factory
 * Changing the module name to angularforms from AngularFormsModule. The factory is still called AngularForms.
 * For the modal module, changed the name  to angularforms.modal from AngularFormsModalModule.
+* Adding unit tests
 
 Requirements
 ============
