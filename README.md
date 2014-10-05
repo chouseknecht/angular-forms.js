@@ -6,7 +6,9 @@ the HTML into your app, complete with Angular directives, validation and Twitter
 
 For full documentation and help getting started visit [http://angularforms.org](http://www.angularforms.org)
 
-v1.0.4 Beta release 
+Latest stable release: v1.0.9 
+
+See the devel branch for the latest and most up-to-date, but possibly not yet stable, release candidate. 
 
 
 Requirements
