@@ -3,37 +3,21 @@
  *
  * Copyright (c) 2014 Chris Houseknecht
  *
- * The MIT License (MIT)
+ * For documentation and support visit angularforms.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of angular-forms.js and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Distributed under The MIT License (MIT)
  *
  */
 
 'use strict';
 
-angular.module('AngularModalModule', [])
+angular.module('angularforms.modal', [])
 
     .factory('AngularModal', [ '$compile', function($compile) {
         return function(params) {
 
             var fn = function() {
-            
+
                 this.init = function() {
                     this.modal = params.modal;
                     this.targetId = params.targetId;
@@ -42,17 +26,17 @@ angular.module('AngularModalModule', [])
 
                 this.build = function() {
                     var attrib, b, btn, html = '';
-           
+
                     // modal container
                     html += "<div id=\"" + this.modal.name + "\" af-modal ng-show=\"" + this.modal.name + "_show\" ";
                     html += this.attribute(this.modal, 'class', 'af-modal');
                     html += (this.modal.height) ? " " + "data-height=\"" + this.modal.height + "\"" : "";
                     html += (this.modal.width) ? " " + "data-width=\"" + this.modal.width + "\"" : "";
                     html += ">\n";
-                    
+
                     // modal header
                     html += "<div class=\"af-modal-header\">" + this.modal.title + "</div>\n";
-                    
+
                     // modal body
                     html += "<div " + this.attribute(this.modal.body,'class', 'af-modal-body');
                     html += (this.modal.body.ngBindHtml) ? " " + this.attribute(this.modal.body, 'ngBindHtml') : "";
@@ -137,7 +121,7 @@ angular.module('AngularModalModule', [])
     .directive('afModal', [ function() {
         return {
             link: function(scope, element, attr) {
-                // keep the <= viewport width
+                // keep width <= viewport width
                 var left, top, wWidth, wHeight, width, height, headerHeight, footerHeight,
                     bodyHeight;
                 wWidth = $(document).width();

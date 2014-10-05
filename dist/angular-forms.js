@@ -3,70 +3,55 @@
  *
  * Copyright (c) 2013-2014 Chris Houseknecht
  *
- * The MIT License (MIT)
+ * For documentation and help visit angularforms.org
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of angular-forms.js and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Distributed uner The MIT License (MIT)
  *
  */
 
 'use strict';
 
-angular.module('AngularFormsModule', [])
+angular.module('angularforms', [])
 
-    .factory('Empty', [ function() {
-        return function(x) {
-            // Utility function. Returns true if a string or numeric is empty.
-            return (x === null || x === undefined || x === '') ? true : false;
-        };
-    }])
+    .factory('AngularForms', [ '$compile', function($compile) {
 
-    .factory('AngularForms', [ '$compile', 'Empty', function($compile, Empty) {
-        return function(params) {
+        return function (params) {
 
-            var fn = function() {
+            var _empty, fn;
+
+            _empty = function (x) {
+                // Utility function. Returns true if a string or numeric is empty.
+                return (x === null || x === undefined || x === '') ? true : false;
+            };
+
+            fn = function() {
 
                 this.defaultCss = {
                     help: 'help-text',
                     error: 'error'
                 };
-                        
+
                 this.init = function() {
                     var key;
                     this.form = params.form;
                     this.targetId = params.targetId;
                     this.scope = params.scope;
 
-                    if (Empty(params.formCss)) {
+                    if (_empty(params.formCss)) {
                         this.formCss = this.defaultCss;
                     } else {
                         this.formCss = params.formCss;
 
                         // copy defaults for undefined classes
                         for (key in this.defaultCss) {
-                            if (Empty(this.formCss[key])) {
+                            if (_empty(this.formCss[key])) {
                                 this.formCss[key] = this.defaultCss[key];
                             }
                         }
                     }
                     this.col_size = "col-sm-10";
                 };
-                    
+
                 this.build = function() {
                     var html = this.startForm(), btn, f, fld, fld_html, label_html, offset;
 
@@ -102,15 +87,15 @@ angular.module('AngularFormsModule', [])
                             fld_html += this.textArea(f, fld);
                             break;
                         }
-                        
+
                         if (fld.helpText) {
                             fld_html += "<div class=\"";
                             fld_html += this.formCss.help;
                             fld_html += "\">" + fld.helpText + "</div>";
                         }
-                        
+
                         fld_html += this.addValidations(f, fld);
-                        
+
                         if (fld.type !== 'checkbox' && fld.type !== 'radio' && fld.label) {
                             label_html = this.fieldLabel(f, fld);
                         }
@@ -198,9 +183,15 @@ angular.module('AngularFormsModule', [])
                     html += (fld.type !== 'spinner') ? "type=\"" + fld.type + "\" " : "";
                     html += (fld.type === 'spinner') ? "af-spinner=\"" + this.form.name + "\" "  : "";
                     html += "ng-model=\"";
-                    html += (fld.ngModel) ? fld.ngModel : f;
+                    if (this.form.modelObject) {
+                        html += (fld.ngModel) ? this.form.modelObject + '.' + fld.ngModel : this.form.modelObject + '.' + f;
+                    } else {
+                        html += (fld.ngModel) ? fld.ngModel : f;
+                    }
                     html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
                     html += this.addInputClass(fld);
+                    html += (fld.ngShow) ? this.attribute(fld,'afOnShow') : "";
+                    html += (fld.ngHide) ? this.attribute(fld,'afOnHide') : "";
                     if (fld.placeholder) {
                         html += " placeholder=\"";
                         html += this.placeholderStar(fld);
@@ -220,10 +211,16 @@ angular.module('AngularFormsModule', [])
                 this.textArea = function(f, fld) {
                     var attr, html = '';
                     html += "<textarea ng-model=\"";
-                    html += (fld.ngModel) ? fld.ngModel : f;
+                    if (this.form.modelObject) {
+                        html += (fld.ngModel) ? this.form.modelObject + '.' + fld.ngModel : this.form.modelObject + '.' + f;
+                    } else {
+                        html += (fld.ngModel) ? fld.ngModel : f;
+                    }
                     html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
                     html += this.addInputClass(fld);
                     html += (!fld.rows) ? "rows=\"5\" " : "";  //default to 5 rows
+                    html += (fld.ngShow) ? this.attribute(fld, 'afOnShow') : "";
+                    html += (fld.ngHide) ? this.attribute(fld, 'afOnHide') : "";
                     for (attr in fld) {
                         if (attr !== 'label' && attr !== 'type' && attr !== 'srOnly'  && attr !== 'class' &&
                             attr !== 'ngHide' && attr !== 'ngShow') {
@@ -237,7 +234,11 @@ angular.module('AngularFormsModule', [])
                 this.select = function(f, fld) {
                     var attr, html = '';
                     html += "<select ng-model=\"";
-                    html += (fld.ngModel) ? fld.ngModel : f;
+                    if (this.form.modelObject) {
+                        html += (fld.ngModel) ? this.form.modelObject + '.' + fld.ngModel : this.form.modelObject + '.' + f;
+                    } else {
+                        html += (fld.ngModel) ? fld.ngModel : f;
+                    }
                     html += "\"";
                     html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
                     html += this.addInputClass(fld);
@@ -256,6 +257,8 @@ angular.module('AngularFormsModule', [])
                             html += this.attribute(fld, attr);
                         }
                     }
+                    html += (fld.ngShow) ? this.attribute(fld, 'afOnShow') : "";
+                    html += (fld.ngHide) ? this.attribute(fld, 'afOnHide') : "";
                     html += ">";
                     html += (fld.placeholder) ? "\n<option value=\"\">" + fld.placeholder + "</option>\n" : "";
                     html += "</select>\n";
@@ -266,7 +269,11 @@ angular.module('AngularFormsModule', [])
                     //checkboxes and radio buttons
                     var attr, html = '';
                     html += "<input type=\"" + fld.type + "\" ng-model=\"";
-                    html += (fld.ngModel) ? fld.ngModel : f;
+                    if (this.form.modelObject) {
+                        html += (fld.ngModel) ? this.form.modelObject + '.' + fld.ngModel : this.form.modelObject + '.' + f;
+                    } else {
+                        html += (fld.ngModel) ? fld.ngModel : f;
+                    }
                     html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
                     html += (fld['class']) ? "class=\"" + fld['class'] + "\" " : "";
                     for (attr in fld) {
@@ -301,6 +308,11 @@ angular.module('AngularFormsModule', [])
                         fld.options[i].type = 'radio';
                         fld.options[i].labelClass = 'radio-inline';
                         fld.options[i].ngModel = (fld.ngModel) ? fld.ngModel : f;
+                        if (this.form.modelObject) {
+                            fld.options[i].ngModel = (fld.ngModel) ? this.form.modelObject + '.' + fld.ngModel : this.form.modelObject + '.' + f;
+                        } else {
+                            fld.options[i].ngModel = (fld.ngModel) ? fld.ngModel : f;
+                        }
                         html += this.indicator(f, fld.options[i]);
                     }
                     html += "</div><!-- radio-group -->\n";
@@ -310,8 +322,13 @@ angular.module('AngularFormsModule', [])
                 this.labelWrap = function(f, fld, html) {
                     // For checkboxes and readio buttons, wrap the input element with a label element
                     var h = '';
-                    h += "<label";
-                    h += (fld.labelClass) ? " class=\"" + fld.labelClass + "\"" : "";
+                    h += "<label ";
+                    if (this.form.horizontal || fld.labelClass) {
+                        h += "class=\"";
+                        h += (this.form.horizontal) ? "control-label " : "";
+                        h += (fld.labelClass) ? fld.labelClass : "";
+                        h += "\"";
+                    }
                     h += (fld.ngShow) ? this.attribute(fld, 'ngShow') : "";
                     h += (fld.ngHide) ? this.attribute(fld, 'ngHide') : "";
                     h+= ">" + html + " " + fld.label + "</label>\n";
@@ -319,7 +336,7 @@ angular.module('AngularFormsModule', [])
                 };
 
                 this.addValidations = function(f, fld) {
-                    var msg, html = '';
+                    var msg, html = '<div class="field-error-group">\n';
                     if (fld.required || fld.ngRequired) {
                         html += "<div class=\"";
                         html += this.formCss.error;
@@ -364,6 +381,7 @@ angular.module('AngularFormsModule', [])
                     html += this.formCss.error;
                     html += "\" ng-show=\"!" + this.form.name + "." + f + ".$pristine && " + this.form.name + "_" + f +
                         "_error\" ng-bind=\"" + this.form.name + "_" + f + "_error\"></div>\n";
+                    html += '</div>';
                     return html;
                 };
 
@@ -402,7 +420,7 @@ angular.module('AngularFormsModule', [])
                     html += " novalidate >\n";
                     return html;
                 };
-                 
+
                 this.addInputClass = function(fld) {
                     var html = '';
                     html += "class=\"";
@@ -416,10 +434,13 @@ angular.module('AngularFormsModule', [])
                 this.attribute = function(obj, itm) {
                     var d, html = '';
                     if (itm.match(/^ng/)) {
-                        d = itm.replace(/^ng/,'').toLowerCase();
+                        d = itm.replace(/^ng/, '').toLowerCase();
                         html += ' ng-' + d + '="' + obj[itm] + '"';
-                    }
-                    else {
+                    } else if (itm === 'afOnHide') {
+                        html += ' af-on-hide="' + obj.ngHide + '"';
+                    } else if (itm === 'afOnShow') {
+                        html += ' af-on-show="' + obj.ngShow + '"';
+                    } else {
                         if (itm !== 'helpText' && itm !== 'labelClass' && itm !== 'defaultValue') {
                             switch (itm) {
                             case 'required':
@@ -460,19 +481,23 @@ angular.module('AngularFormsModule', [])
                     html += "</button>\n";
                     return html;
                 };
-                    
-                // external methods 
+
+                // external methods
 
                 this.inject = function() {
-                    // Build the form and compile, inserting it into the DOM 
+                    // Build the form and compile, inserting it into the DOM
                     var e = angular.element(document.getElementById(this.targetId));
                     e.append(this.build());
                     $compile(e)(this.scope);
                 };
 
+                this.getHtml = function() {
+                    return this.build();
+                };
+
                 this.setError = function(f, msg) {
                     // Custom validation- set field to invalid state and show the error msg.
-                    // Note that following triggers field state changes without setting the form 
+                    // Note - the following triggers field state changes without setting the form
                     // to an invalid state. If the form becomes invalid, the Save button becomes
                     // disabled, and the user is forced to reset the form.
                     this.scope[this.form.name + '_' + f + '_error'] = msg;
@@ -480,6 +505,13 @@ angular.module('AngularFormsModule', [])
                     this.scope[this.form.name][f].$dirty = true;
                     $('#fld_' + f).removeClass('ng-pristine').removeClass('ng-valid').removeClass('ng-valid-custom-error')
                         .addClass('ng-dirty').addClass('ng-invalid').addClass('ng-invalid-custom-error');
+                };
+
+                this.clearError = function(f) {
+                    // Custom validation - remove a custom error message from a single field
+                    this.scope[this.form.name + '_' + f + '_error'] = null;
+                    $('#fld_' + f).addClass('ng-valid').addClass('ng-valid-custom-error')
+                        .removeClass('ng-invalid').removeClass('ng-invalid-custom-error');
                 };
 
                 this.clearErrors = function() {
@@ -493,38 +525,50 @@ angular.module('AngularFormsModule', [])
 
                 this.resetForm = function(master_obj) {
                     // Pass an object of model:value pairs, and the form will be reset
-                    // to the supplied values. Usefule for editting existing data. 
-                    // Otherwise, form is reset to default values supplied in form object 
-                    // (using defaultValue) or ''. 
+                    // to the supplied values. Usefull for editting existing data.
+                    // Otherwise, form is reset to default values supplied in form object
+                    // (using defaultValue) or ''.
                     var f, fld, master, model, val;
-                    master = (Empty(master_obj)) ? {} : master_obj;
+                    master = (_empty(master_obj)) ? {} : master_obj;
                     for (f in this.form.fields) {
                         fld = this.form.fields[f];
                         model = (fld.ngModel) ? fld.ngModel : f;
                         if (fld.type === 'spinner') {
-                            if (!Empty(master[model])) {
+                            if (!_empty(master[model])) {
                                 val = master[model];
                             }
-                            else if (!Empty(fld.defaultValue)) {
+                            else if (!_empty(fld.defaultValue)) {
                                 val = fld.defaultValue;
-                            }
-                            else {
+                            } else {
                                 val = '';
                             }
                             $('#fld_' + f).spinner('value', val);
                         }
                         else if (master[model]) {
-                            this.scope[model] = master[model];
+                            if (this.form.modelObject) {
+                                this.scope[this.form.modelObject][model] = master[model];
+                            } else {
+                                this.scope[model] = master[model];
+                            }
                         }
-                        else if (!Empty(fld.defaultValue)) {
-                            this.scope[model] = fld.defaultValue;
-                        }
-                        else {
-                            this.scope[model] = '';
+                        else if (!_empty(fld.defaultValue)) {
+                            if (this.form.modelObject) {
+                                this.scope[this.form.modelObject][model] = fld.defaultValue;
+                            } else {
+                                this.scope[model] = fld.defaultValue;
+                            }
+                        } else {
+                            if (this.form.modelObject) {
+                                this.scope[this.form.modelObject][model] = '';
+                            } else {
+                                this.scope[model] = '';
+                            }
                         }
                         // Clear validation errors
-                        this.scope[this.form.name][f].$setPristine();
-                        this.scope[this.form.name][f].$setValidity('custom-error', true);
+                        if (this.scope[this.form.name][f]) {
+                            this.scope[this.form.name][f].$setPristine();
+                            this.scope[this.form.name][f].$setValidity('custom-error', true);
+                        }
                         this.scope[this.form.name + '_' + f + '_error'] = '';
                     }
                 };
@@ -535,12 +579,17 @@ angular.module('AngularFormsModule', [])
         };
     }])
 
-    // Custom directives 
+    // Custom directives
+
     .directive('afSpinner', [ function() {
+        /*
+         * Add jqueryui spinner to 'spinner' type input
+         *
+         */
         return {
             require: 'ngModel',
             link: function(scope, element, attr, ctrl) {
-                // Add jquerui spinner to 'spinner' type input
+
                 var form = attr.afSpinner;
                 $(element).spinner({
                     change: function() {
@@ -560,4 +609,64 @@ angular.module('AngularFormsModule', [])
                 });
             }
         };
-    }]);
+    }])
+
+    /*
+     * When fields are hidden or shown, they need to be added/removed from the form controller.
+     * Otherwise, form validation gets honked.
+     *
+     * Inspiration came from this: http://plnkr.co/edit/Ota7pM0iznUmjvWO8zAW?p=preview
+     */
+    .directive('afOnShow', function () {
+        return {
+            require: '^form',
+            restrict: 'A',
+            link: function (scope, element, attrs, form) {
+                var control;
+
+                // add a watch to the ngShow attribute, assuming ngShow is a scope variable
+                scope.$watch(attrs.afOnShow, function(value) {
+                    if (!control) {
+                        control = form[element.attr("name")];
+                    }
+                    if (value === true) {
+                        form.$addControl(control);
+                        angular.forEach(control.$error, function(validity, validationToken) {
+                            form.$setValidity(validationToken, !validity, control);
+                        });
+                    } else {
+                        form.$removeControl(control);
+                    }
+                });
+            }
+        };
+    })
+
+    /*
+     * And handle ngHide...
+     *
+     */
+    .directive('afOnHide', function () {
+        return {
+            require: '^form',
+            restrict: 'A',
+            link: function (scope, element, attrs, form) {
+                var control;
+
+                // add a watch to the ngHide attribute, assuming it contains a scope variable
+                scope.$watch(attrs.afOnHide, function (value) {
+                    if (!control) {
+                        control = form[element.attr("name")];
+                    }
+                    if (!value) {
+                        form.$addControl(control);
+                        angular.forEach(control.$error, function (validity, validationToken) {
+                            form.$setValidity(validationToken, !validity, control);
+                        });
+                    } else {
+                        form.$removeControl(control);
+                    }
+                });
+            }
+        };
+    });

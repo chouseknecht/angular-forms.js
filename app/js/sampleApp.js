@@ -3,33 +3,17 @@
  *
  * Copyright (c) 2013-2014 Chris Houseknecht
  *
+ * For documentation and support visit angularforms.org
+ *
  * Distributed as part of angular-forms.js under The MIT License (MIT)
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
  *
  */
 
 'use strict';
 
-angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule', 'SampleFormDefinition', 'CheckBoxFormDefinition',
+angular.module('sampleApp', ['ngRoute','angularforms', 'angularforms.modal', 'SampleFormDefinition', 'CheckBoxFormDefinition',
     'RadioFormDefinition', 'RobotFormDefinition', 'ExampleModal1Definition'])
-    
+
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
         .when('/', {
@@ -46,7 +30,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
     }])
 
     .run(['$location', '$rootScope', function($location, $rootScope) {
-        
+
         $rootScope.$on('$routeChangeSuccess', function() {
             // When the path changes, update the navbar
             var path = $location.path();
@@ -61,7 +45,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
             });
         });
     }])
-    
+
     .controller('navbarController', ['$scope', '$location', function($scope, $location) {
         $scope.location = $location.path();
     }])
@@ -69,7 +53,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
     .controller('sampleController', ['$scope', '$rootScope', '$location', '$sce', 'AngularForms', 'AngularModal', 'SampleForm',
     'CheckBoxForm', 'RadioForm', 'ExampleModal1',
     function($scope, $rootScope, $location, $sce, AngularForms, AngularModal, SampleForm, CheckBoxForm, RadioForm, ExampleModal1) {
-        
+
         var c, i, fld, form, horizontalForm, horizontalAf, checkboxAf, cbHorizontalForm, cbHorizontalFormAf,
             radio, hRadio, hRadioForm;
 
@@ -79,7 +63,7 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
         $scope.reset = function() {
             form.resetForm();
         };
-        
+
         //Copy of our sample form, make a couple quick changes and render as a horizontal form.
         horizontalForm = angular.copy(SampleForm);
         horizontalForm.horizontal = true;
@@ -177,37 +161,31 @@ angular.module('sampleApp', ['ngRoute','AngularFormsModule', 'AngularModalModule
 
     .controller('robotController', ['$scope', '$rootScope', '$location', 'AngularForms', 'RobotForm',
     function($scope, $rootScope, $location, AngularForms, RobotForm) {
-        
+
         $scope.order_complete = false;
 
         //Inject the robot order form
         var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
         form.inject();
         form.resetForm();
-        
+
         $scope.reset = function() {
             form.resetForm();
         };
-        
+
         $scope.save = function() {
             var errors = 0;
             form.clearErrors(); // clear custom error messages
             if ($scope.arms > 2 && $scope.legs < 3) {
                 form.setError('legs', 'More than 2 arms requires a minimum of 3 legs');
-                //$scope[RobotForm.name + '_legs_error'] = 'More than 2 arms requires a minimum of 3 legs';
-                //$scope[RobotForm.name].legs.$setValidity('legs-error', false);
                 errors++;
             }
             if ($scope.legs < 3 && $scope.head_size === 'large') {
                 form.setError('head_size', 'A large head requires a minimum of 3 legs');
-                //$scope[RobotForm.name + '_head_size_error'] = 'A large head requires a minimum of 3 legs';
-                //$scope[RobotForm.name].head_size.$setValidity('head-size-error', false);
                 errors++;
             }
             if ($scope.name.toLowerCase() === 'bob' || $scope.name.toLowerCase() === 'dave' || $scope.name.toLowerCase() === 'mike') {
                 form.setError('name', 'That name is already taken');
-                //$scope[RobotForm.name + '_name_error'] = 'That name is already taken';
-                //$scope[RobotForm.name].name.$setValidity('name-error', false);
                 errors++;
             }
             if (errors === 0) {
