@@ -9,11 +9,11 @@ For full documentation and help getting started visit [http://angularforms.org](
 Latest stable release: v2.0.0
 
 Devel Branch WIP
-================
+----------------
 * Adding unit tests
 
 Requirements
-============
+------------
 
 * [AngularJS 1.2.6+](http://www.angularjs.org)
 * [Twitter Bootstrap 3.0.3+](http://www.getbootstrap.com)
@@ -24,7 +24,7 @@ Requirements
 Note that Angular-forms.js is being developed with the latest stable versions of any required packages. It is quite possible that earlier version will work just fine.
 
 Installation
-============
+------------
 
 The recommended way to add the required items and angular-forms.js to your project is to use [bower](http://www.bower.io).
 
@@ -40,14 +40,13 @@ Add the follwing stylesheets and scripts to your app:
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/bower_components/angular-forms.js/angular-forms.min.js"></script>
 
-Notes
------
+###Notes
 * the above assume bower installation and with packages installed in bower_components
 * jQueryUI is only required when using the spinner control
 
 
 Sample Application
-==================
+------------------
 
 A sample application is included to provide a getting started example as well as aid in development. To use the sampe app, clone the angular-forms.js repo, install dependencies, and run the included web server. The following assumes the repo will be clones into ~/projects:
 
@@ -64,16 +63,15 @@ Start the web server:
 Point your browser to: http://localhost:8000/app/index.html
 
 Contributing
-============
+------------
 
 At the moment there are no tests. They will be added shortly. In the meantime, install the sample app, as detailed above, and add new features or changes to the sample app and demonstrate that things are working as expected. Lint and minify the javascript using [Grunt](http://gruntjs.com)
 
 
 Release Notes
-=============
+-------------
 
-2.0.0
------
+####2.0.0
 * Fixed hide/show fields and form validation. When fields are hidden using the ng-hide direcitve, they will now be removed from the angular form controller. When fields are shown using ng-show, they will be added to the angular form controller. Previously fields were not automatically added and removed from the controller, and this often caused the form to be in an invalid state due to errors on a hidden field. The user could not fix the problem, and the save button would be disabled.
 * Added a clearError() method to clear errors on a single field.
 * Code cleanup: removed afEmpty factory
