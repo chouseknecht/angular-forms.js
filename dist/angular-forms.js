@@ -242,14 +242,16 @@ angular.module('angularforms', [])
                     html += "\"";
                     html += "\" name=\"" + f + "\" id=\"fld_" + f + "\" ";
                     html += this.addInputClass(fld);
-                    if (typeof fld.optionArray === 'object') {
-                        // optionArray defined as an inline array
-                        this.scope[this.form.name + '_' + f + '_options'] = fld.optionArray;
-                        html += "ng-options=\"itm.id as itm.label for itm in " + this.form.name + '_' + f + '_options' + "\" ";
-                    }
-                    else {
-                        // optionArray is a string, the name of an existing scope variable
-                        html += "ng-options=\"itm.id as itm.label for itm in " + fld.optionArray + "\" ";
+                    if (fld.optionArray) {
+                        if (typeof fld.optionArray === 'object') {
+                            // optionArray defined as an inline array
+                            this.scope[this.form.name + '_' + f + '_options'] = fld.optionArray;
+                            html += "ng-options=\"itm.id as itm.label for itm in " + this.form.name + '_' + f + '_options' + "\" ";
+                        }
+                        else {
+                            // optionArray is a string, the name of an existing scope variable
+                            html += "ng-options=\"itm.id as itm.label for itm in " + fld.optionArray + "\" ";
+                        }
                     }
                     for (attr in fld) {
                         if (attr !== 'label' && attr !== 'type' && attr !== 'srOnly'  && attr !== 'class' && attr !== 'optionArray' &&
@@ -307,12 +309,6 @@ angular.module('angularforms', [])
                     for (i=0; i < fld.options.length; i++) {
                         fld.options[i].type = 'radio';
                         fld.options[i].labelClass = 'radio-inline';
-                        fld.options[i].ngModel = (fld.ngModel) ? fld.ngModel : f;
-                        if (this.form.modelObject) {
-                            fld.options[i].ngModel = (fld.ngModel) ? this.form.modelObject + '.' + fld.ngModel : this.form.modelObject + '.' + f;
-                        } else {
-                            fld.options[i].ngModel = (fld.ngModel) ? fld.ngModel : f;
-                        }
                         html += this.indicator(f, fld.options[i]);
                     }
                     html += "</div><!-- radio-group -->\n";
@@ -323,11 +319,8 @@ angular.module('angularforms', [])
                     // For checkboxes and readio buttons, wrap the input element with a label element
                     var h = '';
                     h += "<label ";
-                    if (this.form.horizontal || fld.labelClass) {
-                        h += "class=\"";
-                        h += (this.form.horizontal) ? "control-label " : "";
-                        h += (fld.labelClass) ? fld.labelClass : "";
-                        h += "\"";
+                    if (fld.labelClass) {
+                        h += "class=\"" + fld.labelClass + "\" ";
                     }
                     h += (fld.ngShow) ? this.attribute(fld, 'ngShow') : "";
                     h += (fld.ngHide) ? this.attribute(fld, 'ngHide') : "";
