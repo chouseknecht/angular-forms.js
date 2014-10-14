@@ -6,7 +6,7 @@ the HTML into your app, complete with Angular directives, validation and Twitter
 
 For full documentation and help getting started visit [http://angularforms.org](http://www.angularforms.org)
 
-Latest stable release: v2.0.0
+Latest stable release: v2.0.1
 
 Devel Branch WIP
 ----------------
@@ -70,6 +70,10 @@ At the moment there are no tests. They will be added shortly. In the meantime, i
 
 Release Notes
 -------------
+####2.0.1
+* ngOptions now works properly on select elements
+* Removed unnecessary control-label class from checkbox label
+* Fixed duplicate objectModel appearing on radio buttons
 
 ####2.0.0
 * Fixed hide/show fields and form validation. When fields are hidden using the ng-hide direcitve, they will now be removed from the angular form controller. When fields are shown using ng-show, they will be added to the angular form controller. Previously fields were not automatically added and removed from the controller, and this often caused the form to be in an invalid state due to errors on a hidden field. The user could not fix the problem, and the save button would be disabled.
