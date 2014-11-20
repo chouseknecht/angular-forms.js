@@ -6,7 +6,7 @@ the HTML into your app, complete with Angular directives, validation and Twitter
 
 For full documentation and help getting started visit [http://angularforms.org](http://www.angularforms.org)
 
-Latest stable release: v2.0.1
+Latest stable release: v2.0.2
 
 Devel Branch WIP
 ----------------
@@ -70,6 +70,10 @@ At the moment there are no tests. They will be added shortly. In the meantime, i
 
 Release Notes
 -------------
+####2.0.2
+* Added support for custom type fields. Use any HTML or an ng-template to create a completely custom element.
+* Added modelObject property to form definition. Value will be prepended to ng-model, providing a convenient way to define models within an object.   
+
 ####2.0.1
 * ngOptions now works properly on select elements
 * Removed unnecessary control-label class from checkbox label
