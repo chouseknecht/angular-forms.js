@@ -530,8 +530,8 @@ form.inject();
             <p>setError provides an alternative to creating a directive for each custom error your form validation might need to handle. Calling setError adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setError(&lt;field name&gt;, &lt;error message text&gt;)</p>
 
             <h5 id="clearError">clearError</h5>
-            <p>Remove the ng-invalid class form a form field and clear a custom error message. Reverse of setError. Pass the name of the field to be cleared: form.clearError(&lt;field name&gt;)</p>
-            
+            <p>Remove the ng-invalid class from a single form field and clear a custom error message. Reverse of setError. Pass the name of the field to be cleared: form.clearError(&lt;field name&gt;)</p>
+
             <h5 id="clearErrors">clearErrors</h5>
             <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input 
             fields. You will typically call form.clearErrors() as the first step in processing form input or just prior to posting to the server.</p>
