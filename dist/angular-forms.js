@@ -86,6 +86,8 @@ angular.module('angularforms', [])
                         case 'textarea':
                             fld_html += this.textArea(f, fld);
                             break;
+                        case 'custom':
+                            fld_html += this.customField(f, fld);
                         }
 
                         if (fld.helpText) {
@@ -229,6 +231,11 @@ angular.module('angularforms', [])
                     }
                     html += "></textarea>";
                     return html;
+                };
+
+                this.customField = function(f, fld) {
+                    // custom field supports label and html property for now.
+                    return fld.html;
                 };
 
                 this.select = function(f, fld) {
@@ -444,7 +451,12 @@ angular.module('angularforms', [])
                                 html += (obj.autocomplete === true || obj.autocomplete === 'on') ? "on\"" : "off\"";
                                 break;
                             default:
-                                html += " " + itm + "=\"" + obj[itm] + "\" ";
+                                if (obj[itm]) {
+                                    html += " " + itm + "=\"" + obj[itm] + "\" ";
+                                } else {
+                                    // allow undefined directives
+                                    html += " " + itm + " ";
+                                }
                             }
                         }
                     }
@@ -494,8 +506,10 @@ angular.module('angularforms', [])
                     // to an invalid state. If the form becomes invalid, the Save button becomes
                     // disabled, and the user is forced to reset the form.
                     this.scope[this.form.name + '_' + f + '_error'] = msg;
-                    this.scope[this.form.name][f].$pristine = false;
-                    this.scope[this.form.name][f].$dirty = true;
+                    if ( this.scope[this.form.name][f]) {
+                        this.scope[this.form.name][f].$pristine = false;
+                        this.scope[this.form.name][f].$dirty = true;
+                    }
                     $('#fld_' + f).removeClass('ng-pristine').removeClass('ng-valid').removeClass('ng-valid-custom-error')
                         .addClass('ng-dirty').addClass('ng-invalid').addClass('ng-invalid-custom-error');
                 };
@@ -511,8 +525,10 @@ angular.module('angularforms', [])
                     // Call as first step in form save to clear custom error messages and classess
                     for (var f in this.form.fields) {
                         this.scope[this.form.name + '_' + f + '_error'] = '';
-                        this.scope[this.form.name][f].$setValidity('custom-error', true);  //fixes classes for us
-                        this.scope[this.form.name][f].$setPristine();
+                        if (this.scope[this.form.name][f]) {
+                            this.scope[this.form.name][f].$setValidity('custom-error', true);  //fixes classes for us
+                            this.scope[this.form.name][f].$setPristine();
+                        }
                     }
                 };
 
