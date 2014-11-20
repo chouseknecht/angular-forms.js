@@ -207,6 +207,12 @@ angular.module('SampleFormDefinition', [])
                         for a given field or the srOnly attribute is true, then it will attempt to prepend '*' to the placeholder value. This is
                         a convenience option. An '*' can be included directly in a field's label text or placeholder text.</td>
                     </tr>
+                    <tr>
+                        <td>modelObject</td>
+                        <td></td>
+                        <td>String value representing an object defined in $scope. This value will be prepended to all field names or ngModel values when generating the ng-model attribute for the element. For example, given <em>first_name</em> as the field name and <em>user</em> as the modelObject value, the ng-model attribute will be set to <em>user.first_name</em>.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -240,6 +246,7 @@ angular.module('SampleFormDefinition', [])
 </pre>
                 <h5 id="data-model" >Data model</h5>
                 <p>By default the name of the field object will be used as the data model for the associated input element. However, this can be overriden by providing an ngModel attribute. In the example below the ngModel value of 'user.username will be used as the data model, overriding the default of 'username'.</p>
+                <p>Note: As mentioned above, if the modelObject property is set in the form definition, its value will be prepeneded to the model name.</p> 
 <pre>
 username: {
     label: 'Username',
@@ -279,8 +286,14 @@ username: {
                             <li>checkbox_group</li>
                             <li>radio_group</li>
                             <li>textarea</li>
+                            <li>custom</li>
                         </ul>
                     </td>
+                </tr>
+                <tr>
+                    <td>html</td>
+                    <td></td>
+                    <td>String containing HTML to be used as the element. Applies only to <em>custom</em> type fields. The HTML string can contain angular directives. Use ng-template and/or ng-controller to introduce complex controls and animations.</td>
                 </tr>
                 <tr>
                     <td>label</td>
@@ -516,6 +529,9 @@ form.inject();
             <h5 id="setError">setError</h5>
             <p>setError provides an alternative to creating a directive for each custom error your form validation might need to handle. Calling setError adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setError(&lt;field name&gt;, &lt;error message text&gt;)</p>
 
+            <h5 id="clearError">clearError</h5>
+            <p>Remove the ng-invalid class form a form field and clear a custom error message. Reverse of setError. Pass the name of the field to be cleared: form.clearError(&lt;field name&gt;)</p>
+            
             <h5 id="clearErrors">clearErrors</h5>
             <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input 
             fields. You will typically call form.clearErrors() as the first step in processing form input or just prior to posting to the server.</p>
