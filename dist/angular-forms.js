@@ -55,8 +55,8 @@ angular.module('angularforms', [])
                 this.build = function() {
                     var html = this.startForm(), btn, f, fld, fld_html, label_html, offset;
 
-                    if (this.form.horizontal && this.inputColSize) {
-                        this.col_size = this.form.inputColSize;
+                    if (this.form.horizontal && this.form.inputColSize) {
+                        this.col_size = parseInt(this.form.inputColSize,10);
                     }
                     for (f in this.form.fields) {
                         fld = this.form.fields[f];
@@ -133,17 +133,17 @@ angular.module('angularforms', [])
                             html += ">\n";
                             html += label_html;
                             if (fld.type === 'checkbox') {
-                                offset = "col-sm-offset-" + (12 - parseInt(this.col_size.replace(/[a-z,A-Z,-]/g,''),10));
+                                offset = "col-sm-offset-" + (12 - this.col_size);
                                 html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
                                 html += "<div class=\"checkbox\">\n";
                             }
                             else if (fld.type === 'radio') {
-                                offset = "col-sm-offset-" + (12 - parseInt(this.col_size.replace(/[a-z,A-Z,-]/g,''),10));
+                                offset = "col-sm-offset-" + (12 - this.col_size);
                                 html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
                                 html += "<div class=\"radio\">\n";
                             }
                             else {
-                                html += "<div class=\"" + this.col_size + "\">\n";
+                                html += "<div class=\"col-sm-" + this.col_size + "\">\n";
                             }
                             html += fld_html;
                             html += (fld.type === 'checkbox' || fld.type === 'radio') ? "</div><!-- checkbox/radio -->\n" : "";
@@ -155,7 +155,7 @@ angular.module('angularforms', [])
                     if (this.form.buttons) {
                         html += "<div class=\"form-group buttons\">\n";
                         if (this.form.horizontal) {
-                            offset = "col-sm-offset-" + (12 - parseInt(this.col_size.replace(/[a-z,A-Z,-]/g,''),10));
+                            offset = "col-sm-offset-" + (12 - this.col_size);
                             html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
                         }
                         for (btn in this.form.buttons) {
@@ -386,14 +386,14 @@ angular.module('angularforms', [])
                 };
 
                 this.fieldLabel = function(f, fld) {
-                    var col_size, html = '';
+                    var label_size, html = '';
                     if (this.form.horizontal) {
-                        col_size = (this.labelColSize) ? this.labelColSize : "col-sm-2";
+                        label_size = "col-sm-" + (12 - this.col_size);
                     }
                     html += "<label for=\"" + f + "\"";
                     if (fld.srOnly || fld.labelClass || this.form.horizontal) {
                         html += " class=\"";
-                        html += (this.form.horizontal) ? col_size + " control-label " : "";
+                        html += (this.form.horizontal) ? label_size + " control-label " : "";
                         html += (fld.srOnly) ? "sr-only " : "";
                         html += (fld.labelClass) ? fld.labelClass : "";
                         html += "\"";
