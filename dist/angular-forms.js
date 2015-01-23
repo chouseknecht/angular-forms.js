@@ -156,7 +156,7 @@ angular.module('angularforms', [])
                         html += "<div class=\"form-group buttons\">\n";
                         if (this.form.horizontal) {
                             offset = "col-sm-offset-" + (12 - this.col_size);
-                            html += "<div class=\"" + offset + " " + this.col_size + "\">\n";
+                            html += "<div class=\"" + offset + " col-sm-" + this.col_size + "\">\n";
                         }
                         for (btn in this.form.buttons) {
                             html += this.button(btn, this.form.buttons[btn]);
