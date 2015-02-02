@@ -86,3 +86,11 @@ Release Notes
 * Changing the module name to angularforms from AngularFormsModule. The factory is still called AngularForms.
 * For the modal module, changed the name  to angularforms.modal from AngularFormsModalModule.
 
+Road Map
+--------
+Development of version 3 is underway. Version 3 will be a complete refactoring:
+* Angular Forms will become a directive, no longer requiring the controller to call an inject method.
+* As a directive, Angular Forms will be much easier to use, from implementation to unit testing. 
+* Version 3 will be fully unit tested.
+* The spinner directive and any jquery-ui dependency will be completely removed.  
+* Will fully support new features found in Angular 1.3    
