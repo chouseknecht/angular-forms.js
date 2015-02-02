@@ -8,10 +8,6 @@ For full documentation and help getting started visit [http://angularforms.org](
 
 Latest stable release: v2.0.2
 
-Devel Branch WIP
-----------------
-* Adding unit tests
-
 Requirements
 ------------
 
@@ -88,7 +84,7 @@ Release Notes
 
 Road Map
 --------
-Development of version 3 is underway. Version 3 will be a complete refactoring:
+Development of version 3 is underway! Version 3 will be a complete refactoring:
 * Angular Forms will become a directive, no longer requiring the controller to call an inject method.
 * As a directive, Angular Forms will be much easier to use, from implementation to unit testing. 
 * Version 3 will be fully unit tested.
