@@ -6,11 +6,12 @@
         </div>
         <h4>Basic Form</h4>
         <div class="well">
-            <div id="basicForm"></div>
+            <div id="basic-form" angular-forms="afBasicForm" form-definition="basicForm"></div>
         </div>
         <h4>Horizontal Form</h4>
-        <div class="well">
-            <div id="horizontalForm"></div>
+        <div class="well" ng-controller="horizontalCtrl">
+            <div id="horizontal-form" angular-forms="afHorizontalForm" form-definition="horizontalForm"
+                form-delay="hzReady"></div>
         </div>
         <h4>Checkboxes</h4>
         <div class="well">
@@ -29,9 +30,9 @@
             <div id="radioHorizontalForm"></div>
         </div>
     	<a href="#/robots" class="btn btn-primary">Order a Robot!</a>
-        
+
         <div id="modal-target"></div>
-    
+
     </div><!-- col-lg-12 -->
 </div><!-- row -->
 

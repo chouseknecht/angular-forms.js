@@ -3,9 +3,9 @@
  *
  *  SampleForm.js
  *
- *  Demonstrate some of the things you can do with angular-forms to 
+ *  Demonstrate some of the things you can do with angular-forms to
  *  generate clean, consistent forms in your app.
- *  
+ *
  */
 
 'use strict';
@@ -14,7 +14,7 @@ angular.module('SampleFormDefinition', [])
     .value(
     'SampleForm', {
         name: 'SampleForm',                    // Required. Used to set <form> id attribute
-        horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
+        horizontal: false,                     // Set to true for Bootstrap horizontal form layout
         starRequired: true,
 
         fields: {
@@ -64,7 +64,7 @@ angular.module('SampleFormDefinition', [])
                 length: 16,
                 autocomplete: false,
                 required: true,
-                confirm: true      //generate a confirmation password field. associate the two and add validation directive 
+                confirm: true      //generate a confirmation password field. associate the two and add validation directive
             },
             employees: {
                 label: 'Employee count',
@@ -91,7 +91,7 @@ angular.module('SampleFormDefinition', [])
                 placeholder: 'Other source',
                 type: 'text',
                 ngShow: "referral_source == 'other'",
-                ngRequired: "referral_source == 'other'",
+                required: true,
                 helpText: 'What is the Other source?'
             },
             about_you: {
