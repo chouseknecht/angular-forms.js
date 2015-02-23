@@ -15,11 +15,11 @@ var app = angular.module('docApp', ['ngRoute', 'RestService', 'Utilities', 'Angu
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
         .when('/', {
-            templateUrl: '/docsite/partials/index_partial.html',
+            templateUrl: 'docsite/partials/index_partial.html',
             controller: 'mainController'
         })
         .when('/reference', {
-            templateUrl: '/docsite/partials/reference_partial.html',
+            templateUrl: 'docsite/partials/reference_partial.html',
             controller: 'referenceController'
         })
         .otherwise({
@@ -28,7 +28,7 @@ var app = angular.module('docApp', ['ngRoute', 'RestService', 'Utilities', 'Angu
     }])
 
     .run(['$location', '$rootScope', function($location, $rootScope) {
-        
+
         $rootScope.$on("$routeChangeSuccess", function() {
             // When the path changes, update the navbar
             var path = $location.path();
@@ -46,10 +46,10 @@ var app = angular.module('docApp', ['ngRoute', 'RestService', 'Utilities', 'Angu
 
 app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'SampleForm',
     function($scope, Rest, Error, AngularForms, SampleForm) {
-        
+
         var form = AngularForms({ scope: $scope, targetId: 'exampleForm', form: SampleForm }),
             url;
-        
+
         $scope.destroyFormHide = true;
         $scope.exampleFormReady =  false;
 
@@ -61,7 +61,7 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
             { id: 'word', label: 'A friend told me' },
             { id: 'other', label: 'Other' }
         ];
-       
+
         $('.fade-in').show(500);
 
         // Get version info and download URL
@@ -81,7 +81,7 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
                     Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
                 });
         });
-        
+
         // Get repo info
         url = '/repos/:user/:repo';
         Rest({ method: 'GET', url: url })
@@ -91,7 +91,7 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
             .error( function(data, status) {
                 Error({ scope: $scope, msg: 'GET ' + url + ' returned: ' + status });
             });
-        
+
         $scope.destroyForm = function() {
             $scope.destroyFormHide = true;
             $scope.exampleFormReady =  false;
@@ -110,7 +110,7 @@ app.controller('mainController', ['$scope', 'Rest', 'Error', 'AngularForms', 'Sa
             form.clearErrors();
             form.resetForm();
         };
-        
+
         $scope.reset = function() {
             form.clearErrors();
             form.resetForm();
@@ -123,7 +123,7 @@ app.controller('referenceController', ['$scope', 'RobotForm', 'AngularForms',
     function($scope, RobotForm, AngularForms) {
 
         $('.fade-in').show(500);
-        
+
         /* Setup the robot order form. This gets displayed under Error handling. */
 
         $scope.order_complete = false;
@@ -132,11 +132,11 @@ app.controller('referenceController', ['$scope', 'RobotForm', 'AngularForms',
         var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
         form.inject();
         form.resetForm();
-        
+
         $scope.reset = function() {
             form.resetForm();
         };
-        
+
         $scope.save = function() {
             var errors = 0;
             form.clearErrors(); // clear custom error messages
@@ -157,7 +157,7 @@ app.controller('referenceController', ['$scope', 'RobotForm', 'AngularForms',
                 setTimeout(function() { alert('Congratuations! We\'re building your robot.'); }, 500);
             }
         };
-        
+
         // Affix parameters
         $scope.getHeaderHeight = function() { return $('.jumbotron').outerHeight(true); };
         $scope.getFooterHeight = function() { return $('.footer').outerHeight(true) + 25; };
