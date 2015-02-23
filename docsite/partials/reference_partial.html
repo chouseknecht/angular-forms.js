@@ -2,14 +2,14 @@
 <div class="jumbotron reference">
     <div class="container">
         <h2>Reference</h2>
-        <p>The nuts and bolts of using <span class="red">A</span>ngularF<img class="cow" src="/docsite/img/redcow.png">rms</p>
+        <p>The nuts and bolts of using <span class="red">A</span>ngularF<img class="cow" src="docsite/img/redcow.png">rms</p>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
         <div class="col-lg-2 col-md-3 hidden-sm hidden-xs">
-            <div class="sidebar-nav" af-affix data-top-offset="getHeaderHeight" data-bottom-offset="getFooterHeight"> 
+            <div class="sidebar-nav" af-affix data-top-offset="getHeaderHeight" data-bottom-offset="getFooterHeight">
                 <h5>Index:</h5>
                 <ul class="nav">
                     <li><a href="#reference#form-object">Form Object</a></li>
@@ -42,12 +42,12 @@
                 </ul>
             </div>
         </div>
-        
+
         <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12">
-            
+
             <h3 id="form-object">Form Object</h3>
             <p>Use angular.module to create a JSON object representing the form. The object will consist of properties that apply to the form, a <em>fields</em> object describing each field, and a <em>buttons</em> object describing each button.
-            </p> 
+            </p>
             <p>The following example taken from the sample app (included in the source repo) creates a form object called <em>SampleForm</em>.</p>
 
 
@@ -61,8 +61,8 @@ angular.module('SampleFormDefinition', [])
     .value(
     'SampleForm', {
         name: 'SampleForm',                    // Required. Used to set &lt;form&gt; id attribute
-        horizontal: false,                     // Set to true for Bootstrap horizontal form layout 
-        
+        horizontal: false,                     // Set to true for Bootstrap horizontal form layout
+
         fields: {
             first_name: {
                 label: 'First Name',
@@ -78,7 +78,7 @@ angular.module('SampleFormDefinition', [])
                 type: 'text',
                 srOnly: true,
                 placeholder: 'Last name',
-                required: true, 
+                required: true,
                 autocomplete: false,
                 helpText: 'Provide your last name.'
                 },
@@ -95,7 +95,7 @@ angular.module('SampleFormDefinition', [])
                 label: 'Username',
                 srOnly: true,
                 placeholder: 'Username',
-                type: 'text', 
+                type: 'text',
                 length: 30,
                 required: true,
                 autocomplete: false,
@@ -106,15 +106,15 @@ angular.module('SampleFormDefinition', [])
                 srOnly: true,
                 placeholder: 'Password',
                 helpText: 'Create a password. Make it strong!',
-                type: 'password', 
-                length: 16, 
+                type: 'password',
+                length: 16,
                 autocomplete: false,
                 required: true,
-                confirm: true      //generate a confirmation password field. associate the two and add validation directive 
+                confirm: true      //generate a confirmation password field. associate the two and add validation directive
                 },
             employees: {
-                label: 'Employee count', 
-                srOnly: true, 
+                label: 'Employee count',
+                srOnly: true,
                 placeholder: 'Number of employees',
                 type: 'number',
                 helpText: 'How many employees do you have?',
@@ -123,7 +123,7 @@ angular.module('SampleFormDefinition', [])
                 ngMaximum: 200
                 },
             referral_source: {
-                label: 'Referral source', 
+                label: 'Referral source',
                 srOnly: true,
                 placeholder: 'Select a referral source',
                 type: 'select',
@@ -142,8 +142,8 @@ angular.module('SampleFormDefinition', [])
                 },
             about_you: {
                 label: 'About you',
-                srOnly: true, 
-                placeholder:'About you', 
+                srOnly: true,
+                placeholder:'About you',
                 type: 'textarea',
                 helpText: 'Tell us a bit about yourself'
                 }
@@ -167,7 +167,7 @@ angular.module('SampleFormDefinition', [])
 </pre>
                 </tab>
             </tabset>
-            
+
 
             <h3 id="form-attributes" class="section-start">Form Attributes</h3>
             <p>Set form attributes by adding the following key/value pairs to the root of the object:</p>
@@ -204,7 +204,7 @@ angular.module('SampleFormDefinition', [])
                     <tr>
                         <td>starRequired</td>
                         <td></td>
-                        <td>Boolean value. Setting to <em>true</em> prepends an '*' to the label of all required fields. If no label exists 
+                        <td>Boolean value. Setting to <em>true</em> prepends an '*' to the label of all required fields. If no label exists
                         for a given field or the srOnly attribute is true, then it will attempt to prepend '*' to the placeholder value. This is
                         a convenience option. An '*' can be included directly in a field's label text or placeholder text.</td>
                     </tr>
@@ -222,8 +222,8 @@ angular.module('SampleFormDefinition', [])
 <pre>
 'SampleForm', {
         name: 'SampleForm',
-        horizontal: false, 
-        
+        horizontal: false,
+
         <span class="highlight">fields:</span> {
             first_name: {
                 label: 'First Name',
@@ -239,7 +239,7 @@ angular.module('SampleFormDefinition', [])
                 type: 'text',
                 srOnly: true,
                 placeholder: 'Last name',
-                required: true, 
+                required: true,
                 autocomplete: false,
                 helpText: 'Provide your last name.'
                 },
@@ -247,7 +247,7 @@ angular.module('SampleFormDefinition', [])
 </pre>
                 <h5 id="data-model" >Data model</h5>
                 <p>By default the name of the field object will be used as the data model for the associated input element. However, this can be overriden by providing an ngModel attribute. In the example below the ngModel value of 'user.username will be used as the data model, overriding the default of 'username'.</p>
-                <p>Note: As mentioned above, if the modelObject property is set in the form definition, its value will be prepeneded to the model name.</p> 
+                <p>Note: As mentioned above, if the modelObject property is set in the form definition, its value will be prepeneded to the model name.</p>
 <pre>
 username: {
     label: 'Username',
@@ -255,11 +255,11 @@ username: {
     <span class="highlight">ngModel: 'user.username'</span>,
     srOnly: true,
     placeholder: 'Username',
-    required: true, 
+    required: true,
     autocomplete: false,
     helpText: 'Provide your username.'
     },
-</pre>                  
+</pre>
             <h5 id="input-field-attributes" >Input field attributes</h5>
             <p>Use the following attributes to define input fields:</p>
 
@@ -342,7 +342,7 @@ username: {
                 <tr>
                     <td>groupClass</td>
                     <td></td>
-                    <td>A string of one or more classes to be assigned to the field's parent &lt;div&gt; element. The parent is the 
+                    <td>A string of one or more classes to be assigned to the field's parent &lt;div&gt; element. The parent is the
                         <em>.form-group</em> wrapped around the label and input field.
                     </td>
                 </tr>
@@ -361,13 +361,13 @@ username: {
                 </tr>
                 </tbody>
             </table>
-            
-            <h5 id="number-fields" >Number fields</h5>
-            
 
-            <h5 id="select-fields" >Select fields</h5>    
+            <h5 id="number-fields" >Number fields</h5>
+
+
+            <h5 id="select-fields" >Select fields</h5>
             <p>In addtion to the those used to define an input field, &lt;select&gt; elements add the following attributes:</p>
-                
+
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -401,7 +401,7 @@ $scope.sources = [
                 </tbody>
             </table>
 
-            <h5 id="checkbox-groups">Checkbox groups</h5>    
+            <h5 id="checkbox-groups">Checkbox groups</h5>
             <p>Use a checkbox group to display a set of related inline checkboxes. Set the <em>checkbox</em> key to an array of objects representing the checkboxes. The following shows an example:</p>
 <pre>
 cb_group_example: {
@@ -411,7 +411,7 @@ cb_group_example: {
     type: 'checkbox_group',
     checkboxes: [
         { model: "option1", label: "Option 1" },
-        { model: "option2", label: "Option 2" }, 
+        { model: "option2", label: "Option 2" },
         { model: "option3", label: "Option 3", ngShow: "option1" },
         { model: "option4", label: "Option 4", ngShow: "option1" }
         ]
@@ -422,7 +422,7 @@ cb_group_example: {
 
             <p>Any of the attributes described above in <em>Input fields</em> can be included in a checkbox array object. Of course certain options don't make sense and should not be used. All supplied ng direcives will be included in the generated HTML.</p>
 
-            <h5 id="radio-button-groups">Radio button groups</h5>    
+            <h5 id="radio-button-groups">Radio button groups</h5>
             <p>Use a radio button group to display a set of related inline radio buttons. Set the <em>options</em> key to an array of objects representing the radio buttons. The following shows an example:</p>
 
 <pre>
@@ -434,14 +434,14 @@ rb_group_example: {
     options: [
         { label: 'Radio option 1', value: 'one' },
         { label: 'Radio option 2', value: 'two' },
-        { label: 'Radio option 3', value: 'three' } 
+        { label: 'Radio option 3', value: 'three' }
         ]
     }
 }
 </pre>
 
             <p>Each radio button object in the options array requires a <em>label</em> and a <em>value</em> key. The label is the string value used in the &lt;label&gt; element. The value is the value to be assigned to the model when the radio is selected.<p>
-            
+
             <p>Just as with a standard input field, the model is assumed to be the field key for the radio group. In the above example <em>rb_group_example</em> will be used as the model. Provide an <em>ngModel</em> key to override.</p>
 
             <p>Just as with checkboxes groups, add keys from the list of <em>Input fields</em> attributes above. All ng directives will be included in the generated HTML.</p>
@@ -465,14 +465,14 @@ buttons: {
     }
 </pre>
             <h5 id="save-and-reset-buttons">Save and reset buttons</h5>
-            
+
             <p>If the button key name is <em>save</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state or when the form contains an error. After a change is made to the form and there are no errors, the save button will be enabled.</p>
-            
+
             <p>If the button key name is <em>reset</em>, the button will automatically receive an ng-disabled directive that disables the button when the form is in an untouched or pristine state. Once a change is made to the form, the button will be enabled.</p>
 
             <h5 id="button-attributes">Button attributes</h5>
             <p>Use the following attributes to construct a button object:</p>
-            
+
             <table class="table table-hover">
             <thead>
             <tr>
@@ -515,9 +515,9 @@ var myCss = {
     error: 'myError'
 };
 form = AngularForms({
-    scope: $scope, 
+    scope: $scope,
     targetId: 'basicForm',
-    form: SampleForm, 
+    form: SampleForm,
     <span class="highlight">formCss: myCss</span>
 });
 form.inject();
@@ -526,7 +526,7 @@ form.inject();
             <h3 id="error-handling" class="section-start">Form Validation</h3>
             <p>AngularForms will automatically handle errors for standard ng directives and input attributes. Standard errors are presented in real
             time as the user enters values into a form. But what about errors detected after the user clicks Save? These might be errors detected by the controller or perhaps by the server. AngularForms provides two methods to help handle errors detected post Save.</p>
-            
+
             <h5 id="setError">setError</h5>
             <p>setError provides an alternative to creating a directive for each custom error your form validation might need to handle. Calling setError adds the ng-invalid class to the form field and displays a custom error message. Pass the field name and the message as parameters: form.setError(&lt;field name&gt;, &lt;error message text&gt;)</p>
 
@@ -534,12 +534,12 @@ form.inject();
             <p>Remove the ng-invalid class from a single form field and clear a custom error message. Reverse of setError. Pass the name of the field to be cleared: form.clearError(&lt;field name&gt;)</p>
 
             <h5 id="clearErrors">clearErrors</h5>
-            <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input 
+            <p>Use the clearErrors method to put the form back to a valid state, removing error messages and the ng-invalid class from all input
             fields. You will typically call form.clearErrors() as the first step in processing form input or just prior to posting to the server.</p>
 
             <h5 id="example">Example</h5>
             <p>The following provides an example of how to process post Save errors: </p>
-            
+
             <div class="row" id="robot-example">
                 <div class="col-lg-12">
                     <div class="well">
@@ -607,18 +607,18 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-inva
 <pre>
 .controller('robotController', ['$scope', '$rootScope', '$location', 'AngularForms', 'RobotForm',
     function($scope, $rootScope, $location, AngularForms, RobotForm) {
-        
+
         $scope.order_complete = false;
 
         //Inject the robot order form
         var form = AngularForms({ scope: $scope, targetId: 'orderForm', form: RobotForm });
         form.inject();
         form.resetForm();
-        
+
         $scope.reset = function() {
             form.resetForm();
         };
-        
+
         $scope.save = function() {
             var errors = 0;
             form.clearErrors(); // clear custom error messages
